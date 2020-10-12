@@ -1,0 +1,17 @@
+/*thead{*/
+/*    border-top: solid 2px black;*/
+/*}*/
+
+/*.djn-tr.form-row.has_original{*/
+/*    border-top: solid 2px black;*/
+/*}*/
+
+.prod_char{
+    border-top: solid 2px black;
+    margin-top: 20px !important;
+}
+
+.prod_val{
+    margin-left: 40px !important;
+    width: unset !important;
+}
