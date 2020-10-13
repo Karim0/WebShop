@@ -15,9 +15,35 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.contrib.auth import views as auth_views
+
+admin.autodiscover()
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('admin_tools/', include('admin_tools.urls')),
     path(r'nested_admin/', include('nested_admin.urls')),
+
+    path('', include('shop.urls')),
+
+
 ]
+
+urlpatterns += staticfiles_urlpatterns()
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+#
+# urlpatterns = [
+#     path('grappelli/', include('grappelli.urls')),
+#     path('admin/', admin.site.urls),
+#     path('admin_tools/', include('admin_tools.urls')),
+#     path('shop/', include('Shop.urls')),
+#     # path(r'^myadmin/', include(admin_site.urls)),
+# ]
+
