@@ -1,0 +1,235 @@
+{% extends 'Shop/base.html' %}
+{% load static %}
+{#{% load filters %}#}
+{% block content %}
+
+    <div class="cart-banner">
+        <img src="{% static 'Shop/img/cart-banner.jpg' %}" alt="" class="page-banner">
+        <div class="page-info">
+            <h1>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Autem molestias voluptatum
+                necessitatibus.</h1>
+            <p><a class="blue" href="{% url 'shop:index' %}">Категория</a> / <span>Детали товара</span></p>
+        </div>
+    </div>
+
+    <main class="product-main">
+        <section class="product-screen">
+            <div class="container mt-5">
+                <div class="row">
+                    <div class="col-lg-6 item-photo">
+                        <div class="fotorama"
+                             data-allowfullscreen="true"
+                             data-arrows="false"
+                             data-click="true"
+                             data-swipe="true">
+                            <img src="{% static 'Shop/img/product.jpg' %}">
+                            <img src="{% static 'Shop/img/product.jpg' %}">
+                            <img src="{% static 'Shop/img/product.jpg' %}">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 filters-box" style="border:0px solid gray">
+                        <h2 class="prod-name">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Autem molestias
+                            voluptatum necessitatibus.</h2>
+
+                        <ul class="filters mt-5">
+                            <li class="text-center m-0 mb-3">
+                                <h3 for=""> Название фильтра</h3>
+                                <div class="filter">
+                                    <div class="filter-val">
+                                        <label for="">Значение</label>
+                                        <input type="radio" name="" id="">
+                                    </div>
+
+                                    <div class="filter-val">
+                                        <label for="">Значение</label>
+                                        <input type="radio" name="" id="">
+                                    </div>
+
+                                    <div class="filter-val">
+                                        <label for="">Значение</label>
+                                        <input type="radio" name="" id="">
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li class="text-center  m-0 mb-3">
+                                <h3 for=""> Название фильтра</h3>
+                                <div class="filter">
+                                    <div class="filter-val">
+                                        <label for="">Значение</label>
+                                        <input type="radio" name="" id="">
+                                    </div>
+
+                                    <div class="filter-val">
+                                        <label for="">Значение</label>
+                                        <input type="radio" name="" id="">
+                                    </div>
+
+                                    <div class="filter-val">
+                                        <label for="">Значение</label>
+                                        <input type="radio" name="" id="">
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li class="text-center  m-0 mb-3">
+                                <h3 for=""> Название фильтра</h3>
+                                <div class="filter">
+                                    <div class="filter-val">
+                                        <label for="">Значение</label>
+                                        <input type="radio" name="" id="">
+                                    </div>
+
+                                    <div class="filter-val">
+                                        <label for="">Значение</label>
+                                        <input type="radio" name="" id="">
+                                    </div>
+
+                                    <div class="filter-val">
+                                        <label for="">Значение</label>
+                                        <input type="radio" name="" id="">
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+
+                        <div class="counter-box">
+                            <div class="def-number-input number-input safari_only mt-5">
+                                <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
+                                        class="minus decrease"><i class="fas fa-minus"></i>
+                                </button>
+                                <input class="quantity" min="0" name="quantity" value="1"
+                                       type="number">
+                                <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
+                                        class="plus increase"><i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="price-box">
+                            <h3 class="title-price"><small>ИТОГ</small></h3>
+                            <p><span> 3.99 </span> X <span>1</span></p>
+                        </div>
+
+                        <div class="section" style="padding-bottom:20px;">
+                            <button class="btn btn-success"><span style="margin-right:20px"
+                                                                  class="glyphicon glyphicon-shopping-cart"
+                                                                  aria-hidden="true"></span> Добавить в корзину
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-9">
+
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                                   aria-controls="home" aria-selected="true">Описание</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                                   aria-controls="profile" aria-selected="false">Отзывы</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                <p style="padding:15px;">
+                                    <small>
+                                        Stay connected either on the phone or the Web with the Galaxy S4 I337 from
+                                        Samsung.
+                                        With 16 GB of memory and a 4G connection, this phone stores precious photos and
+                                        video and lets you upload them to a cloud or social network at blinding-fast
+                                        speed.
+                                        With a 17-hour operating life from one charge, this phone allows you keep in
+                                        touch
+                                        even on the go.
+
+                                        With its built-in photo editor, the Galaxy S4 allows you to edit photos with the
+                                        touch of a finger, eliminating extraneous background items. Usable with most
+                                        carriers, this smartphone is the perfect companion for work or entertainment.
+                                    </small>
+                                </p>
+                                <small>
+                                    <ul>
+                                        <li>Super AMOLED capacitive touchscreen display with 16M colors</li>
+                                        <li>Available on GSM, AT T, T-Mobile and other carriers</li>
+                                        <li>Compatible with GSM 850 / 900 / 1800; HSDPA 850 / 1900 / 2100 LTE; 700 MHz
+                                            Class
+                                            17 / 1700 / 2100 networks
+                                        </li>
+                                        <li>MicroUSB and USB connectivity</li>
+                                        <li>Interfaces with Wi-Fi 802.11 a/b/g/n/ac, dual band and Bluetooth</li>
+                                        <li>Wi-Fi hotspot to keep other devices online when a connection is not
+                                            available
+                                        </li>
+                                        <li>SMS, MMS, email, Push Mail, IM and RSS messaging</li>
+                                        <li>Front-facing camera features autofocus, an LED flash, dual video call
+                                            capability
+                                            and a sharp 4128 x 3096 pixel picture
+                                        </li>
+                                        <li>Features 16 GB memory and 2 GB RAM</li>
+                                        <li>Upgradeable Jelly Bean v4.2.2 to Jelly Bean v4.3 Android OS</li>
+                                        <li>17 hours of talk time, 350 hours standby time on one charge</li>
+                                        <li>Available in white or black</li>
+                                        <li>Model I337</li>
+                                        <li>Package includes phone, charger, battery and user manual</li>
+                                        <li>Phone is 5.38 inches high x 2.75 inches wide x 0.13 inches deep and weighs a
+                                            mere 4.59 oz
+                                        </li>
+                                    </ul>
+                                </small>
+                            </div>
+                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                <p style="padding:15px;">
+                                    <small>
+                                        Stay connected either on the phone or the Web with the Galaxy S4 I337 from
+                                        Samsung.
+                                        With 16 GB of memory and a 4G connection, this phone stores precious photos and
+                                        video and lets you upload them to a cloud or social network at blinding-fast
+                                        speed.
+                                        With a 17-hour operating life from one charge, this phone allows you keep in
+                                        touch
+                                        even on the go.
+
+                                        With its built-in photo editor, the Galaxy S4 allows you to edit photos with the
+                                        touch of a finger, eliminating extraneous background items. Usable with most
+                                        carriers, this smartphone is the perfect companion for work or entertainment.
+                                    </small>
+                                </p>
+                                <small>
+                                    <ul>
+                                        <li>Super AMOLED capacitive touchscreen display with 16M colors</li>
+                                        <li>Available on GSM, AT T, T-Mobile and other carriers</li>
+                                        <li>Compatible with GSM 850 / 900 / 1800; HSDPA 850 / 1900 / 2100 LTE; 700 MHz
+                                            Class
+                                            17 / 1700 / 2100 networks
+                                        </li>
+                                        <li>MicroUSB and USB connectivity</li>
+                                        <li>Interfaces with Wi-Fi 802.11 a/b/g/n/ac, dual band and Bluetooth</li>
+                                        <li>Wi-Fi hotspot to keep other devices online when a connection is not
+                                            available
+                                        </li>
+                                        <li>SMS, MMS, email, Push Mail, IM and RSS messaging</li>
+                                        <li>Front-facing camera features autofocus, an LED flash, dual video call
+                                            capability
+                                            and a sharp 4128 x 3096 pixel picture
+                                        </li>
+                                        <li>Features 16 GB memory and 2 GB RAM</li>
+                                        <li>Upgradeable Jelly Bean v4.2.2 to Jelly Bean v4.3 Android OS</li>
+                                        <li>17 hours of talk time, 350 hours standby time on one charge</li>
+                                        <li>Available in white or black</li>
+                                        <li>Model I337</li>
+                                        <li>Package includes phone, charger, battery and user manual</li>
+                                        <li>Phone is 5.38 inches high x 2.75 inches wide x 0.13 inches deep and weighs a
+                                            mere 4.59 oz
+                                        </li>
+                                    </ul>
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+{% endblock content %}

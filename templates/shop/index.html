@@ -3,12 +3,17 @@
 {#{% load filters %}#}
 {% block content %}
 
-    <div class="main-banner">
+    <div class="banner-wrapper">
+        <div class="main-banner">
+            <img src="{% static 'Shop/img/main-banner.jpg' %}" alt="">
+        </div>
+
         <div class="slogan">
             <h1> Наш магазин</h1>
             <p><span class="rotate">КАЧЕСТВО, ДОСТУПНОСТЬ, УНИКАЛЬНОСТЬ, УСПЕХ</span></p>
         </div>
     </div>
+
     <main class="main-content">
         <section class="category-screen">
             <h2> Категории </h2>
@@ -35,78 +40,88 @@
         </section>
 
         <section class="recomendation-screen">
-            <h2> Mы рекомендуем </h2>
-            <div class="container">
-                <div class="row d-flex justify-content-between">
-                    <div class="owl-carousel">
-                        <div class="product-box">
-                            <div class="card">
-                                <div class="tag-box">
-                                    <span>NEW!</span>
-                                </div>
-                                <div class="prod-wrap">
-                                    <div class="img-box">
-                                        <img src="{% static 'Shop/img/product.jpg' %}" alt="">
+            <div class="main-banner">
+                <img src="{% static 'Shop/img/recomend-banner.png' %}" alt="">
+            </div>
+
+            <div class="content-wrapper">
+                <h2> Mы рекомендуем </h2>
+                <div class="container">
+                    <div class="row d-flex justify-content-between">
+                        <div class="owl-carousel">
+                            <div class="product-box">
+                                <div class="card">
+                                    <div class="tag-box">
+                                        <span>NEW!</span>
                                     </div>
-                                    <div class="content-box">
-                                        <h3>Lorem ipsum dolor sit amet.</h3>
-                                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic nulla, cum
-                                            dicta quod laudantium minima.</p>
-                                        <button>Подробнее</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product-box">
-                            <div class="card">
-                                <div class="tag-box">
-                                    <span>NEW!</span>
-                                </div>
-                                <div class="prod-wrap">
-                                    <div class="img-box">
-                                        <img src="{% static 'Shop/img/product.jpg' %}" alt="">
-                                    </div>
-                                    <div class="content-box">
-                                        <h3>Lorem ipsum dolor sit amet.</h3>
-                                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic nulla, cum
-                                            dicta quod laudantium minima.</p>
-                                        <button>Подробнее</button>
+                                    <div class="prod-wrap">
+                                        <div class="img-box">
+                                            <img src="{% static 'Shop/img/product.jpg' %}" alt="">
+                                        </div>
+                                        <div class="content-box">
+                                            <h3>Lorem ipsum dolor sit amet.</h3>
+                                            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic nulla, cum
+                                                dicta quod laudantium minima.</p>
+                                            <a href="{% url 'shop:product' %}">Подробнее</a>
+
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="product-box">
-                            <div class="card">
-                                <div class="tag-box">
-                                    <span>NEW!</span>
-                                </div>
-                                <div class="prod-wrap">
-                                    <div class="img-box">
-                                        <img src="{% static 'Shop/img/product.jpg' %}" alt="">
+                            <div class="product-box">
+                                <div class="card">
+                                    <div class="tag-box">
+                                        <span>NEW!</span>
                                     </div>
-                                    <div class="content-box">
-                                        <h3>Lorem ipsum dolor sit amet.</h3>
-                                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic nulla, cum
-                                            dicta quod laudantium minima.</p>
-                                        <button>Подробнее</button>
+                                    <div class="prod-wrap">
+                                        <div class="img-box">
+                                            <img src="{% static 'Shop/img/product.jpg' %}" alt="">
+                                        </div>
+                                        <div class="content-box">
+                                            <h3>Lorem ipsum dolor sit amet.</h3>
+                                            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic nulla, cum
+                                                dicta quod laudantium minima.</p>
+                                            <a href="{% url 'shop:product' %}">Подробнее</a>
+
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="product-box">
-                            <div class="card">
-                                <div class="tag-box">
-                                    <span>NEW!</span>
-                                </div>
-                                <div class="prod-wrap">
-                                    <div class="img-box">
-                                        <img src="{% static 'Shop/img/product.jpg' %}" alt="">
+                            <div class="product-box">
+                                <div class="card">
+                                    <div class="tag-box">
+                                        <span>NEW!</span>
                                     </div>
-                                    <div class="content-box">
-                                        <h3>Lorem ipsum dolor sit amet.</h3>
-                                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic nulla, cum
-                                            dicta quod laudantium minima.</p>
-                                        <button>Подробнее</button>
+                                    <div class="prod-wrap">
+                                        <div class="img-box">
+                                            <img src="{% static 'Shop/img/product.jpg' %}" alt="">
+                                        </div>
+                                        <div class="content-box">
+                                            <h3>Lorem ipsum dolor sit amet.</h3>
+                                            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic nulla, cum
+                                                dicta quod laudantium minima.</p>
+                                            <a href="{% url 'shop:product' %}">Подробнее</a>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-box">
+                                <div class="card">
+                                    <div class="tag-box">
+                                        <span>NEW!</span>
+                                    </div>
+                                    <div class="prod-wrap">
+                                        <div class="img-box">
+                                            <img src="{% static 'Shop/img/product.jpg' %}" alt="">
+                                        </div>
+                                        <div class="content-box">
+                                            <h3>Lorem ipsum dolor sit amet.</h3>
+                                            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic nulla, cum
+                                                dicta quod laudantium minima.</p>
+                                            <a href="{% url 'shop:product' %}">Подробнее</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

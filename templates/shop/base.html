@@ -9,13 +9,16 @@
     <title>{{ pagename }}</title>
     <link rel="stylesheet" href="{% static 'Shop/bootstrap-4.5.2-dist/css/bootstrap.css' %}">
     <link rel="stylesheet" href="{% static 'Shop/fontawesome-free-5.15.1-web/css/all.css' %}">
-    <link rel="stylesheet" href="{% static 'Shop/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'Shop/simple-text-rotator-master/simpletextrotator.css' %}">
     <link rel="stylesheet" href="{% static 'Shop/dist/assets/owl.carousel.css' %}">
     <link rel="stylesheet" href="{% static 'Shop/dist/assets/owl.theme.default.css' %}">
     <link rel="stylesheet" href="{% static 'Shop/dist/assets/owl.theme.green.css' %}">
-    <link rel="stylesheet" href="{% static 'Shop/css/mobile_navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'Shop/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'Shop/css/sidebar.css' %}">
+    <link rel="stylesheet" href="{% static 'Shop/css/mobile_navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'Shop/css/fotorama.css' %}">
+    <link rel="stylesheet" href="{% static 'Shop/css/ranger.css' %}">
+
 
 </head>
 <body>
@@ -117,14 +120,15 @@
                     <a class="nav-link" href="#footer">Контакты</a>
                 </li>
                 <li class="nav-item cart-box">
-                    <a class="nav-link" href="{% url 'shop:cart' %}"><i class="fas fa-shopping-cart"></i> <span><sup>0</sup></span></a>
+                    <a class="nav-link" href="{% url 'shop:cart' %}"><i class="fas fa-shopping-cart"></i>
+                        <span><sup>0</sup></span></a>
                 </li>
             </ul>
         </div>
         <button type="button" class="active" id="sidebarCollapse" class="navbar-btn">
-                    <span></span>
-                    <span></span>
-                    <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
         </button>
     </nav>
     <nav id="sidebar" class="active">
@@ -132,26 +136,34 @@
             <li class="active">
                 <a href="{% url 'shop:index' %}"> Главная </a>
             </li>
+
+            <li class="active">
+                <a href="{% url 'shop:about' %}"> О компании </a>
+            </li>
+
             <li>
-                <a href="#">About</a>
-                <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Pages</a>
+                <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Товары</a>
                 <ul class="collapse list-unstyled" id="pageSubmenu">
                     <li>
-                        <a href="#">Page 1</a>
+                        <a href="#subsub" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Категория</a>
+                        <ul class="collapse list-unstyled" id="subsub">
+                            <li><a href="">1</a></li>
+                            <li><a href="">2</a></li>
+                            <li><a href="">3</a></li>
+                        </ul>
                     </li>
                     <li>
-                        <a href="#">Page 2</a>
-                    </li>
-                    <li>
-                        <a href="#">Page 3</a>
+                        <a href="#subsubыги" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Категория</a>
+                        <ul class="collapse list-unstyled" id="ыгиsubsub">
+                            <li><a href="">1</a></li>
+                            <li><a href="">2</a></li>
+                            <li><a href="">3</a></li>
+                        </ul>
                     </li>
                 </ul>
             </li>
             <li>
-                <a href="#">Portfolio</a>
-            </li>
-            <li>
-                <a href="#">Contact</a>
+                <a href="#">Контакты</a>
             </li>
         </ul>
 
@@ -171,9 +183,9 @@
 
 <footer class="main-footer" id="footer">
     <div class="container">
-        <div class="row">
-            <div class="col-4">
-                <h3>Контакты</h3>
+        <div class="row d-flex align-content-start flex-md-wrap-reverse">
+            <div class="col-lg-4 col-md-10 col-sm-10 ml-auto mr-auto">
+                <h3 class="mt-5">Контакты</h3>
                 <p>
                     Телефон: <br><span class="phone"> 332-3223-2332 </span>
                     <br>
@@ -190,8 +202,8 @@
                     <li><a href="#"> <img src="{% static 'Shop/img/facebook.png' %}" alt=""></a></li>
                 </ul>
             </div>
-            <div class="col-4">
-                <h3>Обратная связь</h3>
+            <div class="col-lg-4 col-md-10 col-sm-10 ml-auto mr-auto">
+                <h3 class="mt-5">Обратная связь</h3>
 
                 <form action="" class="callback-form">
                     <input type="text" name="" id="" placeholder="Ваше имя">
@@ -199,8 +211,8 @@
                     <button type="submit" class="callback-btn"> Отправить</button>
                 </form>
             </div>
-            <div class="col-4">
-                <h3>Часто задаваемые вопросы</h3>
+            <div class="col-lg-4 col-md-10 col-sm-10 ml-auto mr-auto">
+                <h3 class="mt-5">Часто задаваемые вопросы</h3>
 
                 <div class="questions-box">
                     <div class="question">
@@ -244,8 +256,12 @@
 <script type="text/javascript"
         src="{% static 'Shop/simple-text-rotator-master/jquery.simple-text-rotator.js' %}"></script>
 <script src="{% static 'Shop/bootstrap-4.5.2-dist/js/bootstrap.js' %}"></script>
-<script type="text/javascript" src="{% static 'Shop/js/main.js' %}"></script>
 <script src="{% static 'Shop/dist/owl.carousel.js' %}"></script>
+<script src="{% static 'Shop/js/fotorama.js' %}"></script>
+<script type="text/javascript" src="{% static 'Shop/js/main.js' %}"></script>
 <script src="{% static 'Shop/js/sidebar.js' %}"></script>
+<script src="{% static 'Shop/js/ranger.js' %}"></script>
+
+
 </body>
 </html>

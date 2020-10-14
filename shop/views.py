@@ -25,7 +25,23 @@ def cart_page(request):
 
 def about_page(request):
     content = {
-        'pagename': 'Корзина',
+        'pagename': 'О компании',
         'type': 'sub-head'
     }
     return render(request, 'shop/about.html', content)
+
+
+def product_page(request):
+    content = {
+        'pagename': 'Продукт',
+        'type': 'sub-head'
+    }
+    return render(request, 'shop/product-details.html', content)
+
+
+def shop_page(request):
+    content = {
+        'pagename': 'Категория',
+        'type': 'sub-head'
+    }
+    return render(request, 'shop/shop.html', content)
