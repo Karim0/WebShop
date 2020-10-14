@@ -1,0 +1,213 @@
+{% extends 'Shop/base.html' %}
+{% load static %}
+{#{% load filters %}#}
+{% block content %}
+
+
+    <div class="cart-banner">
+        <img src="{% static 'Shop/img/cart-banner.jpg' %}" alt="" class="page-banner">
+        <div class="page-info">
+            <h1>Моя корзина</h1>
+            <p><a href="">Главная</a> / <a href="">Корзина</a></p>
+        </div>
+    </div>
+
+    <main class="cart-main">
+        <section class="shopping-cart p-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="mb-2">
+                            <form>
+                                <div class="form-group">
+                                    <label for="full_name">Ваше имя</label>
+                                    <input type="text" class="form-control" id="full_name" name="full_name"
+                                           placeholder="ФИО">
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone">Номер телефона</label>
+                                    <input type="text" class="form-control" id="phone" name="phone"
+                                           placeholder=" 8 777-777-77-77">
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Почтовый адрес</label>
+                                    <input type="email" class="form-control" id="email" name="email"
+                                           placeholder="email@example.com">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="courier"> Курьером </label>
+                                    <input type="radio" name="delivery" id="courier">
+
+                                    <label for="selfdel"> Самовывоз </label>
+                                    <input type="radio" name="delivery" id="selfdel">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="exampleFormControlSelect1">Выберите город</label>
+                                    <select class="form-control" id="exampleFormControlSelect1">
+                                        <option>Алматы</option>
+                                        <option>Нур-Султан</option>
+                                        <option>Шымкент</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="address">Адрес</label>
+                                    <input type="text" class="form-control" id="address" name="address"
+                                           placeholder="улица, дом, кв">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="mb-3">
+                            <div class="pt-4 wish-list">
+                                <h2 class="mb-4">В Корзине (<span>2</span>)</h2>
+                                <div class="cart-item">
+                                    <div class="row mb-4">
+                                        <div class="col-md-5 col-lg-3 col-xl-3">
+                                            <div class="view zoom overlay z-depth-1 rounded mb-3 mb-md-0">
+                                                <img class="img-fluid w-100"
+                                                     src="{% static 'Shop/img/product.jpg' %}"
+                                                     alt="Sample">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-7 col-lg-9 col-xl-9">
+                                            <div class="cart-item-info">
+                                                <div class="d-flex justify-content-between">
+                                                    <div>
+                                                        <h3>Название товара</h3>
+                                                        <p class="mb-3 text-muted text-uppercase small">Тип:
+                                                            сковорода</p>
+                                                        <p class="mb-2 text-muted text-uppercase small">Цвет: синий</p>
+                                                        <p class="mb-3 text-muted text-uppercase small">Размер: M</p>
+                                                    </div>
+                                                    <div class="counter-box">
+                                                        <div class="def-number-input number-input safari_only mb-0 w-100">
+                                                            <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
+                                                                    class="minus decrease"><i class="fas fa-minus"></i>
+                                                            </button>
+                                                            <input class="quantity" min="0" name="quantity" value="1"
+                                                                   type="number">
+                                                            <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
+                                                                    class="plus increase"><i class="fas fa-plus"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <div>
+                                                        <a href="#!" type="button"
+                                                           class="card-link-secondary small text-uppercase mr-3"><i
+                                                                class="fas fa-trash-alt mr-1"></i> Убрать из корзины
+                                                        </a>
+                                                    </div>
+                                                    <p class="mb-0"><span><strong id="summary">$17.99</strong></span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="mb-4">
+                                <div class="cart-item">
+                                    <div class="row mb-4">
+                                        <div class="col-md-5 col-lg-3 col-xl-3">
+                                            <div class="view zoom overlay z-depth-1 rounded mb-3 mb-md-0">
+                                                <img class="img-fluid w-100"
+                                                     src="{% static 'Shop/img/product.jpg' %}"
+                                                     alt="Sample">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-7 col-lg-9 col-xl-9">
+                                            <div class="cart-item-info">
+                                                <div class="d-flex justify-content-between">
+                                                    <div>
+                                                        <h3>Название товара</h3>
+                                                        <p class="mb-3 text-muted text-uppercase small">Тип:
+                                                            сковорода</p>
+                                                        <p class="mb-2 text-muted text-uppercase small">Цвет: синий</p>
+                                                        <p class="mb-3 text-muted text-uppercase small">Размер: M</p>
+                                                    </div>
+                                                    <div class="counter-box">
+                                                        <div class="def-number-input number-input safari_only mb-0 w-100">
+                                                            <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
+                                                                    class="minus decrease"><i class="fas fa-minus"></i>
+                                                            </button>
+                                                            <input class="quantity" min="0" name="quantity" value="1"
+                                                                   type="number">
+                                                            <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
+                                                                    class="plus increase"><i class="fas fa-plus"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <div>
+                                                        <a href="#!" type="button"
+                                                           class="card-link-secondary small text-uppercase mr-3"><i
+                                                                class="fas fa-trash-alt mr-1"></i> Убрать из корзины
+                                                        </a>
+                                                    </div>
+                                                    <p class="mb-0"><span><strong id="summary">$17.99</strong></span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="mb-3">
+                            <div class="pt-4">
+
+                                <h2 class="mb-3">ИТОГ</h2>
+
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+                                        Сумма заказа
+                                        <span>$25.98</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                        Доставка
+                                        <span> самовывоз </span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
+                                        <div>
+                                            <strong> Общая сумма </strong>
+                                        </div>
+                                        <span><strong>$53.98</strong></span>
+                                    </li>
+                                </ul>
+                                <button type="button" class="btn btn-primary btn-block"> ЗАКАЗАТЬ </button>
+                            </div>
+                        </div>
+
+{#                        <div class="mb-3">#}
+{#                            <div class="pt-4">#}
+{#                                <a class="dark-grey-text d-flex justify-content-between" data-toggle="collapse"#}
+{#                                   href="#collapseExample"#}
+{#                                   aria-expanded="false" aria-controls="collapseExample">#}
+{#                                    Добавить купон#}
+{#                                    <span><i class="fas fa-chevron-down pt-1"></i></span>#}
+{#                                </a>#}
+{#                                <div class="collapse" id="collapseExample">#}
+{#                                    <div class="mt-3">#}
+{#                                        <div class="md-form md-outline mb-0">#}
+{#                                            <input type="text" id="discount-code" class="form-control font-weight-light"#}
+{#                                                   placeholder="Enter discount code">#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+
+{% endblock content %}

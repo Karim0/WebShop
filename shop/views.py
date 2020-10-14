@@ -8,6 +8,24 @@ from .models import *
 
 
 def home_page(request):
-    content = {}
-    return render(request, 'Shop/index.html', content)
+    content = {
+        'pagename': 'Главная страница',
+        'type': ''
+    }
+    return render(request, 'shop/index.html', content)
 
+
+def cart_page(request):
+    content = {
+        'pagename': 'Корзина',
+        'type': 'sub-head'
+    }
+    return render(request, 'shop/card-page.html', content)
+
+
+def about_page(request):
+    content = {
+        'pagename': 'Корзина',
+        'type': 'sub-head'
+    }
+    return render(request, 'shop/about.html', content)
