@@ -14,36 +14,30 @@
     <link rel="stylesheet" href="{% static 'Shop/dist/assets/owl.carousel.css' %}">
     <link rel="stylesheet" href="{% static 'Shop/dist/assets/owl.theme.default.css' %}">
     <link rel="stylesheet" href="{% static 'Shop/dist/assets/owl.theme.green.css' %}">
+    <link rel="stylesheet" href="{% static 'Shop/css/mobile_navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'Shop/css/sidebar.css' %}">
 
 </head>
 <body>
 <header class="main-header {{ type }}">
     <nav class="navbar navbar-expand-lg main-navigation">
-
         <div class="navbar-brand brand-box">
-            <a href="#"><img src="{% static 'Shop/img/logo.png' %}" alt="" class="img-fluid"></a>
+            <a href="{% url 'shop:index' %}"><img src="{% static 'Shop/img/logo.png' %}" alt="" class="img-fluid"></a>
         </div>
-
-        <button class="navbar-toggler burger-btn" type="button" data-toggle="collapse"
-                data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"><i class="fas fa-bars"></i></span>
-        </button>
-
-        <div class="collapse navbar-collapse nav-box" id="navbarSupportedContent">
+        <div class="nav-box">
             <ul class="navbar-nav ml-auto">
                 <!-- <li class="nav-item mr-auto callback-box">
                     <a class="whatsapp-ref"><i class="fab fa-whatsapp"></i> +1-888 705 770</a>
                     <a class="callback-btn" href="#footer"> Обратная связь</a>
                 </li>	 -->
                 <li class="nav-item active ml-auto">
-                    <a class="nav-link" href="#">Главная</a>
+                    <a class="nav-link" href="{% url 'shop:index' %}">Главная</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">О компании</a>
+                    <a class="nav-link" href="{% url 'shop:about' %}">О компании</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Товары
                     </a>
@@ -51,7 +45,7 @@
                         <div class="head-menu-wrap">
                             <div class="cat-row">
                                 <div class="menu-cat">
-                                    <a class="" href="#">Еда</a>
+                                    <a class="" href="{% url 'shop:index' %}">Еда</a>
                                     <div class="dropdown-divider"></div>
                                     <ul class="sub-cats">
                                         <li><a href=""> Lorem, ipsum.</a></li>
@@ -59,7 +53,7 @@
                                 </div>
 
                                 <div class="menu-cat">
-                                    <a class="" href="#">Посуда</a>
+                                    <a class="" href="{% url 'shop:index' %}">Посуда</a>
                                     <div class="dropdown-divider"></div>
                                     <ul class="sub-cats">
                                         <li><a href=""> Lorem, ipsum.</a></li>
@@ -71,7 +65,7 @@
                                 </div>
 
                                 <div class="menu-cat">
-                                    <a class="" href="#">Бытовая Химия</a>
+                                    <a class="" href="{% url 'shop:index' %}">Бытовая Химия</a>
                                     <div class="dropdown-divider"></div>
                                     <ul class="sub-cats">
                                         <li><a href=""> Lorem, ipsum.</a></li>
@@ -82,7 +76,7 @@
 
                             <div class="cat-row">
                                 <div class="menu-cat">
-                                    <a class="" href="#">БАДЫ</a>
+                                    <a class="" href="{% url 'shop:index' %}">БАДЫ</a>
                                     <div class="dropdown-divider"></div>
                                     <ul class="sub-cats">
                                         <li><a href=""> Lorem, ipsum.</a></li>
@@ -96,7 +90,7 @@
                                 </div>
 
                                 <div class="menu-cat">
-                                    <a class="" href="#">Косметика</a>
+                                    <a class="" href="{% url 'shop:index' %}">Косметика</a>
                                     <div class="dropdown-divider"></div>
                                     <ul class="sub-cats">
                                         <li><a href=""> Lorem, ipsum.</a></li>
@@ -106,7 +100,7 @@
                                 </div>
 
                                 <div class="menu-cat">
-                                    <a class="" href="#">Аксессуары</a>
+                                    <a class="" href="{% url 'shop:index' %}">Аксессуары</a>
                                     <div class="dropdown-divider"></div>
                                     <ul class="sub-cats">
                                         <li><a href=""> Lorem, ipsum.</a></li>
@@ -123,10 +117,52 @@
                     <a class="nav-link" href="#footer">Контакты</a>
                 </li>
                 <li class="nav-item cart-box">
-                    <a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i> <span><sup>0</sup></span></a>
+                    <a class="nav-link" href="{% url 'shop:cart' %}"><i class="fas fa-shopping-cart"></i> <span><sup>0</sup></span></a>
                 </li>
             </ul>
         </div>
+        <button type="button" class="active" id="sidebarCollapse" class="navbar-btn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+        </button>
+    </nav>
+    <nav id="sidebar" class="active">
+        <ul class="list-unstyled components">
+            <li class="active">
+                <a href="{% url 'shop:index' %}"> Главная </a>
+            </li>
+            <li>
+                <a href="#">About</a>
+                <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Pages</a>
+                <ul class="collapse list-unstyled" id="pageSubmenu">
+                    <li>
+                        <a href="#">Page 1</a>
+                    </li>
+                    <li>
+                        <a href="#">Page 2</a>
+                    </li>
+                    <li>
+                        <a href="#">Page 3</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">Portfolio</a>
+            </li>
+            <li>
+                <a href="#">Contact</a>
+            </li>
+        </ul>
+
+        <ul class="list-unstyled CTAs">
+            <li>
+                <a href="https://bootstrapious.com/tutorial/files/sidebar.zip" class="download">Download source</a>
+            </li>
+            <li>
+                <a href="https://bootstrapious.com/p/bootstrap-sidebar" class="article">Back to article</a>
+            </li>
+        </ul>
     </nav>
 </header>
 
@@ -210,5 +246,6 @@
 <script src="{% static 'Shop/bootstrap-4.5.2-dist/js/bootstrap.js' %}"></script>
 <script type="text/javascript" src="{% static 'Shop/js/main.js' %}"></script>
 <script src="{% static 'Shop/dist/owl.carousel.js' %}"></script>
+<script src="{% static 'Shop/js/sidebar.js' %}"></script>
 </body>
 </html>

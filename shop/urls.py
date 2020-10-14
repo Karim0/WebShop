@@ -3,7 +3,7 @@ from django.conf.urls import url
 
 from . import views
 
-app_name = 'Shop'
+app_name = 'shop'
 
 urlpatterns = [
     path('', views.home_page, name='index'),
