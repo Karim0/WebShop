@@ -1,0 +1,413 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>jQuery Super Easy Text Rotator by Pete R. | The Pete Design</title>
+	<meta name="title" content="jQuery Super Easy Text Rotator by Pete R. | The Pete Design" />
+	<meta name="description" content="Add a fully customizable Path-like wheel menu button to your website. Created by Pete R., Founder of BucketListly" />
+	<meta name="author" content="Pete R.">
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Pacifico:400' rel='stylesheet' type='text/css'>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  <script type="text/javascript" src="jquery.simple-text-rotator.js"></script>
+  <style>
+    html {
+      height: 100%;
+    }
+    body {
+      background: #f4eedf;
+      padding: 0;
+      text-align: center;
+      font-family: 'open sans';
+      position: relative;
+      margin: 0;
+      height: 100%;
+    }
+    
+    .wrapper {
+    	height: auto !important;
+    	height: 100%;
+    	margin: 0 auto; 
+    	overflow: hidden;
+    }
+    
+    a {
+      text-decoration: none;
+    }
+    
+    
+    h1, h2 {
+      width: 100%;
+      float: left;
+    }
+    h1 {
+      margin-top: 100px;
+      color: #555;
+      margin-bottom: 5px;
+    }
+    h2 {
+      color: #999;
+      font-weight: 100;
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+    
+    .pointer {
+      color: #9b59b6;
+      font-family: 'Pacifico', cursive;
+      font-size: 30px;
+      margin-top: 15px;
+    }
+    pre {
+      margin: 80px auto;
+    }
+    pre code {
+      padding: 35px;
+      border-radius: 5px;
+      font-size: 15px;
+      background: rgba(0,0,0,0.1);
+      border: rgba(0,0,0,0.05) 5px solid;
+      max-width: 500px;
+    }
+
+
+    .main {
+      float: left;
+      width: 100%;
+      margin: 0 auto;
+    }
+    
+    .main h1 {
+      padding:150px 50px;
+      float: left;
+      width: 100%;
+      font-size: 45px;
+      box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      font-weight: 100;
+      color: white;
+      margin: 0;
+    }
+
+    .main h1.demo1 {
+      background: #1ABC9C;
+    }
+    .main h1.demo2 {
+      background: #e74c3c;
+    }
+    .main h1.demo3 {
+      background: #e67e22;
+    }
+    .main h1.demo4 {
+      background: #f1c40f;
+    }
+    .main h1.demo5 {
+      background: #34495e;
+    }
+    
+    .reload, .btn{
+      display: inline-block;
+      border: 4px solid #FFF;
+      border-radius: 5px;
+      -moz-border-radius: 5px;
+      -webkit-border-radius: 5px;
+      background: rgba(255,255,255, 0.75);
+      display: inline-block;
+      line-height: 100%;
+      padding: 0.7em;
+      text-decoration: none;
+      opacity: 0.7;
+      color: #555;
+      width: 100px;
+      line-height: 140%;
+      font-size: 17px;
+      font-family: open sans;
+      font-weight: bold;
+    }
+    .reload:hover, .btn:hover {
+      background: white;
+    }
+    .btn {
+      width: 200px;
+    }
+    .btns {
+      width: 230px;
+      margin: 50px auto;
+    }
+    .credit {
+      text-align: center;
+      color: #999;
+      padding: 10px;
+      margin: 0 0 40px 0;
+      background: rgba(255,255,255,0.25);
+      float: left;
+      width: 100%;
+    }
+    .credit a {
+      color: #555;
+      text-decoration: none;
+      font-weight: bold;
+    }body .one .bsa_it_ad { background: transparent; border: none; font-family: inherit; padding: 0 15px 0 10px; margin: 0; text-align: center; }
+body .one .bsa_it_ad:hover img { -moz-box-shadow: 0 0 3px #000; -webkit-box-shadow: 0 0 3px #000; box-shadow: 0 0 3px #000; }
+body .one .bsa_it_ad .bsa_it_i { display: block; padding: 0; float: none; margin: 0 0 5px; }
+body .one .bsa_it_ad .bsa_it_i img { padding: 0; border: none; }
+body .one .bsa_it_ad .bsa_it_t { padding: 6px 0; }
+body .one .bsa_it_ad .bsa_it_d { padding: 0; font-size: 12px; color: #333; }
+body .one .bsa_it_p { display: none; }
+body #bsap_aplink, body #bsap_aplink:hover { display: block; font-size: 10px; margin: 12px 15px 0; text-align: center; }
+
+.ads {
+  position: fixed;
+  left: 10px;
+  bottom: 10px;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  z-index: 99;
+  text-align: center;
+  max-width: 200px;
+}
+
+.ads a {
+  color: black;
+}
+
+.ad-header {
+  margin: 0 0 -2px 0px;
+  background: white;
+  border-radius: 3px 3px 0 0;
+  overflow: hidden;
+}
+.ad-header a {
+  float: right;
+  border-left: 1px solid #f3f3f3;
+  padding:10px;
+  line-height: 100%;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-align: center;
+  color: black;
+}
+.ad-header a:hover {
+  background: #eee;
+}
+
+.ads .promo {
+  position: absolute;
+  top: -195px;
+  left: 0;
+}
+
+.message {
+  max-width: 550px;
+  margin: 50px auto 0;
+  padding: 14px;
+  background: #72EC80;
+  color: #0E530E;
+  font-weight: normal;
+  font-style: normal;
+  border-radius: 3px;
+}
+
+.success-message a{
+  color: black;
+  border-bottom: 1px dotted #000;
+}
+
+.success-message {
+  background: #72EC80;
+  color: #0E530E;
+}
+
+.error-message a{
+  color: #FFF;
+  border-bottom: 1px dotted #fff;
+}
+
+.error-message {
+  background: #EC7272;
+  color: #FFF;
+}
+
+.socials {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.1);
+  width: 100%;
+  float: left;
+  padding: 9px 5px 5px;
+  margin: 0 0 60px 0;
+}
+.socials > * {
+  display: inline !important;
+}
+.socials .fb-like {
+  top: -5px;
+  min-width: 85px;
+  text-align: left;
+}
+.socials .fb-like > span {
+  vertical-align: top;
+}
+.socials .twitter-share-button {
+  width: 85px  !important;
+}
+	  
+#carbonads {
+  --width: 180px;
+  --font-size: 14px;
+}
+
+#carbonads {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  display: block;
+  overflow: hidden;
+  margin-bottom: 20px;
+  max-width: var(--width);
+  border-radius: 4px;
+  text-align: center;
+  box-shadow: 0 0 0 1px hsla(0, 0%, 0%, .1);
+  background-color: hsl(0, 0%, 98%);
+  font-size: var(--font-size);
+  line-height: 1.5;
+}
+
+#carbonads a {
+  color: inherit;
+  text-decoration: none;
+}
+
+#carbonads a:hover {
+  color: inherit;
+}
+
+#carbonads span {
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+
+.carbon-img {
+  display: block;
+  margin-bottom: 8px;
+  max-width: var(--width);
+  line-height: 1;
+}
+
+.carbon-img img {
+  display: block;
+  margin: 0 auto;
+  max-width: var(--width) !important;
+  width: var(--width);
+  height: auto;
+}
+
+.carbon-text {
+  display: block;
+  padding: 0 1em 8px;
+}
+
+.carbon-poweredby {
+  display: block;
+  padding: 10px var(--font-size);
+  background: repeating-linear-gradient(-45deg, transparent, transparent 5px, hsla(0, 0%, 0%, .025) 5px, hsla(0, 0%, 0%, .025) 10px) hsla(203, 11%, 95%, .4);
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  font-weight: 600;
+  font-size: 9px;
+  line-height: 0;
+}
+
+@media only screen and (min-width: 320px) and (max-width: 759px) {
+  #carbonads {
+    float: none;
+    margin: 0 auto;
+    max-width: 330px;
+  }
+  #carbonads span {
+    position: relative;
+  }
+  #carbonads > span {
+    max-width: none;
+  }
+  .carbon-img {
+    float: left;
+    margin: 0;
+  }
+
+  .carbon-img img {
+    max-width: 130px !important;
+  }
+  .carbon-text {
+    float: left;
+    margin-bottom: 0;
+    padding: 8px 20px;
+    text-align: left;
+    max-width: calc(100% - 130px - 3em);
+  }
+  .carbon-poweredby {
+    left: 130px;
+    bottom: 0;
+    display: block;
+    width: 100%;
+  }}}
+	</style>
+	<link rel="stylesheet" type="text/css" href="simpletextrotator.css" />
+	<script>
+	  $(document).ready(function(){
+			$(".demo1 .rotate").textrotator({
+        animation: "fade",
+        speed: 1000
+      });
+      $(".demo2 .rotate").textrotator({
+        animation: "flip",
+        speed: 1250
+      });
+      $(".demo3 .rotate").textrotator({
+        animation: "flipCube",
+        speed: 1500
+      });
+      $(".demo4 .rotate").textrotator({
+        animation: "flipUp",
+        speed: 1750
+      });
+      $(".demo5 .rotate").textrotator({
+        animation: "spin",
+        speed: 2000
+      });
+		});
+		
+	</script>
+</head>
+<body>
+  <div class="wrapper">
+	  <!-- AdPacks.com Zone Code -->
+    <div class="ads">
+    <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CKYI5KJE&placement=wwwthepetedesigncom" id="_carbonads_js"></script>
+    </div>
+    <!-- End AdPacks.com Zone Code -->
+    <h1>jQuery Super Simple Text Rotator by Pete R.</h1>
+    <h2>Add a super simple rotating text to your website with little to no markup</h2>
+    <p class="credit">Created by <a href="http://www.thepetedesign.com">Pete R.</a>, Founder of <a href="http://www.bucketlistly.com" target="_blank">BucketListly</a></p>
+    <p class="pointer">Turn this:</p>
+    <pre><code>Super &lt;span class="rotate"&gt;Simple, Customizable, Light Weight, Easy&lt;/span&gt; Text Rotator with Style</code></pre>
+	  <p class="pointer">into these..</p>
+	  <div class="main">
+	    <h1 class="demo1">Super <span class="rotate">Simple, Customizable, Light Weight, Easy</span> Text Rotator with Style</h1>
+	    <h1 class="demo2">Super <span class="rotate">Simple, Customizable, Light Weight, Easy</span> Text Rotator with Style</h1>
+	    <h1 class="demo3">Super <span class="rotate">Simple, Customizable, Light Weight, Easy</span> Text Rotator with Style</h1>
+	    <h1 class="demo4">Super <span class="rotate">Simple, Customizable, Light Weight, Easy</span> Text Rotator with Style</h1>
+	    <h1 class="demo5">Super <span class="rotate">Simple, Customizable, Light Weight, Easy</span> Text Rotator with Style</h1>
+    </div>
+  </div><!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-11278966-3"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-11278966-3');
+</script>
+
+</body>
+</html>
