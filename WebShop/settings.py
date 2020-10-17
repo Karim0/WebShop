@@ -71,6 +71,10 @@ TEMPLATES = [
                 'django.template.loaders.filesystem.Loader',
                 'django.template.loaders.app_directories.Loader',
             ],
+            'libraries': {
+                'temp_filter': 'shop.templatetags.temp_filter',
+
+            }
         },
     },
 ]
@@ -126,7 +130,6 @@ ADMIN_TOOLS_INDEX_DASHBOARD = 'shop.dashboard.CustomIndexDashboard'
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
-
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
@@ -134,6 +137,5 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MEDIA_URL = '/media/'
-
 
 # CART_SESSION_ID = 'shop'

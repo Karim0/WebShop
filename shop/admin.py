@@ -3,6 +3,11 @@ from shop.models import *
 from nested_admin.nested import NestedStackedInline, NestedModelAdmin, NestedTabularInline
 
 
+class ProductPhotoAdmin(NestedTabularInline):
+    model = ProductPhoto
+    extra = 0
+
+
 class ValCharAdmin(NestedTabularInline):
     model = ProdVal
     extra = 0
@@ -26,7 +31,7 @@ class ProdCharAdmin(NestedTabularInline):
 
 class ProductAdmin(NestedModelAdmin):
     model = Product
-    inlines = [ProdCharAdmin]
+    inlines = [ProdCharAdmin, ProductPhotoAdmin]
 
 
 # Register your models here.

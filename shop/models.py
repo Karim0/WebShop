@@ -20,6 +20,13 @@ class Subcategory(models.Model):
         return f'{self.name}: {self.category.name}'
 
 
+class Property(models.Model):
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+
+
 class Product(models.Model):
     name = models.CharField(max_length=255)
     subcategory = models.ForeignKey(Subcategory, on_delete=models.CASCADE)
@@ -53,16 +60,10 @@ class ProductChar(models.Model):
     price = models.IntegerField()
     sold = models.IntegerField()
     amount = models.IntegerField()
+    props = models.ManyToManyField(Property, through='ProdVal')
 
     def __str__(self):
         return f'prod - {self.prod.name}, price - {self.price}, sold - {self.sold}, amount - {self.amount}'
-
-
-class Property(models.Model):
-    name = models.CharField(max_length=255)
-
-    def __str__(self):
-        return self.name
 
 
 class ProdVal(models.Model):

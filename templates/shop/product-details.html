@@ -1,13 +1,12 @@
 {% extends 'Shop/base.html' %}
 {% load static %}
-{#{% load filters %}#}
+{% load temp_filter %}
 {% block content %}
 
     <div class="cart-banner">
         <img src="{% static 'Shop/img/cart-banner.jpg' %}" alt="" class="page-banner">
         <div class="page-info">
-            <h1>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Autem molestias voluptatum
-                necessitatibus.</h1>
+            <h1>{{ product.name }}</h1>
             <p><a class="blue" href="{% url 'shop:index' %}">Категория</a> / <span>Детали товара</span></p>
         </div>
     </div>
@@ -22,75 +21,29 @@
                              data-arrows="false"
                              data-click="true"
                              data-swipe="true">
-                            <img src="{% static 'Shop/img/product.jpg' %}">
-                            <img src="{% static 'Shop/img/product.jpg' %}">
-                            <img src="{% static 'Shop/img/product.jpg' %}">
+                            {% for p in product.productphoto_set.all %}
+                                <img src="{{ p.img.url }}" alt='{{ p.alt }}'>
+                            {% endfor %}
                         </div>
                     </div>
                     <div class="col-lg-6 filters-box" style="border:0px solid gray">
-                        <h2 class="prod-name">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Autem molestias
-                            voluptatum necessitatibus.</h2>
+                        <h2 class="prod-name">{{ product.name }}</h2>
 
                         <ul class="filters mt-5">
-                            <li class="text-center m-0 mb-3">
-                                <h3 for=""> Название фильтра</h3>
-                                <div class="filter">
-                                    <div class="filter-val">
-                                        <label for="">Значение</label>
-                                        <input type="radio" name="" id="">
-                                    </div>
+                            {% for pr in prop %}
+                                <li class="text-center m-0 mb-3">
+                                    <h3 for=""> {{ pr }}</h3>
+                                    <div class="filter">
+                                        {% for pv in prop_val|get_val_map:pr %}
+                                            <div class="filter-val">
+                                                <label for="">{{ pv }}</label>
+                                                <input type="radio" name="" id="">
+                                            </div>
+                                        {% endfor %}
 
-                                    <div class="filter-val">
-                                        <label for="">Значение</label>
-                                        <input type="radio" name="" id="">
                                     </div>
-
-                                    <div class="filter-val">
-                                        <label for="">Значение</label>
-                                        <input type="radio" name="" id="">
-                                    </div>
-                                </div>
-                            </li>
-
-                            <li class="text-center  m-0 mb-3">
-                                <h3 for=""> Название фильтра</h3>
-                                <div class="filter">
-                                    <div class="filter-val">
-                                        <label for="">Значение</label>
-                                        <input type="radio" name="" id="">
-                                    </div>
-
-                                    <div class="filter-val">
-                                        <label for="">Значение</label>
-                                        <input type="radio" name="" id="">
-                                    </div>
-
-                                    <div class="filter-val">
-                                        <label for="">Значение</label>
-                                        <input type="radio" name="" id="">
-                                    </div>
-                                </div>
-                            </li>
-
-                            <li class="text-center  m-0 mb-3">
-                                <h3 for=""> Название фильтра</h3>
-                                <div class="filter">
-                                    <div class="filter-val">
-                                        <label for="">Значение</label>
-                                        <input type="radio" name="" id="">
-                                    </div>
-
-                                    <div class="filter-val">
-                                        <label for="">Значение</label>
-                                        <input type="radio" name="" id="">
-                                    </div>
-
-                                    <div class="filter-val">
-                                        <label for="">Значение</label>
-                                        <input type="radio" name="" id="">
-                                    </div>
-                                </div>
-                            </li>
+                                </li>
+                            {% endfor %}
                         </ul>
 
                         <div class="counter-box">

@@ -1,145 +1,252 @@
-/* This line can be removed it was just for display on CodePen: */
-
-
-.slider-labels {
-  margin-top: 10px;
+body {
+    font-family: 'Karla', 'Arial', sans-serif;
+    font-weight: 500;
+    background: #fff;
 }
 
-/* Functional styling;
- * These styles are required for noUiSlider to function.
- * You don't need to change these rules to apply your design.
- */
-.noUi-target,.noUi-target * {
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -ms-touch-action: none;
-  touch-action: none;
-  -ms-user-select: none;
-  -moz-user-select: none;
-  user-select: none;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
+p {
+    padding: 0;
+    margin: 0;
 }
 
-.noUi-target {
-  position: relative;
-  direction: ltr;
+.wrapper-price {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-.noUi-base {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  z-index: 1;
-/* Fix 401 */
+.wrapper-price .filter-price {
+    width: 220px;
+    border: 0;
+    padding: 0;
+    margin: 0;
 }
 
-.noUi-origin {
-  position: absolute;
-  right: 0;
-  top: 0;
-  left: 0;
-  bottom: 0;
+.wrapper-price .price-title {
+    position: relative;
+    color: #fff;
+    font-size: 14px;
+    line-height: 1.2em;
+    font-weight: 400;
+    background: #d58e32;
+    padding: 10px;
 }
 
-.noUi-handle {
-  position: relative;
-  z-index: 1;
+.wrapper-price .price-container {
+    display: flex;
+    border: 1px solid #ccc;
+    padding: 5px;
+    width: 100%;
 }
 
-.noUi-stacking .noUi-handle {
-/* This class is applied to the lower origin when
-   its values is > 50%. */
-  z-index: 10;
+.wrapper-price .price-field {
+    position: relative;
+    width: 100%;
+    height: 36px;
+    box-sizing: border-box;
+    padding-top: 15px;
+    padding-left: 0px;
 }
 
-.noUi-state-tap .noUi-origin {
-  -webkit-transition: left 0.3s,top .3s;
-  transition: left 0.3s,top .3s;
+.wrapper-price .price-field input[type=range] {
+    position: absolute;
 }
 
-.noUi-state-drag * {
-  cursor: inherit !important;
+/* Reset style for input range */
+
+.wrapper-price .price-field input[type=range] {
+    width: 100%;
+    height: 7px;
+    /*border: 1px solid #000;*/
+    outline: 0;
+    box-sizing: border-box;
+    /*border-radius: 5px;*/
+    pointer-events: none;
+    -webkit-appearance: none;
 }
 
-/* Painting and performance;
- * Browsers can paint handles in their own layer.
- */
-.noUi-base,.noUi-handle {
-  -webkit-transform: translate3d(0,0,0);
-  transform: translate3d(0,0,0);
+.wrapper-price .price-field input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
 }
 
-/* Slider size and handle placement;
- */
-.noUi-horizontal {
-  height: 4px;
+.wrapper-price .price-field input[type=range]:active,
+.wrapper-price .price-field input[type=range]:focus {
+    outline: 0;
 }
 
-.noUi-horizontal .noUi-handle {
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  left: -7px;
-  top: -7px;
-  background-color: #345DBB;
+.wrapper-price .price-field input[type=range]::-ms-track {
+    width: 188px;
+    height: 2px;
+    border: 0;
+    outline: 0;
+    box-sizing: border-box;
+    border-radius: 5px;
+    pointer-events: none;
+    background: transparent;
+    border-color: transparent;
+    color: red;
+    border-radius: 5px;
 }
 
-/* Styling;
- */
-.noUi-background {
-  background: #D6D7D9;
+/* Style toddler input range */
+
+.wrapper-price .price-field input[type=range]::-webkit-slider-thumb {
+    /* WebKit/Blink */
+    position: relative;
+    -webkit-appearance: none;
+    margin: 0;
+    border: 0;
+    outline: 0;
+    border-radius: 50%;
+    height: 10px;
+    width: 10px;
+    margin-top: -4px;
+    background-color: #fff;
+    cursor: pointer;
+    cursor: pointer;
+    pointer-events: all;
+    z-index: 100;
 }
 
-.noUi-connect {
-  background: #345DBB;
-  -webkit-transition: background 450ms;
-  transition: background 450ms;
+.wrapper-price .price-field input[type=range]::-moz-range-thumb {
+    /* Firefox */
+    position: relative;
+    appearance: none;
+    margin: 0;
+    border: 0;
+    outline: 0;
+    border-radius: 50%;
+    height: 10px;
+    width: 10px;
+    margin-top: -5px;
+    background-color: #fff;
+    cursor: pointer;
+    cursor: pointer;
+    pointer-events: all;
+    z-index: 100;
 }
 
-.noUi-origin {
-  border-radius: 2px;
+.wrapper-price .price-field input[type=range]::-ms-thumb {
+    /* IE */
+    position: relative;
+    appearance: none;
+    margin: 0;
+    border: 0;
+    outline: 0;
+    border-radius: 50%;
+    height: 10px;
+    width: 10px;
+    margin-top: -5px;
+    background-color: #242424;
+    cursor: pointer;
+    cursor: pointer;
+    pointer-events: all;
+    z-index: 100;
 }
 
-.noUi-target {
-  border-radius: 2px;
+/* Style track input range */
+
+.wrapper-price .price-field input[type=range]::-webkit-slider-runnable-track {
+    /* WebKit/Blink */
+    width: 188px;
+    height: 2px;
+    cursor: pointer;
+    background: #555;
+    border-radius: 5px;
 }
 
-.noUi-target.noUi-connect {
+.wrapper-price .price-field input[type=range]::-moz-range-track {
+    /* Firefox */
+    width: 188px;
+    height: 2px;
+    cursor: pointer;
+    background: #242424;
+    border-radius: 5px;
 }
 
-/* Handles and cursors;
- */
-.noUi-draggable {
-  cursor: w-resize;
+.wrapper-price .price-field input[type=range]::-ms-track {
+    /* IE */
+    width: 188px;
+    height: 2px;
+    cursor: pointer;
+    background: #242424;
+    border-radius: 5px;
 }
 
-.noUi-vertical .noUi-draggable {
-  cursor: n-resize;
+/* Style for input value block */
+
+.wrapper-price .price-wrap {
+    display: flex;
+    color: #242424;
+    font-size: 14px;
+    line-height: 1.2em;
+    font-weight: 400;
+    margin-bottom: 0;
 }
 
-.noUi-handle {
-  cursor: default;
-  -webkit-box-sizing: content-box !important;
-  -moz-box-sizing: content-box !important;
-  box-sizing: content-box !important;
+.wrapper-price .price-wrap-1,
+.wrapper-price .price-wrap-2 {
+    display: flex;
+    margin-left: 0;
+    flex-grow: 1;
+    justify-content: center;
 }
 
-.noUi-handle:active {
-  border: 8px solid #345DBB;
-  border: 8px solid rgba(53,93,187,0.38);
-  -webkit-background-clip: padding-box;
-  background-clip: padding-box;
-  left: -14px;
-  top: -14px;
+.wrapper-price .price-title {
+    margin-right: 5px;
 }
 
-/* Disabled state;
- */
-[disabled].noUi-connect,[disabled] .noUi-connect {
-  background: #B8B8B8;
+.wrapper-price .price-wrap_line {
+    margin: 6px 0 5px 5px;
 }
 
-[disabled].noUi-origin,[disabled] .noUi-handle {
-  cursor: not-allowed;
+.wrapper-price .price-wrap #one,
+.wrapper-price .price-wrap #two {
+    width: 60px;
+    margin: 0 2px 0 0;
+    background: 0;
+    border: 0;
+    outline: 0;
+    color: #242424;
+    font-family: 'Karla', 'Arial', sans-serif;
+    font-size: 14px;
+    line-height: 1.2em;
+    font-weight: 400;
+    text-align: left;
+    padding: 0 0 0 5px;
+}
+
+.wrapper-price .price-wrap label {
+    text-align: right;
+    margin-top: 6px;
+    padding-left: 5px;
+}
+
+/* Style for active state input */
+
+.wrapper-price .price-field input[type=range]:hover::-webkit-slider-thumb {
+    box-shadow: 0 0 0 1px #242424;
+    transition-duration: 0.3s;
+}
+
+.wrapper-price .price-field input[type=range]:active::-webkit-slider-thumb {
+    box-shadow: 0 0 0 1px #242424;
+    transition-duration: 0.3s;
+}
+
+
+.wrapper-price .price-field input[type=range]::-webkit-slider-thumb {
+    background: #000;
+}
+
+
+.tag-prod {
+    position: absolute;
+    right: 0;
+    z-index: 1;
+    border-radius: 0 0 0 5px;
+    background: #000;
+    padding: 5px 20px;
+    color: #fff;
 }

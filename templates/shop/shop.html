@@ -1,5 +1,6 @@
 {% extends 'Shop/base.html' %}
 {% load static %}
+{% load temp_filter %}
 {#{% load filters %}#}
 {% block content %}
 
@@ -20,80 +21,94 @@
             <div class="container-fluid p-5">
                 <div class="row">
                     <div class="col-lg-3 col-md-10 col-sm-12 mr-auto ml-auto">
-                        <div class="filter-sidebar">
-                            <div class="sub-cat-box">
-                                <h2>Подкатегории</h2>
-
-
-                                <ul class="sub-cats">
-                                    {#                                    {% for sub in subcategory %}#}
-                                    {#                                        <li><a href=""> {{ sub.name }} </a></li>#}
-                                    {#                                    {% endfor %}#}
-                                </ul>
-                            </div>
-                            <div class="filters-box">
-                                <h2>Фильтры</h2>
-                                <ul>
-                                    <li>
-                                        <label for="inputState">Название фильтра</label>
-                                        <select id="inputState" class="form-control">
-                                            <option selected>Значение</option>
-                                            <option>Значение</option>
-                                            <option>Значение</option>
-                                        </select>
-                                    </li>
-
-                                    <li>
-                                        <label for="inputState">Название фильтра</label>
-                                        <select id="inputState" class="form-control">
-                                            <option selected>Значение</option>
-                                            <option>Значение</option>
-                                            <option>Значение</option>
-                                        </select>
-                                    </li>
-
-                                    <li>
-                                        <label for="inputState">Название фильтра</label>
-                                        <select id="inputState" class="form-control">
-                                            <option selected>Значение</option>
-                                            <option>Значение</option>
-                                            <option>Значение</option>
-                                        </select>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="rating-box">
-
-                            </div>
-                            <div class="select-price-box">
-                                <h2>Ценовой промежуток</h2>
-                                <div class="container">
-                                    <div class="row mt-4">
-                                        <div class="col-sm-12">
-                                            <div id="slider-range"></div>
-                                        </div>
+                        <form action="">
+                            <div class="filter-sidebar">
+                                {% if subcategory %}
+                                    <div class="sub-cat-box">
+                                        <h2>Подкатегории</h2>
+                                        <ul class="sub-cats">
+                                            {% for sub in subcategory %}
+                                                <li>
+                                                    <a href="{% url 'shop:product_subcat' sub.id %}"> {{ sub.name }} </a>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
                                     </div>
-                                    <div class="row slider-labels">
-                                        <div class="col-sm-6 caption">
-                                            <strong>Min:</strong> <span id="slider-range-value1"></span>
-                                        </div>
-                                        <div class="col-sm-6 text-right caption">
-                                            <strong>Max:</strong> <span id="slider-range-value2"></span>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <form>
-                                                <input type="hidden" name="min-value" value="">
-                                                <input type="hidden" name="max-value" value="">
-                                            </form>
-                                        </div>
+                                {% endif %}
+                                <div class="filters-box">
+                                    <h2>Фильтры</h2>
+                                    <ul>
+                                        {% for prop in props %}
+                                            <li>
+                                                <label for="inputState">{{ prop.name }}</label>
+                                                <select id="inputState" class="form-control" name="{{ prop.name }}">
+                                                    <option value="-1">Не выбрано</option>
+                                                    {% for val in prop.prodval_set.all|unique %}
+                                                        {% if request.GET|is_contains:val  %}
+                                                            <option value="{{ val }}"
+                                                                    selected>{{ val }}</option>
+                                                        {% else %}
+                                                            <option value="{{ val }}">{{ val }}</option>
+                                                        {% endif %}
+
+                                                    {% endfor %}
+
+                                                </select>
+                                            </li>
+                                        {% endfor %}
+
+                                    </ul>
+                                </div>
+                                <div class="rating-box">
+
+                                </div>
+                                <div class="select-price-box">
+                                    <h2>Ценовой промежуток</h2>
+                                    <div class="wrapper-price">
+                                        <fieldset class="filter-price">
+                                            <div class="price-field">
+                                                {% if min_price_curr != -1 %}
+                                                    <input type="range" min="{{ min_price }}" max="{{ max_price }}"
+                                                           value="{{ min_price_curr }}"
+                                                           id="lower">
+                                                {% else %}
+                                                    <input type="range" min="{{ min_price }}" max="{{ max_price }}"
+                                                           value="{{ min_price }}"
+                                                           id="lower">
+                                                {% endif %}
+
+
+                                                {% if max_price_curr != -1 %}
+                                                    <input type="range" min="{{ min_price }}" max="{{ max_price }}"
+                                                           value="{{ max_price_curr }}"
+                                                           id="upper">
+                                                {% else %}
+                                                    <input type="range" min="{{ min_price }}" max="{{ max_price }}"
+                                                           value="{{ max_price }}"
+                                                           id="upper">
+                                                {% endif %}
+
+                                            </div>
+                                            <div class="price-wrap">
+                                                <div class="price-container">
+                                                    <div class="price-wrap-1">
+                                                        <label for="one">₸</label>
+                                                        <input id="one" name="min_price">
+                                                    </div>
+                                                    <div class="price-wrap_line">-</div>
+                                                    <div class="price-wrap-2">
+                                                        <label for="two">₸</label>
+                                                        <input id="two" name="max_price">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
                                     </div>
                                 </div>
+                                <button class="f-btn filter-btn" type="submit"> Фильтровать</button>
+                                <a class="f-btn reset-btn" href="#"> Сбросить </a>
                             </div>
-                            <button class="f-btn filter-btn" type="submit"> Фильтровать</button>
-                            <a class="f-btn reset-btn" href="#"> Сбросить </a>
-                        </div>
+                        </form>
                     </div>
 
                     <div class="col-lg-9">
@@ -112,227 +127,28 @@
                             </div>
                             <div class="row">
                                 <div class="all-products-box d-flex justify-content-between w-100 p-0 mt-4 flex-wrap">
-                                    <div class="product-box">
-                                        <div class="card">
-                                            <div class="tag-box">
-                                                <span>NEW!</span>
-                                            </div>
-                                            <div class="prod-wrap">
-                                                <div class="img-box">
-                                                    <img src="{% static 'Shop/img/product.jpg' %}" alt="">
+                                    {% for pr in product %}
+                                        <div class="product-box">
+                                            <div class="card">
+                                                <div class="tag-box">
+                                                    <span>NEW!</span>
                                                 </div>
-                                                <div class="content-box">
-                                                    <h3>Lorem ipsum dolor sit amet.</h3>
-                                                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic
-                                                        nulla, cum
-                                                        dicta quod laudantium minima.</p>
-                                                    <a href="{% url 'shop:product' 1 %}">Подробнее</a>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-box">
-                                        <div class="card">
-                                            <div class="tag-box">
-                                                <span>NEW!</span>
-                                            </div>
-                                            <div class="prod-wrap">
-                                                <div class="img-box">
-                                                    <img src="{% static 'Shop/img/product.jpg' %}" alt="">
-                                                </div>
-                                                <div class="content-box">
-                                                    <h3>Lorem ipsum dolor sit amet.</h3>
-                                                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic
-                                                        nulla, cum
-                                                        dicta quod laudantium minima.</p>
-                                                    <a href="{% url 'shop:product' 1 %}">Подробнее</a>
-
+                                                <div class="prod-wrap">
+                                                    <div class="img-box">
+                                                        {% for ph in pr.productphoto_set.all %}
+                                                            <img src="{{ ph.img.url }}" alt="{{ ph.alt }}">
+                                                        {% endfor %}
+                                                    </div>
+                                                    <div class="content-box">
+                                                        <h3>{{ pr.name }}</h3>
+                                                        <p>{{ pr.desc_short }}</p>
+                                                        <a href="{% url 'shop:product_detail' pr.id %}">Подробнее</a>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="product-box">
-                                        <div class="card">
-                                            <div class="tag-box">
-                                                <span>NEW!</span>
-                                            </div>
-                                            <div class="prod-wrap">
-                                                <div class="img-box">
-                                                    <img src="{% static 'Shop/img/product.jpg' %}" alt="">
-                                                </div>
-                                                <div class="content-box">
-                                                    <h3>Lorem ipsum dolor sit amet.</h3>
-                                                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic
-                                                        nulla, cum
-                                                        dicta quod laudantium minima.</p>
-                                                    <a href="{% url 'shop:product' 1 %}">Подробнее</a>
+                                    {% endfor %}
 
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-box">
-                                        <div class="card">
-                                            <div class="tag-box">
-                                                <span>NEW!</span>
-                                            </div>
-                                            <div class="prod-wrap">
-                                                <div class="img-box">
-                                                    <img src="{% static 'Shop/img/product.jpg' %}" alt="">
-                                                </div>
-                                                <div class="content-box">
-                                                    <h3>Lorem ipsum dolor sit amet.</h3>
-                                                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic
-                                                        nulla, cum
-                                                        dicta quod laudantium minima.</p>
-                                                    <a href="{% url 'shop:product' 1 %}">Подробнее</a>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-box">
-                                        <div class="card">
-                                            <div class="tag-box">
-                                                <span>NEW!</span>
-                                            </div>
-                                            <div class="prod-wrap">
-                                                <div class="img-box">
-                                                    <img src="{% static 'Shop/img/product.jpg' %}" alt="">
-                                                </div>
-                                                <div class="content-box">
-                                                    <h3>Lorem ipsum dolor sit amet.</h3>
-                                                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic
-                                                        nulla, cum
-                                                        dicta quod laudantium minima.</p>
-                                                    <a href="{% url 'shop:product' 1 %}">Подробнее</a>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-box">
-                                        <div class="card">
-                                            <div class="tag-box">
-                                                <span>NEW!</span>
-                                            </div>
-                                            <div class="prod-wrap">
-                                                <div class="img-box">
-                                                    <img src="{% static 'Shop/img/product.jpg' %}" alt="">
-                                                </div>
-                                                <div class="content-box">
-                                                    <h3>Lorem ipsum dolor sit amet.</h3>
-                                                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic
-                                                        nulla, cum
-                                                        dicta quod laudantium minima.</p>
-                                                    <a href="{% url 'shop:product' 1 %}">Подробнее</a>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-box">
-                                        <div class="card">
-                                            <div class="tag-box">
-                                                <span>NEW!</span>
-                                            </div>
-                                            <div class="prod-wrap">
-                                                <div class="img-box">
-                                                    <img src="{% static 'Shop/img/product.jpg' %}" alt="">
-                                                </div>
-                                                <div class="content-box">
-                                                    <h3>Lorem ipsum dolor sit amet.</h3>
-                                                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic
-                                                        nulla, cum
-                                                        dicta quod laudantium minima.</p>
-                                                    <a href="{% url 'shop:product' 1 %}">Подробнее</a>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-box">
-                                        <div class="card">
-                                            <div class="tag-box">
-                                                <span>NEW!</span>
-                                            </div>
-                                            <div class="prod-wrap">
-                                                <div class="img-box">
-                                                    <img src="{% static 'Shop/img/product.jpg' %}" alt="">
-                                                </div>
-                                                <div class="content-box">
-                                                    <h3>Lorem ipsum dolor sit amet.</h3>
-                                                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic
-                                                        nulla, cum
-                                                        dicta quod laudantium minima.</p>
-                                                    <a href="{% url 'shop:product' 1 %}">Подробнее</a>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-box">
-                                        <div class="card">
-                                            <div class="tag-box">
-                                                <span>NEW!</span>
-                                            </div>
-                                            <div class="prod-wrap">
-                                                <div class="img-box">
-                                                    <img src="{% static 'Shop/img/product.jpg' %}" alt="">
-                                                </div>
-                                                <div class="content-box">
-                                                    <h3>Lorem ipsum dolor sit amet.</h3>
-                                                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic
-                                                        nulla, cum
-                                                        dicta quod laudantium minima.</p>
-                                                    <a href="{% url 'shop:product' 1 %}">Подробнее</a>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-box">
-                                        <div class="card">
-                                            <div class="tag-box">
-                                                <span>NEW!</span>
-                                            </div>
-                                            <div class="prod-wrap">
-                                                <div class="img-box">
-                                                    <img src="{% static 'Shop/img/product.jpg' %}" alt="">
-                                                </div>
-                                                <div class="content-box">
-                                                    <h3>Lorem ipsum dolor sit amet.</h3>
-                                                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic
-                                                        nulla, cum
-                                                        dicta quod laudantium minima.</p>
-                                                    <a href="{% url 'shop:product' 1 %}">Подробнее</a>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-box">
-                                        <div class="card">
-                                            <div class="tag-box">
-                                                <span>NEW!</span>
-                                            </div>
-                                            <div class="prod-wrap">
-                                                <div class="img-box">
-                                                    <img src="{% static 'Shop/img/product.jpg' %}" alt="">
-                                                </div>
-                                                <div class="content-box">
-                                                    <h3>Lorem ipsum dolor sit amet.</h3>
-                                                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic
-                                                        nulla, cum
-                                                        dicta quod laudantium minima.</p>
-                                                    <a href="{% url 'shop:product' 1 %}">Подробнее</a>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                        </di>
-                                    </div>
                                 </div>
                             </div>
                         </div>
