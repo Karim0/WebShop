@@ -1,5 +1,5 @@
 from django.db import models
-
+import datetime
 
 # Create your models here.
 
@@ -35,6 +35,15 @@ class Product(models.Model):
 
     def __str__(self):
         return f'{self.name}: subcategory - {self.subcategory.name}'
+
+class ProductComment(models.Model):
+    prod = models.ForeignKey(Product, on_delete=models.CASCADE)
+    text = models.TextField()
+    rate = models.IntegerField(default=0)
+    pub_date = models.DateField(default=datetime.date.today)
+
+    def __str__(self):
+        return f'{self.prod.name}: alt: {self.alt}, video url - {self.img.url}'
 
 
 class ProductPhoto(models.Model):

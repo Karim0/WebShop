@@ -1,24 +1,25 @@
 /*
     DEMO STYLE
 */
-@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
-
 
 #sidebar {
     display: none;
-    padding-top: 100px;
+    padding: 50px 20px;
     position: absolute;
-    top: 0;
     right: 0;
-    width: 250px;
+    top: 0;
+    width: 100%;
+    border: 1px solid red;
+    min-height: 100vh;
     /* min-width: 250px; 
     max-width: 250px; */
-    background: #7386D5;
+    background: white;
     color: #fff;
     transition: all 0.6s cubic-bezier(0.945, 0.020, 0.270, 0.665);
     transform-origin: bottom right;
-    overflow: hidden;
+    overflow-y: scroll;
     /* width: 255%; */
+    /*z-index: 100000;*/
 }
 
 #sidebar.active {
@@ -32,9 +33,9 @@
     background: #6d7fcc;
 }
 
+
 #sidebar ul.components {
     padding: 20px 0;
-    border-bottom: 1px solid #47748b;
 }
 
 #sidebar ul p {
@@ -48,11 +49,38 @@
     display: block;
 }
 
-#sidebar ul li a:hover {
-    color: #7386D5;
-    background: #fff;
+#sidebar ul li ul.show{
+    display: flex;
+    /*flex-direction: row;*/
+    flex-wrap: wrap;
+}
+#sidebar ul li ul.collapsing{
+    display: none;
+    transition: none!important;
 }
 
+#sidebar ul li ul.show li {
+    display: block;
+    width: 33.33%;
+}
+
+#sidebar ul li ul.show li ul.show{
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+}
+
+#sidebar ul li a.dropd {
+    border-bottom: 1px solid red;
+}
+
+#sidebar ul li a.collapsed{
+    border-bottom: none;
+}
+
+#sidebar ul li a:hover {
+    color: red;
+}
 
 
 a[data-toggle="collapse"] {
