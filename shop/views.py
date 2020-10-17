@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.views.generic import View, ListView, DetailView, CreateView, UpdateView, DeleteView
-from django.db.models import Max, Min
+from django.db.models import Max, Min, Avg
 
 from .models import *
 
@@ -11,7 +11,8 @@ from .models import *
 def home_page(request):
     content = {
         'pagename': 'Главная страница',
-        'type': ''
+        'type': '',
+        'prod_recom': Product.objects.annotate(prodreate=Avg('productcomment__rate')).order_by('-prodreate')
     }
     return render(request, 'shop/index.html', content)
 
