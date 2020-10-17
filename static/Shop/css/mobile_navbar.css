@@ -1,4 +1,4 @@
-@media (min-width: 768px) and (max-width: 1024px) {
+@media (min-width: 768px) and (max-width: 1023px) {
 
     .nav-box {
         display: none;
@@ -43,5 +43,41 @@
 
     .main-footer p {
         font-size: .9em;
+    }
+}
+
+@media (min-width: 425px) and (max-width: 767px){
+     .nav-box {
+        display: none;
+    }
+
+    #sidebarCollapse {
+        display: block !important;
+
+    }
+
+    #sidebar {
+        display: block!important;
+        /* min-width: 250px; */
+        /*width: 50%;*/
+        height: 100vh;
+    }
+}
+
+@media (max-width: 424px){
+     .nav-box {
+        display: none;
+    }
+
+    #sidebarCollapse {
+        display: block !important;
+
+    }
+
+    #sidebar {
+        display: block!important;
+        /* min-width: 250px; */
+        /*width: 100%;*/
+        height: 100vh;
     }
 }
