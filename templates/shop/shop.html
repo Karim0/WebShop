@@ -8,8 +8,6 @@
         <img src="{% static 'Shop/img/background.jpg' %}" alt="" class="page-banner">
         <div class="page-info">
             <h1>Категория</h1>
-            {#            <p><a class="blue" href="{% url 'shop:index' %}">Главная</a> / <span>Корзина</span></p>#}
-
             <form class="d-flex justify-content-center align-content-center mt-5" action="">
                 <input type="text" class="search-bar" placeholder="Поиск">
                 <button type="submit" class="search-btn"> ИСКАТЬ</button>
@@ -25,12 +23,12 @@
                         <div class="filter-sidebar">
                             <div class="sub-cat-box">
                                 <h2>Подкатегории</h2>
+
+
                                 <ul class="sub-cats">
-                                    <li><a href=""> Под категория </a></li>
-                                    <li><a href=""> Под категория </a></li>
-                                    <li><a href=""> Под категория </a></li>
-                                    <li><a href=""> Под категория </a></li>
-                                    <li><a href=""> Под категория </a></li>
+                                    {#                                    {% for sub in subcategory %}#}
+                                    {#                                        <li><a href=""> {{ sub.name }} </a></li>#}
+                                    {#                                    {% endfor %}#}
                                 </ul>
                             </div>
                             <div class="filters-box">
@@ -128,7 +126,7 @@
                                                     <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic
                                                         nulla, cum
                                                         dicta quod laudantium minima.</p>
-                                                    <a href="{% url 'shop:product' %}">Подробнее</a>
+                                                    <a href="{% url 'shop:product' 1 %}">Подробнее</a>
 
                                                 </div>
                                             </div>
@@ -148,7 +146,7 @@
                                                     <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic
                                                         nulla, cum
                                                         dicta quod laudantium minima.</p>
-                                                    <a href="{% url 'shop:product' %}">Подробнее</a>
+                                                    <a href="{% url 'shop:product' 1 %}">Подробнее</a>
 
                                                 </div>
                                             </div>
@@ -168,7 +166,7 @@
                                                     <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic
                                                         nulla, cum
                                                         dicta quod laudantium minima.</p>
-                                                    <a href="{% url 'shop:product' %}">Подробнее</a>
+                                                    <a href="{% url 'shop:product' 1 %}">Подробнее</a>
 
                                                 </div>
                                             </div>
@@ -188,7 +186,7 @@
                                                     <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic
                                                         nulla, cum
                                                         dicta quod laudantium minima.</p>
-                                                    <a href="{% url 'shop:product' %}">Подробнее</a>
+                                                    <a href="{% url 'shop:product' 1 %}">Подробнее</a>
 
                                                 </div>
                                             </div>
@@ -208,7 +206,7 @@
                                                     <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic
                                                         nulla, cum
                                                         dicta quod laudantium minima.</p>
-                                                    <a href="{% url 'shop:product' %}">Подробнее</a>
+                                                    <a href="{% url 'shop:product' 1 %}">Подробнее</a>
 
                                                 </div>
                                             </div>
@@ -228,7 +226,7 @@
                                                     <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic
                                                         nulla, cum
                                                         dicta quod laudantium minima.</p>
-                                                    <a href="{% url 'shop:product' %}">Подробнее</a>
+                                                    <a href="{% url 'shop:product' 1 %}">Подробнее</a>
 
                                                 </div>
                                             </div>
@@ -248,7 +246,7 @@
                                                     <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic
                                                         nulla, cum
                                                         dicta quod laudantium minima.</p>
-                                                    <a href="{% url 'shop:product' %}">Подробнее</a>
+                                                    <a href="{% url 'shop:product' 1 %}">Подробнее</a>
 
                                                 </div>
                                             </div>
@@ -268,7 +266,7 @@
                                                     <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic
                                                         nulla, cum
                                                         dicta quod laudantium minima.</p>
-                                                    <a href="{% url 'shop:product' %}">Подробнее</a>
+                                                    <a href="{% url 'shop:product' 1 %}">Подробнее</a>
 
                                                 </div>
                                             </div>
@@ -288,7 +286,7 @@
                                                     <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic
                                                         nulla, cum
                                                         dicta quod laudantium minima.</p>
-                                                    <a href="{% url 'shop:product' %}">Подробнее</a>
+                                                    <a href="{% url 'shop:product' 1 %}">Подробнее</a>
 
                                                 </div>
                                             </div>
@@ -308,7 +306,7 @@
                                                     <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic
                                                         nulla, cum
                                                         dicta quod laudantium minima.</p>
-                                                    <a href="{% url 'shop:product' %}">Подробнее</a>
+                                                    <a href="{% url 'shop:product' 1 %}">Подробнее</a>
 
                                                 </div>
                                             </div>
@@ -328,7 +326,7 @@
                                                     <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic
                                                         nulla, cum
                                                         dicta quod laudantium minima.</p>
-                                                    <a href="{% url 'shop:product' %}">Подробнее</a>
+                                                    <a href="{% url 'shop:product' 1 %}">Подробнее</a>
 
                                                 </div>
                                             </div>
@@ -340,6 +338,7 @@
                         </div>
                     </div>
                 </div>
+            </div>
         </section>
     </main>
 {% endblock content %}
