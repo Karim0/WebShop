@@ -25,7 +25,7 @@ def cart_page(request):
 
 def about_page(request):
     content = {
-        'pagename': 'Корзина',
+        'pagename': 'О компании',
         'type': 'sub-head'
     }
     return render(request, 'shop/about.html', content)
@@ -41,7 +41,7 @@ def contact_page(request):
 
 def product_page(request):
     content = {
-        'pagename': 'Товары',
+        'pagename': 'Продукт',
         'type': 'sub-head',
         'products': Product.objects.all()
     }
