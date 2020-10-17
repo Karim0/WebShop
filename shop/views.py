@@ -45,7 +45,7 @@ def product_page(request):
         'type': 'sub-head',
         'products': Product.objects.all()
     }
-    return render(request, 'shop/product.html', content)
+    return render(request, 'shop/shop.html', content)
 
 
 def product_detail_page(request, pk):
@@ -54,7 +54,7 @@ def product_detail_page(request, pk):
         'type': 'sub-head',
         'product': Product.objects.get(id=pk)
     }
-    return render(request, 'shop/product_detail.html', content)
+    return render(request, 'shop/product-details.html', content)
 
 
 def product_cat_page(request, pk):
@@ -63,7 +63,7 @@ def product_cat_page(request, pk):
         'type': 'sub-head',
         'product': Product.objects.filter(subcategory__in=Subcategory.objects.filter(category_id=pk))
     }
-    return render(request, 'shop/product.html', content)
+    return render(request, 'shop/shop.html', content)
 
 
 def product_subcat_page(request, pk):
@@ -72,7 +72,7 @@ def product_subcat_page(request, pk):
         'type': 'sub-head',
         'product': Product.objects.filter(subcategory_id=pk)
     }
-    return render(request, 'shop/product.html', content)
+    return render(request, 'shop/shop.html', content)
 
 
 def filter_prod(cat_id, prop):
