@@ -48,71 +48,17 @@
                     <div class="dropdown-menu header-menu" aria-labelledby="navbarDropdown">
                         <div class="head-menu-wrap">
                             <div class="cat-row">
-                                <div class="menu-cat">
-                                    <a class="" href="{% url 'shop:index' %}">Еда</a>
-                                    <div class="dropdown-divider"></div>
-                                    <ul class="sub-cats">
-                                        <li><a href=""> Lorem, ipsum.</a></li>
-                                    </ul>
-                                </div>
-
-                                <div class="menu-cat">
-                                    <a class="" href="{% url 'shop:index' %}">Посуда</a>
-                                    <div class="dropdown-divider"></div>
-                                    <ul class="sub-cats">
-                                        <li><a href=""> Lorem, ipsum.</a></li>
-                                        <li><a href=""> Lorem, ipsum.</a></li>
-                                        <li><a href=""> Lorem, ipsum.</a></li>
-                                        <li><a href=""> Lorem, ipsum.</a></li>
-                                        <li><a href=""> Lorem, ipsum.</a></li>
-                                    </ul>
-                                </div>
-
-                                <div class="menu-cat">
-                                    <a class="" href="{% url 'shop:index' %}">Бытовая Химия</a>
-                                    <div class="dropdown-divider"></div>
-                                    <ul class="sub-cats">
-                                        <li><a href=""> Lorem, ipsum.</a></li>
-                                        <li><a href=""> Lorem, ipsum.</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <div class="cat-row">
-                                <div class="menu-cat">
-                                    <a class="" href="{% url 'shop:index' %}">БАДЫ</a>
-                                    <div class="dropdown-divider"></div>
-                                    <ul class="sub-cats">
-                                        <li><a href=""> Lorem, ipsum.</a></li>
-                                        <li><a href=""> Lorem, ipsum.</a></li>
-                                        <li><a href=""> Lorem, ipsum.</a></li>
-                                        <li><a href=""> Lorem, ipsum.</a></li>
-                                        <li><a href=""> Lorem, ipsum.</a></li>
-                                        <li><a href=""> Lorem, ipsum.</a></li>
-                                        <li><a href=""> Lorem, ipsum.</a></li>
-                                    </ul>
-                                </div>
-
-                                <div class="menu-cat">
-                                    <a class="" href="{% url 'shop:index' %}">Косметика</a>
-                                    <div class="dropdown-divider"></div>
-                                    <ul class="sub-cats">
-                                        <li><a href=""> Lorem, ipsum.</a></li>
-                                        <li><a href=""> Lorem, ipsum.</a></li>
-                                        <li><a href=""> Lorem, ipsum.</a></li>
-                                    </ul>
-                                </div>
-
-                                <div class="menu-cat">
-                                    <a class="" href="{% url 'shop:index' %}">Аксессуары</a>
-                                    <div class="dropdown-divider"></div>
-                                    <ul class="sub-cats">
-                                        <li><a href=""> Lorem, ipsum.</a></li>
-                                        <li><a href=""> Lorem, ipsum.</a></li>
-                                        <li><a href=""> Lorem, ipsum.</a></li>
-                                        <li><a href=""> Lorem, ipsum.</a></li>
-                                    </ul>
-                                </div>
+                                {% for cat in categs %}
+                                    <div class="menu-cat">
+                                        <a class="" href="{% url 'shop:product' cat.id %}">{{ cat.name }}</a>
+                                        <div class="dropdown-divider"></div>
+                                        <ul class="sub-cats">
+                                            {% for s in cat.subcategory_set.all %}
+                                                <li><a href="{% url 'shop:product_subcat' s.id %}">{{ s.name }}</a></li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                {% endfor %}
                             </div>
                         </div>
                     </div>
@@ -143,17 +89,19 @@
             </li>
 
             <li>
-                <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle dropd collapsed">Товары</a>
+                <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false"
+                   class="dropdown-toggle dropd collapsed">Товары</a>
                 <ul class="collapse list-unstyled" id="pageSubmenu">
                     {% for cat in categs %}
-                    <li>
-                        <a href="#subsub" data-toggle="collapse" aria-expanded="false">Категория</a>
-                        <ul class="collapse list-unstyled" id="subsub">
-                            <li><a href="">1</a></li>
-                            <li><a href="">2</a></li>
-                            <li><a href="">3</a></li>
-                        </ul>
-                    </li>
+                        <li>
+                            <a href="#sub{{ cat.id }}" data-toggle="collapse" aria-expanded="false">{{ cat.name }}</a>
+                            <ul class="collapse list-unstyled" id="sub{{ cat.id }}">
+                                {% for s in cat.subcategory_set.all %}
+                                    <li><a href="{% url 'shop:product' s.id %}">s.name</a></li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    {% endfor %}
                 </ul>
             </li>
             <li>
@@ -194,10 +142,10 @@
             <div class="col-lg-4 col-md-10 col-sm-10 ml-auto mr-auto">
                 <h3 class="mt-5">Обратная связь</h3>
 
-                <form action="" class="callback-form">
+                <form name="call_back_form" action="" method="post" class="callback-form">
                     <input type="text" name="" id="" placeholder="Ваше имя">
                     <input type="text" name="" id="" placeholder="Ваш номер телефона">
-                    <button type="submit" class="callback-btn"> Отправить </button>
+                    <button type="submit" class="callback-btn"> Отправить</button>
                 </form>
             </div>
             <div class="col-lg-4 col-md-10 col-sm-10 ml-auto mr-auto">
@@ -205,19 +153,19 @@
 
                 <div class="questions-box">
                     {% for q in questions %}
-                    <div class="question">
-                        <p>
-                            <a class="" data-toggle="collapse" href="#question1" role="button" aria-expanded="false"
-                               aria-controls="question{{ q.id }}">
-                                {{ q.question }}
-                            </a>
-                        </p>
-                        <div class="collapse" id="question{{ q.id }}">
-                            <div class="card card-body">
-                                 <p> {{ q.answer }}</p>
+                        <div class="question">
+                            <p>
+                                <a class="" data-toggle="collapse" href="#question1" role="button" aria-expanded="false"
+                                   aria-controls="question{{ q.id }}">
+                                    {{ q.question }}
+                                </a>
+                            </p>
+                            <div class="collapse" id="question{{ q.id }}">
+                                <div class="card card-body">
+                                    <p> {{ q.answer }}</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     {% endfor %}
                 </div>
             </div>

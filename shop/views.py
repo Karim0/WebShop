@@ -22,6 +22,7 @@ def home_page(request):
 def cart_page(request):
     content = {
         'pagename': 'Корзина',
+        'categs': Category.objects.all(),
         'type': 'sub-head'
     }
     return render(request, 'shop/card-page.html', content)
@@ -30,6 +31,7 @@ def cart_page(request):
 def about_page(request):
     content = {
         'pagename': 'О компании',
+        'categs': Category.objects.all(),
         'type': 'sub-head'
     }
     return render(request, 'shop/about.html', content)
@@ -54,6 +56,7 @@ def product_page(request, pk):
     content = {
         'pagename': 'Продукт',
         'type': 'sub-head',
+        'categs': Category.objects.all(),
         'subcategory': subcategory,
         'product': products,
         'props': props,
@@ -77,6 +80,7 @@ def product_detail_page(request, pk):
             prop_val[i[1]].append(j.value)
 
     content = {
+        'categs': Category.objects.all(),
         'pagename': 'О товаре',
         'type': 'sub-head',
         'product': product,
@@ -102,6 +106,7 @@ def product_subcat_page(request, pk):
         products = products.filter(productchar__price__gte=min_price).filter(
             productchar__price__lte=max_price).distinct()
     content = {
+        'categs': Category.objects.all(),
         'pagename': 'Продукт',
         'type': 'sub-head',
         'product': products,
@@ -121,3 +126,5 @@ def filter_prod(cat_id, prop):
         prods = prods.filter(prodval__value__contains=prop[i]).distinct()
 
     return prods
+
+
