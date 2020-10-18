@@ -130,9 +130,6 @@ ADMIN_TOOLS_INDEX_DASHBOARD = 'shop.dashboard.CustomIndexDashboard'
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
-STATIC_URL = '/static/'
-
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 

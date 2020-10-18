@@ -1,13 +1,4 @@
-body {
-    font-family: 'Karla', 'Arial', sans-serif;
-    font-weight: 500;
-    background: #fff;
-}
 
-p {
-    padding: 0;
-    margin: 0;
-}
 
 .wrapper-price {
     display: flex;

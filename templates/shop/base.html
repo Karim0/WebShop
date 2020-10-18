@@ -38,7 +38,7 @@
                     <a class="nav-link" href="{% url 'shop:index' %}">Главная</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'shop:about' %}">О компании</a>
+                    <a class="nav-link" href="{% url 'shop:about' %}">О магазине</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button"
@@ -118,7 +118,7 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#footer">Контакты</a>
+                    <a class="nav-link" href="#contacts">Контакты</a>
                 </li>
                 <li class="nav-item cart-box">
                     <a class="nav-link" href="{% url 'shop:cart' %}"><i class="fas fa-shopping-cart"></i>
@@ -139,14 +139,14 @@
             </li>
 
             <li class="active">
-                <a href="{% url 'shop:about' %}"> О компании </a>
+                <a href="{% url 'shop:about' %}"> О магазине </a>
             </li>
 
             <li>
                 <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle dropd collapsed">Товары</a>
                 <ul class="collapse list-unstyled" id="pageSubmenu">
                     <li>
-                        <a href="#subsub" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Категория</a>
+                        <a href="#subsub" data-toggle="collapse" aria-expanded="false">Категория</a>
                         <ul class="collapse list-unstyled" id="subsub">
                             <li><a href="">1</a></li>
                             <li><a href="">2</a></li>
@@ -154,7 +154,7 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="#subsubыги" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Категория</a>
+                        <a href="#subsub" data-toggle="collapse" aria-expanded="false">Категория</a>
                         <ul class="collapse list-unstyled" id="subsub">
                             <li><a href="">1</a></li>
                             <li><a href="">2</a></li>
@@ -164,7 +164,11 @@
                 </ul>
             </li>
             <li>
-                <a href="#">Контакты</a>
+                <a href="#contacts">Контакты</a>
+            </li>
+
+            <li>
+                <a href="{% url 'shop:cart' %}">Корзина</a>
             </li>
         </ul>
     </nav>
@@ -173,10 +177,10 @@
 {% block content %}
 {% endblock content %}
 
-<footer class="main-footer" id="footer">
+<footer class="main-footer">
     <div class="container">
-        <div class="row d-flex align-content-start flex-md-wrap-reverse">
-            <div class="col-lg-4 col-md-10 col-sm-10 ml-auto mr-auto">
+        <div class="row d-flex align-content-start flex-lg-wrap flex-wrap-reverse">
+            <div class="col-lg-4 col-md-10 col-sm-10 ml-auto mr-auto" id="contacts">
                 <h3 class="mt-5">Контакты</h3>
                 <p>
                     Телефон: <br><span class="phone"> 332-3223-2332 </span>
@@ -200,7 +204,7 @@
                 <form action="" class="callback-form">
                     <input type="text" name="" id="" placeholder="Ваше имя">
                     <input type="text" name="" id="" placeholder="Ваш номер телефона">
-                    <button type="submit" class="callback-btn"> Отправить</button>
+                    <button type="submit" class="callback-btn"> Отправить </button>
                 </form>
             </div>
             <div class="col-lg-4 col-md-10 col-sm-10 ml-auto mr-auto">

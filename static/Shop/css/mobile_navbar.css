@@ -9,9 +9,10 @@
     }
 
     #sidebar {
-        display: block!important;
+        /*display: block;*/
         /* min-width: 250px; */
     }
+
     .category-screen > h2 {
         font-size: 2.5em;
     }
@@ -27,7 +28,7 @@
     .banner-wrapper > .slogan > p {
         font-size: 3.5em;
     }
-    
+
 
     .category-screen > ul > li:hover > a {
         font-size: 4em;
@@ -38,16 +39,38 @@
     }
 
     .recomendation-screen .product-box > .card > .prod-wrap > .content-box {
-        font-size: .9em!important;
+        font-size: .9em !important;
     }
 
     .main-footer p {
         font-size: .9em;
     }
+
+
+    .search-bar {
+        width: 400px;
+    }
+
+    .cart-banner .page-info h1 {
+        font-size: 2em;
+    }
+
+    .brand-box {
+        width: 20%;
+    }
+
+    .main-header {
+        position: relative;
+    }
+
+    .main-header:hover {
+        background: white;
+    }
+
 }
 
-@media (min-width: 425px) and (max-width: 767px){
-     .nav-box {
+@media (min-width: 490px) and (max-width: 767px) {
+    .nav-box {
         display: none;
     }
 
@@ -57,27 +80,198 @@
     }
 
     #sidebar {
-        display: block!important;
+        /*height: 100vh;*/
+    }
+
+    .category-screen > h2 {
+        font-size: 2em;
+        margin-top: 50px;
+    }
+
+    .category-screen > ul > li > a {
+        font-size: 2.5em;
+    }
+
+    .banner-wrapper > .slogan > h1 {
+        font-size: 1.75em;
+    }
+
+    .banner-wrapper > .slogan > p {
+        font-size: 3em;
+    }
+
+
+    .category-screen > ul > li:hover > a {
+        font-size: 3.5em;
+    }
+
+    .recomendation-screen h2 {
+        font-size: 2em;
+        margin-bottom: 100px;
+        margin-top: 50px;
+    }
+
+    .recomendation-screen .product-box > .card > .prod-wrap > .content-box {
+        font-size: .9em !important;
+    }
+
+    .main-footer p {
+        font-size: .9em;
+    }
+
+    .product-box > .card {
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .search-bar {
+        width: 100%;
+    }
+
+    .cart-banner .page-info h1 {
+        font-size: 2em;
+    }
+
+    .brand-box {
+        width: 30%;
+    }
+
+
+    .main-header {
+        position: relative;
+    }
+
+
+    .main-header:hover {
+        background: white;
+    }
+
+}
+
+@media (max-width: 489px) {
+    .nav-box {
+        display: none;
+    }
+
+    #sidebarCollapse {
+        display: block !important;
+
+    }
+
+    #sidebar {
+        /*display: block !important;*/
         /* min-width: 250px; */
         /*width: 50%;*/
-        height: 100vh;
-    }
-}
-
-@media (max-width: 424px){
-     .nav-box {
-        display: none;
+        /*height: 100vh;*/
     }
 
-    #sidebarCollapse {
-        display: block !important;
-
+    .category-screen > h2 {
+        font-size: 1.75em;
+        margin-top: 50px;
     }
 
-    #sidebar {
-        display: block!important;
-        /* min-width: 250px; */
-        /*width: 100%;*/
-        height: 100vh;
+    .category-screen > ul > li > a {
+        font-size: 2em;
+    }
+
+    .banner-wrapper > .slogan > h1 {
+        font-size: 1.25em;
+    }
+
+    .banner-wrapper > .slogan > p {
+        font-size: 2em;
+    }
+
+
+    .category-screen > ul > li:hover > a {
+        font-size: 3em;
+    }
+
+    .recomendation-screen h2 {
+        font-size: 1.5em;
+        margin-bottom: 10%;
+        margin-top: 50px;
+    }
+
+    .recomendation-screen .product-box > .card > .prod-wrap > .content-box {
+        font-size: .9em !important;
+    }
+
+    .main-footer p {
+        font-size: .9em;
+    }
+
+    .product-box > .card {
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .search-bar {
+        width: 100%;
+    }
+
+    .cart-banner .page-info h1 {
+        font-size: 2em;
+    }
+
+    .shopping-screen .product-box {
+        width: 100%;
+    }
+
+    .brand-box {
+        width: 30%;
+    }
+
+    .main-header {
+        position: relative;
+    }
+
+    .main-header:hover {
+        background: white;
+    }
+
+    .shopping-screen .card {
+        height: 150%;
+    }
+
+    .shopping-screen .card > .prod-wrap {
+        display: flex;
+        align-items: center;
+    }
+
+    .shopping-screen .card > .prod-wrap > .img-box {
+        padding: 0;
+        margin: 0 15px;
+        width: 50%;
+        height: fit-content;
+    }
+
+    .shopping-screen .card > .prod-wrap > .content-box {
+        display: block;
+        position: relative;
+        height: 100%;
+        align-items: center;
+        background: white;
+        color: black;
+        font-size: .8em;
+        text-align: left;
+    }
+
+    .shopping-screen .card:hover > .prod-wrap > .content-box {
+        display: block;
+    }
+
+    .shopping-screen .card > .prod-wrap > .content-box > a {
+        position: absolute;
+        left: 50%;
+        margin-right: -50%;
+        bottom: 5%;
+        transform: translate(-50%, 0)
+    }
+
+    .shopping-screen .card > .prod-wrap > .content-box > h3 {
+        /*font-size: 1em;*/
+        color: black;
+
     }
 }

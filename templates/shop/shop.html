@@ -9,7 +9,7 @@
         <img src="{% static 'Shop/img/background.jpg' %}" alt="" class="page-banner">
         <div class="page-info">
             <h1>Категория</h1>
-            <form class="d-flex justify-content-center align-content-center mt-5" action="">
+            <form class="d-flex justify-content-center align-content-center mt-lg-5 mt-md-2 m-0" action="">
                 <input type="text" class="search-bar" placeholder="Поиск">
                 <button type="submit" class="search-btn"> ИСКАТЬ</button>
             </form>
@@ -18,9 +18,9 @@
 
     <main class="shop-main">
         <section class="shopping-screen">
-            <div class="container-fluid p-5">
-                <div class="row">
-                    <div class="col-lg-3 col-md-10 col-sm-12 mr-auto ml-auto">
+            <div class="container-fluid p-lg-5 p-md-2 p-1">
+                <div class="row m-0">
+                    <div class="col-lg-3 col-md-10 col-sm-10 mr-auto ml-auto">
                         <form action="">
                             <div class="filter-sidebar">
                                 {% if subcategory %}
@@ -111,7 +111,7 @@
                         </form>
                     </div>
 
-                    <div class="col-lg-9">
+                    <div class="col-lg-9 col-12">
                         <div class="container">
                             <div class="row">
                                 <div class="sorting-box">
@@ -135,9 +135,7 @@
                                                 </div>
                                                 <div class="prod-wrap">
                                                     <div class="img-box">
-                                                        {% for ph in pr.productphoto_set.all %}
-                                                            <img src="{{ ph.img.url }}" alt="{{ ph.alt }}">
-                                                        {% endfor %}
+                                                        <img class="w-100" src="{% static 'Shop/img/product.jpg' %}" alt="{{ ph.alt }}">
                                                     </div>
                                                     <div class="content-box">
                                                         <h3>{{ pr.name }}</h3>

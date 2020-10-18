@@ -7,11 +7,20 @@ $(".rotate").textrotator({
 $(document).ready(function () {
     $(".owl-carousel").owlCarousel({
         loop: true,
-        items: 3,
         margin: 10,
+        items: 3,
         autoplay: true,
         autoplayTimeout: 5000,
-        autoplayHoverPause: true
+        autoplayHoverPause: true,
+        responsiveClass: true,
+        responsive: {
+            0: {
+                items: 1
+            },
+            768: {
+                items: 3
+            }
+        }
     });
 });
 
