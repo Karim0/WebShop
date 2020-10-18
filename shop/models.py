@@ -2,12 +2,25 @@ from django.db import models
 import datetime
 
 
-# Create your models here.
+class Question(models.Model):
+    question = models.CharField(max_length=255)
+    answer = models.TextField()
+
+    def __str__(self):
+        return f'{self.question}'
+
+
+class Calling(models.Model):
+    full_name = models.CharField(max_length=255)
+    phone = models.CharField(max_length=50)
+    def __str__(self):
+        return f'{self.full_name} {self.phone}'
+
 
 class Category(models.Model):
     name = models.CharField(max_length=255)
     desc = models.TextField()
-    banner = models.ImageField(upload_to='banners/')
+    banner = models.ImageField(upload_to='banners')
 
     def __str__(self):
         return f'{self.name}, {self.desc}'
@@ -84,3 +97,4 @@ class ProdVal(models.Model):
 
     def __str__(self):
         return f'{self.prod_char.prod.name}: {self.prop.name} - {self.value}'
+

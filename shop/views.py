@@ -4,7 +4,6 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.views.generic import View, ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.db.models import Max, Min, Avg
-from django.db.models import Max, Min
 
 from .models import *
 
@@ -14,10 +13,8 @@ def home_page(request):
         'pagename': 'Главная страница',
         'type': '',
         'categs': Category.objects.all(),
-        'prods': Product.objects.all()
-
-        'type': '',
-        'prod_recom': Product.objects.annotate(prodreate=Avg('productcomment__rate')).order_by('-prodreate')
+        'prod_recom': Product.objects.annotate(prodreate=Avg('productcomment__rate')).order_by('-prodreate'),
+        'questions': Question.objects.all()
     }
     return render(request, 'shop/index.html', content)
 

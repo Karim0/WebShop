@@ -145,14 +145,7 @@
             <li>
                 <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle dropd collapsed">Товары</a>
                 <ul class="collapse list-unstyled" id="pageSubmenu">
-                    <li>
-                        <a href="#subsub" data-toggle="collapse" aria-expanded="false">Категория</a>
-                        <ul class="collapse list-unstyled" id="subsub">
-                            <li><a href="">1</a></li>
-                            <li><a href="">2</a></li>
-                            <li><a href="">3</a></li>
-                        </ul>
-                    </li>
+                    {% for cat in categs %}
                     <li>
                         <a href="#subsub" data-toggle="collapse" aria-expanded="false">Категория</a>
                         <ul class="collapse list-unstyled" id="subsub">
@@ -211,37 +204,21 @@
                 <h3 class="mt-5">Часто задаваемые вопросы</h3>
 
                 <div class="questions-box">
+                    {% for q in questions %}
                     <div class="question">
                         <p>
                             <a class="" data-toggle="collapse" href="#question1" role="button" aria-expanded="false"
-                               aria-controls="question1">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo, quod.
+                               aria-controls="question{{ q.id }}">
+                                {{ q.question }}
                             </a>
                         </p>
-                        <div class="collapse" id="question1">
+                        <div class="collapse" id="question{{ q.id }}">
                             <div class="card card-body">
-                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad
-                                squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt
-                                sapiente ea proident.
+                                 <p> {{ q.answer }}</p>
                             </div>
                         </div>
                     </div>
-
-                    <div class="question">
-                        <p>
-                            <a class="" data-toggle="collapse" href="#question2" role="button" aria-expanded="false"
-                               aria-controls="question2">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo, quod.
-                            </a>
-                        </p>
-                        <div class="collapse" id="question2">
-                            <div class="card card-body">
-                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad
-                                squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt
-                                sapiente ea proident.
-                            </div>
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>
