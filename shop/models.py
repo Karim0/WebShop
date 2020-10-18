@@ -1,6 +1,7 @@
 from django.db import models
 import datetime
 
+
 # Create your models here.
 
 class Category(models.Model):
@@ -35,6 +36,7 @@ class Product(models.Model):
 
     def __str__(self):
         return f'{self.name}: subcategory - {self.subcategory.name}'
+
 
 class ProductComment(models.Model):
     prod = models.ForeignKey(Product, on_delete=models.CASCADE)
