@@ -86,9 +86,18 @@ WSGI_APPLICATION = 'WebShop.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'shop',
+        'USER': 'shop',
+        'PASSWORD': 'shop',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
+
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    # }
 }
 
 # Password validation
@@ -129,7 +138,6 @@ STATIC_URL = '/static/'
 ADMIN_TOOLS_INDEX_DASHBOARD = 'shop.dashboard.CustomIndexDashboard'
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 

@@ -10,8 +10,12 @@
         <div class="page-info">
             <h1>Категория</h1>
             <form class="d-flex justify-content-center align-content-center mt-lg-5 mt-md-2 m-0" action="">
-                <input type="text" class="search-bar" placeholder="Поиск">
-                <button type="submit" class="search-btn"> ИСКАТЬ</button>
+                {% if search %}
+                    <input type="text" class="search-bar" placeholder="Поиск" name="search" value="{{ search }}">
+                {% else %}
+                    <input type="text" class="search-bar" placeholder="Поиск" name="search" value="">
+                {% endif %}
+                <button type="submit" class="search-btn">ИСКАТЬ</button>
             </form>
         </div>
     </div>
@@ -21,7 +25,10 @@
             <div class="container-fluid p-lg-5 p-md-2 p-1">
                 <div class="row m-0">
                     <div class="col-lg-3 col-md-10 col-sm-10 mr-auto ml-auto">
-                        <form action="">
+                        <form action="" id="filter_form">
+                            {% if search %}
+                                <input type="text" value="{{ search }}" name="search" hidden>
+                            {% endif %}
                             <div class="filter-sidebar">
                                 {% if subcategory %}
                                     <div class="sub-cat-box">
@@ -44,7 +51,7 @@
                                                 <select id="inputState" class="form-control" name="{{ prop.name }}">
                                                     <option value="-1">Не выбрано</option>
                                                     {% for val in prop.prodval_set.all|unique %}
-                                                        {% if request.GET|is_contains:val  %}
+                                                        {% if request.GET|is_contains:val %}
                                                             <option value="{{ val }}"
                                                                     selected>{{ val }}</option>
                                                         {% else %}
@@ -117,10 +124,15 @@
                                 <div class="sorting-box">
                                     <form class="sorting" action="">
                                         <label for="inputState">Сортировать по: </label>
-                                        <select id="inputState" class="form-control">
-                                            <option selected>Значение</option>
-                                            <option>Значение</option>
-                                            <option>Значение</option>
+                                        <select id="inputState" class="form-control" form="#filter_form" name="order">
+                                            <option {% if order == 'По рейтингу' %}selected{% endif %}>По рейтингу
+                                            </option>
+                                            <option {% if order == 'Цена по возрастанию' %}selected{% endif %}>Цена по
+                                                возрастанию
+                                            </option>
+                                            <option {% if order == 'Цена по убыванию' %}selected{% endif %}>Цена по
+                                                убыванию
+                                            </option>
                                         </select>
                                     </form>
                                 </div>
@@ -135,7 +147,8 @@
                                                 </div>
                                                 <div class="prod-wrap">
                                                     <div class="img-box">
-                                                        <img class="w-100" src="{% static 'Shop/img/product.jpg' %}" alt="{{ ph.alt }}">
+                                                        <img class="w-100" src="{% static 'Shop/img/product.jpg' %}"
+                                                             alt="{{ ph.alt }}">
                                                     </div>
                                                     <div class="content-box">
                                                         <h3>{{ pr.name }}</h3>
