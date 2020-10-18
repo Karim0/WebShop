@@ -766,17 +766,17 @@ p {
 .product-screen .filter {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: flex-start;
 }
 
-.product-screen .filter .filter-val {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    margin: 5px;
-    align-items: center;
+.product-screen .filter label {
+    text-align: left;
+    width: 100%;
 }
 
+.product-screen .filter label:hover{
+    border-bottom: 1px solid black;
+}
 
 .product-screen .filter .filter-val label {
     margin: 5px;
@@ -786,6 +786,7 @@ p {
     border-bottom: 1px solid black;
     font-weight: bold;
 }
+
 .product-screen .product_comments {
     padding: 10px;
 }

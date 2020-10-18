@@ -70,22 +70,14 @@ def product_page(request, pk):
 
 def product_detail_page(request, pk):
     product = Product.objects.get(id=pk)
-    prop = set()
-    prop_val = {}
 
-    for i in Property.objects.filter(prodval__prod_char__in=product.productchar_set.all()).distinct().values_list():
-        prop.add(i[1])
-        prop_val[i[1]] = []
-        for j in ProdVal.objects.filter(prod_char__in=product.productchar_set.all()).filter(prop=i[0]).distinct():
-            prop_val[i[1]].append(j.value)
 
     content = {
         'categs': Category.objects.all(),
         'pagename': 'О товаре',
         'type': 'sub-head',
         'product': product,
-        'prop': prop,
-        'prop_val': prop_val
+        'prodch': product.productchar_set.all(),
     }
     return render(request, 'shop/product-details.html', content)
 

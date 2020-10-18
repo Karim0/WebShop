@@ -28,23 +28,22 @@
                     </div>
                     <div class="col-lg-6 filters-box" style="border:0px solid gray">
                         <h2 class="prod-name">{{ product.name }}</h2>
-
+                        <form action="" method="get" name="" id="prod-form">
                         <ul class="filters mt-5">
-                            {% for pr in prop %}
+                            {% for pr in prodch %}
                                 <li class="text-center m-0 mb-3">
-                                    <h3 for=""> {{ pr }}</h3>
                                     <div class="filter">
-                                        {% for pv in prop_val|get_val_map:pr %}
-                                            <div class="filter-val">
-                                                <label for="">{{ pv }}</label>
-                                                <input type="radio" name="" id="">
-                                            </div>
-                                        {% endfor %}
-
+                                        <label id="chars{{ pr.id }}" for="#prodch{{ pr.id }}" onclick="select_char({{ pr.id }}, {{ pr.price }})">
+                                            {% for v in pr.prodval_set.all %}
+                                                {{ v.prop.name }}: <b style="color: black; margin-right: 5px">{{ v.value }}</b>
+                                            {% endfor %}
+                                        </label>
+                                        <input type="radio" name="prodchars" id="prodch{{ pr.id }}" value="{{ pr.id }}" hidden>
                                     </div>
                                 </li>
                             {% endfor %}
                         </ul>
+                        </form>
 
                         <div class="counter-box">
                             <div class="def-number-input number-input safari_only mt-5">
@@ -196,7 +195,7 @@
                                                 </div>
                                                 <textarea placeholder="Ваш коментарий"></textarea>
 
-                                                <button> Оставить коментарий </button>
+                                                <button> Оставить коментарий</button>
                                             </form>
                                         </div>
                                     </li>
