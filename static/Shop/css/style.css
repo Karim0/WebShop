@@ -749,7 +749,6 @@ p {
 
 .product-screen .section {
     width: 100%;
-    margin-left: -15px;
     padding: 2px;
     padding-left: 15px;
     padding-right: 15px;
@@ -757,7 +756,6 @@ p {
 }
 
 .product-screen .title-price {
-    margin-top: 30px;
     margin-bottom: 0;
     color: black;
     border: none;
@@ -774,7 +772,7 @@ p {
     width: 100%;
 }
 
-.product-screen .filter label:hover{
+.product-screen .filter label:hover {
     border-bottom: 1px solid black;
 }
 
@@ -872,11 +870,12 @@ p {
 }
 
 .filters-box .price-box {
+    margin-top: 40px;
     display: flex;
     width: 100%;
-    justify-content: space-around;
-    padding: 5px 0;
-    align-items: center;
+    justify-content: space-between;
+    padding: 5px 15px;
+    align-items: flex-end;
 }
 
 .shopping-screen .filter-sidebar {

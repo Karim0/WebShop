@@ -4,14 +4,19 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.views.generic import View, ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.db.models import Max, Min, Avg
+from django.http import response, JsonResponse
+import json
 
 from .models import *
 
 
 def home_page(request):
+    session_key = request.session.session_key
+    if not session_key:
+        request.session.cycle_key()
+
     content = {
         'pagename': 'Главная страница',
-        'type': '',
         'categs': Category.objects.all(),
         'prod_recom': Product.objects.annotate(prodreate=Avg('productcomment__rate')).order_by('-prodreate'),
         'questions': Question.objects.all()
@@ -20,15 +25,36 @@ def home_page(request):
 
 
 def cart_page(request):
+    session_key = request.session.session_key
+    if not session_key:
+        request.session.cycle_key()
+
+    try:
+        cart = Cart.objects.get(session_key=session_key)
+    except Cart.DoesNotExist:
+        cart = Cart(session_key=session_key)
+        cart.save()
+
+    totals = 0
+
+    for cp in cart.cartproduct_set.all():
+        totals += cp.amount * cp.product.price
+
     content = {
         'pagename': 'Корзина',
         'categs': Category.objects.all(),
-        'type': 'sub-head'
+        'items': cart.cartproduct_set.all(),
+        'cartSize': len(cart.cartproduct_set.all()),
+        'tot': totals
     }
     return render(request, 'shop/card-page.html', content)
 
 
 def about_page(request):
+    session_key = request.session.session_key
+    if not session_key:
+        request.session.cycle_key()
+
     content = {
         'pagename': 'О компании',
         'categs': Category.objects.all(),
@@ -38,6 +64,10 @@ def about_page(request):
 
 
 def product_page(request, pk):
+    session_key = request.session.session_key
+    if not session_key:
+        request.session.cycle_key()
+
     subcategory = Subcategory.objects.filter(category_id=pk)
     products = Product.objects.filter(subcategory__in=subcategory)
     max_min_min = ProductChar.objects.filter(prod__in=products).aggregate(Max('price'), Min('price'))
@@ -69,8 +99,11 @@ def product_page(request, pk):
 
 
 def product_detail_page(request, pk):
-    product = Product.objects.get(id=pk)
+    session_key = request.session.session_key
+    if not session_key:
+        request.session.cycle_key()
 
+    product = Product.objects.get(id=pk)
 
     content = {
         'categs': Category.objects.all(),
@@ -83,6 +116,10 @@ def product_detail_page(request, pk):
 
 
 def product_subcat_page(request, pk):
+    session_key = request.session.session_key
+    if not session_key:
+        request.session.cycle_key()
+
     products = Product.objects.filter(subcategory_id=pk)
     max_min_min = ProductChar.objects.filter(prod__in=products).aggregate(Max('price'), Min('price'))
     props = Property.objects.filter(prodval__prod_char__prod__in=products).distinct()
@@ -112,6 +149,10 @@ def product_subcat_page(request, pk):
 
 
 def filter_prod(cat_id, prop):
+    session_key = request.session.session_key
+    if not session_key:
+        request.session.cycle_key()
+
     prods = ProductChar.objects.filter(prod__subcategory__category_id=cat_id)
 
     for i in prop.keys():
@@ -120,3 +161,95 @@ def filter_prod(cat_id, prop):
     return prods
 
 
+def addCart(request):
+    session_key = request.session.session_key
+    if not session_key:
+        request.session.cycle_key()
+
+    try:
+        cart = Cart.objects.get(session_key=session_key)
+    except Cart.DoesNotExist:
+        cart = Cart(session_key=session_key)
+        cart.save()
+
+    id = request.POST['prodchars']
+    amount = request.POST['amount']
+    prod = ProductChar.objects.get(pk=id)
+    pass_bool = True
+
+    for i in cart.cartproduct_set.all():
+        if prod == i.product:
+            pass_bool = False
+            i.amount += int(amount)
+            i.save()
+
+    if pass_bool:
+        cartElement = CartProduct(cart=cart, product=prod, amount=amount)
+        cartElement.save()
+
+    return redirect('shop:cart')
+
+
+def delete_item(request):
+    session_key = request.session.session_key
+    if not session_key:
+        request.session.cycle_key()
+
+    try:
+        cart = Cart.objects.get(session_key=session_key)
+    except Cart.DoesNotExist:
+        cart = Cart(session_key=session_key)
+        cart.save()
+
+    prod = cart.cartproduct_set.get(id=request.GET.get('product_id'))
+
+    prod.delete()
+
+    cartList = []
+
+    totals = 0
+    for cp in cart.cartproduct_set.all():
+        totals += cp.amount * cp.product.price
+
+    for i in cart.cartproduct_set.all():
+        props = []
+        for j in i.product.prodval_set.all():
+            props.append({
+                'prop': j.prop.name,
+                'value': j.value
+            })
+        img = i.product.prod.productphoto_set.all().first()
+        cartList.append({
+            "name": i.product.prod.name,
+            "price": i.product.price,
+            "img": img.img.url,
+            "props": props,
+            "alt": img.alt,
+            "id": i.id,
+            "totals": totals,
+            "amount": i.amount
+        })
+
+    return JsonResponse(json.dumps(cartList), safe=False)
+
+
+def changeAmount(request):
+    session_key = request.session.session_key
+    if not session_key:
+        request.session.cycle_key()
+
+    try:
+        cart = Cart.objects.get(session_key=session_key)
+    except Cart.DoesNotExist:
+        cart = Cart(session_key=session_key)
+        cart.save()
+
+
+    prod = cart.cartproduct_set.get(id=request.GET.get('product_id'))
+    print(prod.amount)
+
+    prod.amount = request.GET.get('amount')
+    prod.save()
+
+    print(prod.amount)
+    return JsonResponse(json.dumps([]), safe=False)
