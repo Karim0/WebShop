@@ -52,7 +52,7 @@ def cart_page(request):
     content = {
         'pagename': 'Корзина',
         'categs': Category.objects.all(),
-        'items': cart.cartproduct_set.all(),
+        'items': cart.cartproduct_set.all().order_by('pk'),
         'cartSize': len(cart.cartproduct_set.all()),
         'tot': totals
     }
@@ -246,7 +246,7 @@ def delete_item(request):
 
     cartList = []
 
-    for i in cart.cartproduct_set.all():
+    for i in cart.cartproduct_set.all().order_by('pk'):
         props = []
         for j in i.product.prodval_set.all():
             props.append({
@@ -287,7 +287,7 @@ def changeAmount(request):
         prod.save()
     cartList = []
 
-    for i in cart.cartproduct_set.all():
+    for i in cart.cartproduct_set.all().order_by('pk'):
         props = []
         for j in i.product.prodval_set.all():
             props.append({

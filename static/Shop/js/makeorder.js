@@ -82,17 +82,25 @@ function addAmount(id) {
                                                         </button>
                                                     </div>
                                                     </form>
+                                                    
                                                 </div>
                                             </div>
                                             <div class="d-flex justify-content-between align-items-center">
-                                                <div>
-                                                    <button onclick="delItem(${cart[i]['id']})"
-                                                            class="btn small text-uppercase mr-3">
-                                                        <i
-                                                                class="fas fa-trash-alt mr-1"></i> Убрать из
-                                                        корзины
-                                                    </button>
-                                                </div>
+                                                
+                                                <form action="/shop/product/delete"
+                                                                      id="delete_item${cart[i]['id']}"
+                                                                      method="get">
+                            
+                                                                    <div>
+                                                                        <button onclick="delItem(${cart[i]['id']})"
+                                                                                class="btn small text-uppercase mr-3">
+                                                                            <i
+                                                                                    class="fas fa-trash-alt mr-1"></i>
+                                                                            Убрать из
+                                                                            корзины
+                                                                        </button>
+                                                                    </div>
+                                                                </form>
                                                 <p class="mb-0"><span
                                                         id="item{{ cp.id }}Price">${cart[i]['price']}</span>
                                                     X <span id="item{{ cp.id }}Count">${cart[i]['amount']}</span>
@@ -211,14 +219,20 @@ function minusAmount(id) {
                                                 </div>
                                             </div>
                                             <div class="d-flex justify-content-between align-items-center">
-                                                <div>
-                                                    <button onclick="delItem(${cart[i]['id']})"
-                                                            class="btn small text-uppercase mr-3">
-                                                        <i
-                                                                class="fas fa-trash-alt mr-1"></i> Убрать из
-                                                        корзины
-                                                    </button>
-                                                </div>
+                                                <form action="/shop/product/delete"
+                                                                      id="delete_item${cart[i]['id']}"
+                                                                      method="get">
+                            
+                                                                    <div>
+                                                                        <button onclick="delItem(${cart[i]['id']})"
+                                                                                class="btn small text-uppercase mr-3">
+                                                                            <i
+                                                                                    class="fas fa-trash-alt mr-1"></i>
+                                                                            Убрать из
+                                                                            корзины
+                                                                        </button>
+                                                                    </div>
+                                                                </form>
                                                 <p class="mb-0"><span
                                                         id="item{{ cp.id }}Price">${cart[i]['price']}</span>
                                                     X <span id="item{{ cp.id }}Count">${cart[i]['amount']}</span>
@@ -326,14 +340,20 @@ function delItem(id) {
                                                 </div>
                                             </div>
                                             <div class="d-flex justify-content-between align-items-center">
-                                                <div>
-                                                    <button onclick="delItem(${cart[i]['id']})"
-                                                            class="btn small text-uppercase mr-3">
-                                                        <i
-                                                                class="fas fa-trash-alt mr-1"></i> Убрать из
-                                                        корзины
-                                                    </button>
-                                                </div>
+                                                <form action="/shop/product/delete"
+                                                                      id="delete_item${cart[i]['id']}"
+                                                                      method="get">
+                            
+                                                                    <div>
+                                                                        <button onclick="delItem(${cart[i]['id']})"
+                                                                                class="btn small text-uppercase mr-3">
+                                                                            <i
+                                                                                    class="fas fa-trash-alt mr-1"></i>
+                                                                            Убрать из
+                                                                            корзины
+                                                                        </button>
+                                                                    </div>
+                                                                </form>
                                                 <p class="mb-0"><span
                                                         id="item{{ cp.id }}Price">${cart[i]['price']}</span>
                                                     X <span id="item{{ cp.id }}Count">${cart[i]['amount']}</span>
