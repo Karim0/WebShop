@@ -1,12 +1,12 @@
 from django import template
 from django.template.defaultfilters import stringfilter
 
+# from shop.models import CartProduct
 register = template.Library()
 
 
 @register.filter()
 def is_contains(value, key):
-
     return key in value.values()
 
 
@@ -21,3 +21,8 @@ def unique(value):
     for x in value:
         output.add(x.value)
     return output
+
+# @register.filter()
+# def totPrice(id):
+#     cp = CartProduct.objects.get(pk=id)
+#     return cp.amount*cp.product.price

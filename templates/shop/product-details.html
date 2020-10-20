@@ -27,49 +27,52 @@
                         </div>
                     </div>
                     <div class="col-lg-6 filters-box" style="border:0px solid gray">
-                        <h2 class="prod-name">{{ product.name }}</h2>
+                        <form action="{% url 'shop:add_cart' %}" method="post">
+                        {% csrf_token %}
+                            <h2 class="prod-name">{{ product.name }}</h2>
+                            <ul class="filters mt-5">
+                                {% for pr in prodch %}
+                                    <li class="text-center m-0 mb-3">
+                                        <div class="filter">
+                                            <label id="chars{{ pr.id }}" for="prodch{{ pr.id }}"
+                                                   onclick="select_char({{ pr.id }}, {{ pr.price }})">
+                                                {% for v in pr.prodval_set.all %}
+                                                    {{ v.prop.name }}:
+                                                    <b style="color: black; margin-right: 5px">{{ v.value }}</b>
+                                                {% endfor %}
+                                            </label>
+                                            <input type="radio" name="prodchars" id="prodch{{ pr.id }}"
+                                                   value="{{ pr.id }}" hidden>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                            <div class="counter-box">
+                                <div class="">
+                                    <a onclick="modify('minus')"
+                                            class="minus decrease"><i class="fas fa-minus"></i>
+                                    </a>
+                                    <input class="quantity" min="0" name="amount" value="0"
+                                           type="number" id="countAmount" onchange="modify('change')">
+                                    <a onclick="modify('plus')"
+                                            class="plus increase"><i class="fas fa-plus"></i>
+                                    </a>
+                                </div>
+                            </div>
 
-                        <ul class="filters mt-5">
-                            {% for pr in prop %}
-                                <li class="text-center m-0 mb-3">
-                                    <h3 for=""> {{ pr }}</h3>
-                                    <div class="filter">
-                                        {% for pv in prop_val|get_val_map:pr %}
-                                            <div class="filter-val">
-                                                <label for="">{{ pv }}</label>
-                                                <input type="radio" name="" id="">
-                                            </div>
-                                        {% endfor %}
+                            <div class="price-box">
+                                <h3 class="title-price">ИТОГ</h3>
+                                <p><span id="pricebox" style="font-size: 2em"> 0 </span> (<span id="cost">0</span>тг X
+                                    <span
+                                            id="amountbox">0</span>шт)</p>
+                            </div>
 
-                                    </div>
-                                </li>
-                            {% endfor %}
-                        </ul>
-
-                        <div class="counter-box">
-                            <div class="def-number-input number-input safari_only mt-5">
-                                <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
-                                        class="minus decrease"><i class="fas fa-minus"></i>
-                                </button>
-                                <input class="quantity" min="0" name="quantity" value="1"
-                                       type="number">
-                                <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
-                                        class="plus increase"><i class="fas fa-plus"></i>
+                            <div class="section">
+                                <button class="btn btn-success" type="submit">
+                                    Добавить в корзину
                                 </button>
                             </div>
-                        </div>
-
-                        <div class="price-box">
-                            <h3 class="title-price">ИТОГ</h3>
-                            <p><span> 3.99 </span> X <span>1</span></p>
-                        </div>
-
-                        <div class="section" style="padding-bottom:20px;">
-                            <button class="btn btn-success"><span style="margin-right:20px"
-                                                                  class="glyphicon glyphicon-shopping-cart"
-                                                                  aria-hidden="true"></span> Добавить в корзину
-                            </button>
-                        </div>
+                        </form>
                     </div>
 
                     <div class="col-xs-9">
@@ -196,7 +199,7 @@
                                                 </div>
                                                 <textarea placeholder="Ваш коментарий"></textarea>
 
-                                                <button> Оставить коментарий </button>
+                                                <button> Оставить коментарий</button>
                                             </form>
                                         </div>
                                     </li>

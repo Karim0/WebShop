@@ -749,7 +749,6 @@ p {
 
 .product-screen .section {
     width: 100%;
-    margin-left: -15px;
     padding: 2px;
     padding-left: 15px;
     padding-right: 15px;
@@ -757,7 +756,6 @@ p {
 }
 
 .product-screen .title-price {
-    margin-top: 30px;
     margin-bottom: 0;
     color: black;
     border: none;
@@ -766,17 +764,17 @@ p {
 .product-screen .filter {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: flex-start;
 }
 
-.product-screen .filter .filter-val {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    margin: 5px;
-    align-items: center;
+.product-screen .filter label {
+    text-align: left;
+    width: 100%;
 }
 
+.product-screen .filter label:hover {
+    border-bottom: 1px solid black;
+}
 
 .product-screen .filter .filter-val label {
     margin: 5px;
@@ -786,6 +784,7 @@ p {
     border-bottom: 1px solid black;
     font-weight: bold;
 }
+
 .product-screen .product_comments {
     padding: 10px;
 }
@@ -871,11 +870,12 @@ p {
 }
 
 .filters-box .price-box {
+    margin-top: 40px;
     display: flex;
     width: 100%;
-    justify-content: space-around;
-    padding: 5px 0;
-    align-items: center;
+    justify-content: space-between;
+    padding: 5px 15px;
+    align-items: flex-end;
 }
 
 .shopping-screen .filter-sidebar {
