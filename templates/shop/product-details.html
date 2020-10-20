@@ -28,7 +28,7 @@
                     </div>
                     <div class="col-lg-6 filters-box" style="border:0px solid gray">
                         <form action="{% url 'shop:add_cart' %}" method="post">
-                        {% csrf_token %}
+                            {% csrf_token %}
                             <h2 class="prod-name">{{ product.name }}</h2>
                             <ul class="filters mt-5">
                                 {% for pr in prodch %}
@@ -50,12 +50,12 @@
                             <div class="counter-box">
                                 <div class="">
                                     <a onclick="modify('minus')"
-                                            class="minus decrease"><i class="fas fa-minus"></i>
+                                       class="minus decrease"><i class="fas fa-minus"></i>
                                     </a>
                                     <input class="quantity" min="0" name="amount" value="0"
                                            type="number" id="countAmount" onchange="modify('change')">
                                     <a onclick="modify('plus')"
-                                            class="plus increase"><i class="fas fa-plus"></i>
+                                       class="plus increase"><i class="fas fa-plus"></i>
                                     </a>
                                 </div>
                             </div>

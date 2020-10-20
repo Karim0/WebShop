@@ -18,7 +18,8 @@
                 <div class="row">
                     <div class="col-lg-8">
                         <div class="mb-2">
-                            <form>
+                            <form method="post" action="{% url 'shop:make_order' %}" id="make_order">
+                                {% csrf_token %}
                                 <div class="form-group">
                                     <label for="full_name">Ваше имя</label>
                                     <input type="text" class="form-control" id="full_name" name="full_name"
@@ -34,18 +35,21 @@
                                     <input type="email" class="form-control" id="email" name="email"
                                            placeholder="email@example.com">
                                 </div>
+                                <div class="form-group d-flex justify-content-around align-items-center">
+                                    <div>
+                                        <label for="courier" class="mr-3"> Курьером </label>
+                                        <input type="radio" name="delivery" id="courier" checked onclick="courierSel()">
+                                    </div>
 
-                                <div class="form-group">
-                                    <label for="courier"> Курьером </label>
-                                    <input type="radio" name="delivery" id="courier" checked onclick="courierSel()">
-
-                                    <label for="selfdel"> Самовывоз </label>
-                                    <input type="radio" name="delivery" id="selfdel" onclick="selfSel()">
+                                    <div>
+                                        <label for="selfdel" class="mr-3"> Самовывоз </label>
+                                        <input type="radio" name="delivery" id="selfdel" onclick="selfSel()">
+                                    </div>
                                 </div>
                                 <div id="optionalFields" class="p-0 m-0">
                                     <div class="form-group">
-                                        <label for="exampleFormControlSelect1">Выберите город</label>
-                                        <select class="form-control" id="exampleFormControlSelect1">
+                                        <label for="citySel">Выберите город</label>
+                                        <select class="form-control" id="citySel" name="city">
                                             <option>Алматы</option>
                                             <option>Нур-Султан</option>
                                             <option>Шымкент</option>
@@ -58,13 +62,27 @@
                                                placeholder="улица, дом, кв">
                                     </div>
                                 </div>
+                                <div class="form-group d-flex justify-content-around align-items-center">
+                                    <div>
+                                        <label for="bCard" class="mr-3"> Банковской картой </label>
+                                        <input type="radio" name="payment" id="bCard" checked
+                                               onclick="paySel('картой')">
+                                    </div>
+
+                                    <div>
+                                        <label for="cash" class="mr-3"> Наличными </label>
+                                        <input type="radio" name="payment" id="cash" onclick="paySel('наличными')">
+                                    </div>
+                                </div>
                             </form>
                         </div>
                         <div class="mb-3">
                             <div class="pt-4 wish-list">
                                 <h2 class="mb-4">В Корзине (<span id="cartSize">{{ cartSize }}</span>)</h2>
-                                <form action="{% url 'shop:delete_item' %}" id="delete_item" method="get">
-                                    <form action="{% url 'shop:modify' %}" id="modifyForm" method="get">
+                                <div id="cartItemsList">
+                                    {% if cartSize == 0 %}
+                                        Пока нет товаров
+                                    {% else %}
                                         {% for cp in items %}
                                             <div class="cart-item">
                                                 <div class="row mb-4">
@@ -86,35 +104,44 @@
                                                                     {% endfor %}
                                                                 </div>
                                                                 <div class="col-lg-6 col-md-6 col-12 counter-box text-center">
-                                                                    <div class="def-number-input number-input safari_only mb-0 w-100">
-                                                                        <button type="submit"
-                                                                                onclick="minusAmount({{ cp.id }})"
-                                                                                class="minus decrease"><i
-                                                                                class="fas fa-minus"></i>
-                                                                        </button>
-                                                                        <input class="quantity" min="0"
-                                                                               name="item{{ cp.id }}Amount"
-                                                                               id="item{{ cp.id }}Amount"
-                                                                               value="{{ cp.amount }}"
-                                                                               type="number">
-                                                                        <button type="submit"
-                                                                                onclick="addAmount({{ cp.id }})"
-                                                                                class="plus increase"><i
-                                                                                class="fas fa-plus"></i>
-                                                                        </button>
-                                                                    </div>
+                                                                    <form action="{% url 'shop:modify' %}"
+                                                                          id="modifyItem{{ cp.id }}"
+                                                                          method="get">
+                                                                        <div class="def-number-input number-input safari_only mb-0 w-100">
+                                                                            <button type="submit"
+                                                                                    onclick="minusAmount({{ cp.id }})"
+                                                                                    class="minus decrease"><i
+                                                                                    class="fas fa-minus"></i>
+                                                                            </button>
+                                                                            <input class="quantity" min="0"
+                                                                                   name="item{{ cp.id }}Amount"
+                                                                                   id="item{{ cp.id }}Amount"
+                                                                                   value="{{ cp.amount }}"
+                                                                                   type="number">
+                                                                            <button type="submit"
+                                                                                    onclick="addAmount({{ cp.id }})"
+                                                                                    class="plus increase"><i
+                                                                                    class="fas fa-plus"></i>
+                                                                            </button>
+                                                                        </div>
+                                                                    </form>
                                                                 </div>
                                                             </div>
                                                             <div class="d-flex justify-content-between align-items-center">
-                                                                <div>
-                                                                    <button onclick="delItem({{ cp.id }})"
-                                                                            class="btn small text-uppercase mr-3">
-                                                                        <i
-                                                                                class="fas fa-trash-alt mr-1"></i>
-                                                                        Убрать из
-                                                                        корзины
-                                                                    </button>
-                                                                </div>
+                                                                <form action="{% url 'shop:delete_item' %}"
+                                                                      id="delete_item{{ cp.id }}"
+                                                                      method="get">
+
+                                                                    <div>
+                                                                        <button onclick="delItem({{ cp.id }})"
+                                                                                class="btn small text-uppercase mr-3">
+                                                                            <i
+                                                                                    class="fas fa-trash-alt mr-1"></i>
+                                                                            Убрать из
+                                                                            корзины
+                                                                        </button>
+                                                                    </div>
+                                                                </form>
                                                                 <p class="mb-0"><span
                                                                         id="item{{ cp.id }}Price">{{ cp.product.price }}</span>
                                                                     X
@@ -126,9 +153,9 @@
                                                 </div>
                                             </div>
                                         {% endfor %}
-                                    </form>
-                                </form>
-                                <hr class="mb-4">
+                                    {% endif %}
+                                    <hr class="mb-4">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -141,6 +168,10 @@
                                         Доставка
                                         <span id="delType"> курьером </span>
                                     </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                        Способ оплаты
+                                        <span id="paymentType"> картой </span>
+                                    </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
                                         <div>
                                             <strong> Общая сумма </strong>
@@ -148,7 +179,7 @@
                                         <span style="font-weight: bold" id="totalCheck"> {{ tot }} </span>
                                     </li>
                                 </ul>
-                                <button type="button" class="btn btn-primary btn-block"> ЗАКАЗАТЬ</button>
+                                <button type="submit" class="btn btn-primary btn-block" form="make_order"> ЗАКАЗАТЬ</button>
                             </div>
                         </div>
 
