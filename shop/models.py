@@ -56,10 +56,12 @@ class ProductComment(models.Model):
     prod = models.ForeignKey(Product, on_delete=models.CASCADE)
     text = models.TextField()
     rate = models.IntegerField(default=0)
+    user_name = models.CharField(max_length=255, default='')
+    phone_number = models.CharField(max_length=255, default='')
     pub_date = models.DateField(default=datetime.date.today)
 
     def __str__(self):
-        return f'{self.prod.name}: alt: {self.alt}, video url - {self.img.url}'
+        return f'{self.prod.name}'
 
 
 class ProductPhoto(models.Model):

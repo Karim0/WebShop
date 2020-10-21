@@ -999,3 +999,19 @@ p {
     color: #00afea;
 }
 
+.page_list {
+    display: flex;
+    justify-content: normal;
+}
+
+.page_list li{
+    margin: 0 !important;
+}
+
+.page_list li a{
+    padding: 5px 10px;
+}
+
+.page_list li a:hover{
+    background-color: #cccccc;
+}

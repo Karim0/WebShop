@@ -28,7 +28,7 @@
                     </div>
                     <div class="col-lg-6 filters-box" style="border:0px solid gray">
                         <form action="{% url 'shop:add_cart' %}" method="post">
-                        {% csrf_token %}
+                            {% csrf_token %}
                             <h2 class="prod-name">{{ product.name }}</h2>
                             <ul class="filters mt-5">
                                 {% for pr in product.productchar_set.all %}
@@ -50,12 +50,12 @@
                             <div class="counter-box">
                                 <div class="">
                                     <a onclick="modify('minus')"
-                                            class="minus decrease"><i class="fas fa-minus"></i>
+                                       class="minus decrease"><i class="fas fa-minus"></i>
                                     </a>
                                     <input class="quantity" min="0" name="amount" value="0"
                                            type="number" id="countAmount" onchange="modify('change')">
                                     <a onclick="modify('plus')"
-                                            class="plus increase"><i class="fas fa-plus"></i>
+                                       class="plus increase"><i class="fas fa-plus"></i>
                                     </a>
                                 </div>
                             </div>
@@ -136,54 +136,47 @@
                                 </small>
                             </div>
                             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                <ul class="product_comments">
-                                    <li>
-                                        <div class="comment-box">
-                                            <span class="commentator"> Nick Fury </span> <span class="star"><i
-                                                class="fas fa-star"></i></span>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin gravida,
-                                                mauris at vestibulum malesuada, lacus leo vulputate metus, ut fermentum
-                                                urna sem quis erat. Praesent nec ipsum eu dolor scelerisque cursus. Sed
-                                                rutrum elit neque, vitae feugiat tellus finibus vel. Aliquam interdum
-                                                lacus metus, vitae lacinia lorem suscipit ultricies. Nam pretium sit
-                                                amet justo sit amet accumsan. Curabitur posuere sit amet massa sit amet
-                                                commodo. </p>
-                                            <span class="date">20.20.20</span>
-                                        </div>
-                                    </li>
+                                <ul class="product_comments w-100">
+                                    {% for com in comment %}
+                                        <li>
+                                            <div class="comment-box">
+                                                <span class="commentator"> {{ com.user_name }} </span>
 
-                                    <li>
-                                        <div class="comment-box">
-                                            <span class="commentator"> Nick Fury </span> <span class="star"><i
-                                                class="fas fa-star"></i></span> <span class="star"><i
-                                                class="fas fa-star"></i></span> <span class="star"><i
-                                                class="fas fa-star"></i></span> <span class="star"><i
-                                                class="fas fa-star"></i></span> <span class="star"><i
-                                                class="fas fa-star"></i></span>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin gravida,
-                                                mauris at vestibulum malesuada, lacus leo vulputate metus, ut fermentum
-                                                urna sem quis erat. Praesent nec ipsum eu dolor scelerisque cursus. Sed
-                                                rutrum elit neque, vitae feugiat tellus finibus vel. Aliquam interdum
-                                                lacus metus, vitae lacinia lorem suscipit ultricies. Nam pretium sit
-                                                amet justo sit amet accumsan. Curabitur posuere sit amet massa sit amet
-                                                commodo. </p>
-                                            <span class="date">20.20.20</span>
-                                        </div>
-                                    </li>
+                                                {% for rate in ''|center:com.rate %}
+                                                    <span class="star"><i class="fas fa-star"></i></span>
+                                                {% endfor %}
+
+                                                <p>{{ com.text }}</p>
+                                                <span class="date">{{ com.pub_date }}</span>
+                                            </div>
+                                        </li>
+                                    {% endfor %}
+
+                                    {% if comment.paginator.num_pages > 1 %}
+                                        <li class="d-flex justify-content-center">
+                                            <ul class="page_list">
+                                                {% for p in  comment.paginator.page_range %}
+                                                    <li><a href="?page={{ p }}">{{ p }}</a></li>
+                                                {% endfor %}
+                                            </ul>
+                                        </li>
+                                    {% endif %}
 
                                     <li class="leave-comment">
                                         <div>
-                                            <form action="">
+                                            <form action="{% url 'shop:add_comment' %}" method="post">
+                                                {% csrf_token %}
+                                                <input type="number" name="prod_id" value="{{ product.id }}" hidden>
                                                 <div class="row p-0 m-0">
                                                     <div class="form-group p-0 col-lg-6">
-                                                        <input class="w-100" type="text" name="" id=""
+                                                        <input class="w-100" type="text" name="user_name" id=""
                                                                placeholder="Ваше ФИО">
 
-                                                        <input class="w-100" type="text" name="" id=""
+                                                        <input class="w-100" type="text" name="phone_number" id=""
                                                                placeholder="Ваш номер телефона">
                                                     </div>
                                                     <div class="col-lg-6 d-flex align-items-center">
-                                                        <div class="rating d-flex justify-content-center">
+                                                        <div class="rating d-flex justify-content-center flex-row-reverse">
                                                             <span><input type="radio" name="rating" id="str5" value="5"><label
                                                                     for="str5" class="fas fa-star"></label></span>
                                                             <span><input type="radio" name="rating" id="str4" value="4"><label
@@ -197,7 +190,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <textarea placeholder="Ваш коментарий"></textarea>
+                                                <textarea placeholder="Ваш коментарий" name="text"></textarea>
 
                                                 <button> Оставить коментарий</button>
                                             </form>

@@ -7,6 +7,7 @@ from django.db.models import Max, Min, Avg
 from django.contrib.postgres.search import SearchVector, SearchRank, SearchQuery
 from django.http import response, JsonResponse
 import json
+from django.core.paginator import Paginator
 
 from .models import *
 
@@ -66,22 +67,14 @@ def about_page(request):
 
 def product_detail_page(request, pk):
     product = Product.objects.get(id=pk)
-    prop = set()
-    prop_val = {}
-
-    for i in Property.objects.filter(prodval__prod_char__in=product.productchar_set.all()).distinct().values_list():
-        prop.add(i[1])
-        prop_val[i[1]] = []
-        for j in ProdVal.objects.filter(prod_char__in=product.productchar_set.all()).filter(prop=i[0]).distinct():
-            prop_val[i[1]].append(j.value)
+    page = request.GET.get('page', 1)
 
     content = {
         'categs': Category.objects.all(),
         'pagename': 'О товаре',
         'type': 'sub-head',
         'product': product,
-        'prop': prop,
-        'prop_val': prop_val,
+        'comment': Paginator(product.productcomment_set.all(), 5).get_page(page),
     }
     return render(request, 'shop/product-details.html', content)
 
@@ -107,8 +100,13 @@ def product_page(request, pk):
     max_price = int(request.GET.get('max_price', -1))
     min_price = int(request.GET.get('min_price', -1))
 
+    subcat = int(request.GET.get('subcat', -1))
+
+    if subcat != -1:
+        products = Product.objects.filter(subcategory_id=subcat)
+
     for i in request.GET.keys():
-        if request.GET[i] != '-1' and i not in ['max_price', 'min_price', 'search', 'order']:
+        if request.GET[i] != '-1' and i not in ['max_price', 'min_price', 'search', 'order', 'subcat', 'page']:
             products = products.filter(productchar__prodval__value=request.GET[i]).distinct()
 
     if min_price != -1 and max_price != -1:
@@ -124,89 +122,22 @@ def product_page(request, pk):
     elif order == 'Цена по убыванию':
         products = products.annotate(price=Min('productchar__price')).order_by('-price')
 
+    page = request.GET.get('page', 1)
     content = {
         'pagename': 'Продукт',
         'type': 'sub-head',
         'categs': Category.objects.all(),
         'subcategory': subcategory,
-        'product': products,
-        'props': props,
-        'max_price': max_min_min['price__max'],
-        'min_price': max_min_min['price__min'],
-        'max_price_curr': max_price,
-        'min_price_curr': min_price,
-        'search': search
-    }
-    return render(request, 'shop/shop.html', content)
-
-
-def product_subcat_page(request, pk):
-    session_key = request.session.session_key
-    if not session_key:
-        request.session.cycle_key()
-    search = request.GET.get('search', None)
-    order = request.GET.get('order', None)
-    if search:
-        # products = Product.objects.annotate(search=SearchVector('name', 'desc_short', 'desc')).filter(search=search)
-        products = Product.objects.annotate(
-            rank=SearchRank(SearchVector('name', 'desc_short', 'desc'), SearchQuery(search))).filter(rank__gte=0.05)
-    else:
-        products = Product.objects.filter(subcategory_id=pk)
-
-
-
-    products = Product.objects.filter(subcategory_id=pk)
-    max_min_min = ProductChar.objects.filter(prod__in=products).aggregate(Max('price'), Min('price'))
-    props = Property.objects.filter(prodval__prod_char__prod__in=products).distinct()
-
-    max_price = int(request.GET.get('max_price', -1))
-    min_price = int(request.GET.get('min_price', -1))
-
-    for i in request.GET.keys():
-        if request.GET[i] != '-1' and i not in ['max_price', 'min_price', 'search', 'order']:
-            products = products.filter(productchar__prodval__value=request.GET[i]).distinct()
-
-    if min_price != -1 and max_price != -1:
-        products = products.filter(productchar__price__gte=min_price).filter(
-            productchar__price__lte=max_price).distinct()
-
-    if order == 'По рейтингу' and search:
-        products = products.order_by('-rank')
-    elif order == 'По рейтингу':
-        products = products.annotate(rate=Avg('productcomment__rate')).order_by('-rate')
-    elif order == 'Цена по возрастанию':
-        products = products.annotate(price=Min('productchar__price')).order_by('price')
-        print(products)
-    elif order == 'Цена по убыванию':
-        products = products.annotate(price=Min('productchar__price')).order_by('-price')
-
-    content = {
-        'categs': Category.objects.all(),
-        'pagename': 'Продукт',
-        'type': 'sub-head',
-        'product': products,
+        'product': Paginator(products, 9).get_page(page),
         'props': props,
         'max_price': max_min_min['price__max'],
         'min_price': max_min_min['price__min'],
         'max_price_curr': max_price,
         'min_price_curr': min_price,
         'search': search,
-        'order': order
+        'cur_subcat': subcat
     }
     return render(request, 'shop/shop.html', content)
-
-
-def filter_prod(cat_id, prop):
-    # session_key = request.session.session_key
-    # if not session_key:
-    #     request.session.cycle_key()
-
-    prods = ProductChar.objects.filter(prod__subcategory__category_id=cat_id)
-
-    for i in prop.keys():
-        prods = prods.filter(prodval__value__contains=prop[i]).distinct()
-
-    return prods
 
 
 def addCart(request):
@@ -292,7 +223,6 @@ def changeAmount(request):
         cart = Cart(session_key=session_key)
         cart.save()
 
-
     prod = cart.cartproduct_set.get(id=request.GET.get('product_id'))
     print(prod.amount)
 
@@ -301,3 +231,15 @@ def changeAmount(request):
 
     print(prod.amount)
     return JsonResponse(json.dumps([]), safe=False)
+
+
+def add_comment(request):
+    pk = int(request.POST.get('prod_id'))
+    comment = ProductComment()
+    comment.prod_id = pk
+    comment.rate = int(request.POST.get('rating', 0))
+    comment.text = request.POST.get('text')
+    comment.pub_date = datetime.datetime.now()
+    comment.user_name = request.POST.get('user_name')
+    comment.save()
+    return redirect('shop:product_detail', pk=pk)

@@ -30,16 +30,13 @@
                             {% endif %}
                             <div class="filter-sidebar">
                                 {% if subcategory %}
-                                    <div class="sub-cat-box">
-                                        <h2>Подкатегории</h2>
-                                        <ul class="sub-cats">
-                                            {% for sub in subcategory %}
-                                                <li>
-                                                    <a href="{% url 'shop:product_subcat' sub.id %}"> {{ sub.name }} </a>
-                                                </li>
-                                            {% endfor %}
-                                        </ul>
-                                    </div>
+                                    <select name="subcat" id="" class="form-control">
+                                        <option value="-1">Не выбрано</option>
+                                        {% for sub in subcategory %}
+                                            <option value="{{ sub.id }}" {% if cur_subcat == sub.id %}
+                                                    selected {% endif %}>{{ sub.name }}</option>
+                                        {% endfor %}
+                                    </select>
                                 {% endif %}
                                 <div class="filters-box">
                                     <h2>Фильтры</h2>
@@ -161,6 +158,17 @@
 
                                 </div>
                             </div>
+                            {% if product.paginator.num_pages > 1 %}
+                                <div class="row">
+                                    <div class="col-12 ">
+                                        <ul class="page_list justify-content-center">
+                                            {% for p in  product.paginator.page_range %}
+                                                <li><a href="?page={{ p }}">{{ p }}</a></li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
