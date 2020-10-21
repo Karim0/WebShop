@@ -5,7 +5,6 @@ $(document).ready(function(){
     $('.rating input').click(function () {
         $(".rating span").removeClass('checked');
         $(this).parent().addClass('checked');
-        console.log('asdasdas');
     });
 
     $('input:radio').change(
