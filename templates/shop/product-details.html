@@ -34,6 +34,8 @@
                                 {% for pr in product.productchar_set.all %}
                                     <li class="text-center m-0 mb-3">
                                         <div class="filter">
+                                            <input type="radio" name="prodchars" id="prodch{{ pr.id }}"
+                                                   value="{{ pr.id }}" hidden>
                                             <label id="chars{{ pr.id }}" for="prodch{{ pr.id }}"
                                                    onclick="select_char({{ pr.id }}, {{ pr.price }})">
                                                 {% for v in pr.prodval_set.all %}
@@ -41,12 +43,12 @@
                                                     <b style="color: black; margin-right: 5px">{{ v.value }}</b>
                                                 {% endfor %}
                                             </label>
-                                            <input type="radio" name="prodchars" id="prodch{{ pr.id }}"
-                                                   value="{{ pr.id }}" hidden>
+
                                         </div>
                                     </li>
                                 {% endfor %}
                             </ul>
+                        <div id="opt" class="m-0 p-0">
                             <div class="counter-box">
                                 <div class="">
                                     <a onclick="modify('minus')"
@@ -72,6 +74,7 @@
                                     Добавить в корзину
                                 </button>
                             </div>
+                        </div>
                         </form>
                     </div>
 

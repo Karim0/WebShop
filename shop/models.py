@@ -1,6 +1,11 @@
 from django.db import models
 import datetime
 
+STATUS = [
+    ('Не проверен', 'Не проверен'),
+    ('Проверен', 'Проверен'),
+]
+
 
 class Question(models.Model):
     question = models.CharField(max_length=255)
@@ -119,6 +124,7 @@ class CartProduct(models.Model):
         return f"Название товара: {self.product.product.name}  --  " \
                f"Размер: {self.product.size}  --  Цвет: {self.product.color}"
 
+
 # class Article(models.Model):
 #     title = models.CharField(max_length=200, help_text="(максимальное число символов: 200)",
 #                              verbose_name="Название статьи ")
@@ -193,35 +199,23 @@ class CartProduct(models.Model):
 #         verbose_name_plural = "Профили сайта"
 
 
-# class Order(models.Model):
-#     name = models.CharField(max_length=100, verbose_name="Имя клиента")
-#     address = models.CharField(max_length=100, verbose_name="Адресс клиента")
-#     phone = models.CharField(max_length=100, verbose_name="Телефон клиента")
-#     total_sum = models.IntegerField(default=0, verbose_name="Общая сумма заказа")
-#     pub_date = models.DateTimeField(verbose_name="Дата заказа", default=timezone.now())
-#     checked = models.CharField(
-#         max_length=20,
-#         choices=STATUS,
-#         default='Не проверен',
-#         verbose_name="Статус заказа"
-#     )
-#
-#     def __str__(self):
-#         return f"{self.name} - {self.address} - {self.phone} - {self.checked} - {self.pub_date}"
-#
-#     class Meta:
-#         verbose_name = "Заказ"
-#         verbose_name_plural = "Заказы"
-#
-#
-# class OrderPosition(models.Model):
-#     order = models.ForeignKey(Order, on_delete=models.CASCADE)
-#     productName = models.CharField(verbose_name="Название товара", max_length=50)
-#     size = models.CharField(verbose_name="Размер", max_length=50)
-#     color = models.CharField(verbose_name="Цвет", max_length=50)
-#     amount = models.IntegerField(verbose_name="Количество", default=0)
-#     price = models.IntegerField(verbose_name="Цена", default=0)
-#     preOrder = models.CharField(verbose_name="Предзаказ", max_length=10)
-#
-#     def __str__(self):
-#         return f"{self.productName}"
+class Order(models.Model):
+    name = models.CharField(max_length=100, verbose_name="Имя клиента")
+    address = models.CharField(max_length=100, verbose_name="Адресс клиента")
+    phone = models.CharField(max_length=100, verbose_name="Телефон клиента")
+    total_sum = models.IntegerField(default=0, verbose_name="Общая сумма заказа")
+    pub_date = models.DateTimeField(verbose_name="Дата заказа", auto_now_add=True, blank=True)
+
+    checked = models.CharField(
+        max_length=20,
+        choices=STATUS,
+        default='Не проверен',
+        verbose_name="Статус заказа"
+    )
+
+    def __str__(self):
+        return f"{self.name} - {self.address} - {self.phone} - {self.checked} - {self.pub_date}"
+
+    class Meta:
+        verbose_name = "Заказ"
+        verbose_name_plural = "Заказы"

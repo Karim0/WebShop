@@ -68,7 +68,7 @@
                 </li>
                 <li class="nav-item cart-box">
                     <a class="nav-link" href="{% url 'shop:cart' %}"><i class="fas fa-shopping-cart"></i>
-                        <span><sup>0</sup></span></a>
+                        <span id="cartProductAmount"><sup>{{ cartSize }}</sup></span></a>
                 </li>
             </ul>
         </div>

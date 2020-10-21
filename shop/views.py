@@ -17,11 +17,20 @@ def home_page(request):
     if not session_key:
         request.session.cycle_key()
 
+    try:
+        cart = Cart.objects.get(session_key=session_key)
+    except Cart.DoesNotExist:
+        cart = Cart(session_key=session_key)
+        cart.save()
+
     content = {
         'pagename': 'Главная страница',
         'categs': Category.objects.all(),
         'prod_recom': Product.objects.annotate(prodreate=Avg('productcomment__rate')).order_by('-prodreate'),
-        'questions': Question.objects.all()
+        'questions': Question.objects.all(),
+        'cartSize': len(cart.cartproduct_set.all()),
+        'cart': cart
+
     }
     return render(request, 'shop/index.html', content)
 
@@ -45,7 +54,7 @@ def cart_page(request):
     content = {
         'pagename': 'Корзина',
         'categs': Category.objects.all(),
-        'items': cart.cartproduct_set.all(),
+        'items': cart.cartproduct_set.all().order_by('pk'),
         'cartSize': len(cart.cartproduct_set.all()),
         'tot': totals
     }
@@ -57,9 +66,16 @@ def about_page(request):
     if not session_key:
         request.session.cycle_key()
 
+    try:
+        cart = Cart.objects.get(session_key=session_key)
+    except Cart.DoesNotExist:
+        cart = Cart(session_key=session_key)
+        cart.save()
+
     content = {
         'pagename': 'О компании',
         'categs': Category.objects.all(),
+        'cartSize': len(cart.cartproduct_set.all()),
         'type': 'sub-head'
     }
     return render(request, 'shop/about.html', content)
@@ -69,10 +85,17 @@ def product_detail_page(request, pk):
     product = Product.objects.get(id=pk)
     page = request.GET.get('page', 1)
 
+    try:
+        cart = Cart.objects.get(session_key=session_key)
+    except Cart.DoesNotExist:
+        cart = Cart(session_key=session_key)
+        cart.save()
+
     content = {
         'categs': Category.objects.all(),
         'pagename': 'О товаре',
         'type': 'sub-head',
+        'cartSize': len(cart.cartproduct_set.all()),
         'product': product,
         'comment': Paginator(product.productcomment_set.all(), 5).get_page(page),
     }
@@ -132,6 +155,8 @@ def product_page(request, pk):
         'props': props,
         'max_price': max_min_min['price__max'],
         'min_price': max_min_min['price__min'],
+        'cartSize': len(cart.cartproduct_set.all()),
+
         'max_price_curr': max_price,
         'min_price_curr': min_price,
         'search': search,
@@ -186,11 +211,7 @@ def delete_item(request):
 
     cartList = []
 
-    totals = 0
-    for cp in cart.cartproduct_set.all():
-        totals += cp.amount * cp.product.price
-
-    for i in cart.cartproduct_set.all():
+    for i in cart.cartproduct_set.all().order_by('pk'):
         props = []
         for j in i.product.prodval_set.all():
             props.append({
@@ -224,13 +245,48 @@ def changeAmount(request):
         cart.save()
 
     prod = cart.cartproduct_set.get(id=request.GET.get('product_id'))
-    print(prod.amount)
 
-    prod.amount = request.GET.get('amount')
-    prod.save()
+    if int(request.GET.get('amount')) <= 0:
+        prod.delete()
+    else:
+        prod.amount = int(request.GET.get('amount'))
+        prod.save()
+    cartList = []
 
-    print(prod.amount)
-    return JsonResponse(json.dumps([]), safe=False)
+    for i in cart.cartproduct_set.all().order_by('pk'):
+        props = []
+        for j in i.product.prodval_set.all():
+            props.append({
+                'prop': j.prop.name,
+                'value': j.value
+            })
+        img = i.product.prod.productphoto_set.all().first()
+        cartList.append({
+            "name": i.product.prod.name,
+            "price": i.product.price,
+            "img": img.img.url,
+            "props": props,
+            "alt": img.alt,
+            "id": i.id,
+            "amount": i.amount
+        })
+    return JsonResponse(json.dumps(cartList), safe=False)
+
+
+def make_order(request):
+    session_key = request.session.session_key
+    if not session_key:
+        request.session.cycle_key()
+
+    try:
+        cart = Cart.objects.get(session_key=session_key)
+    except Cart.DoesNotExist:
+        cart = Cart(session_key=session_key)
+        cart.save()
+
+    if request.method == 'POST':
+        print(request.POST.get('full_name'))
+
 
 
 def add_comment(request):

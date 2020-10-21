@@ -776,6 +776,14 @@ p {
     border-bottom: 1px solid black;
 }
 
+.product-screen .filter label:focus {
+    border-bottom: 1px solid black;
+}
+
+.product-screen .filter label:active {
+    border-bottom: 1px solid black;
+}
+
 .product-screen .filter .filter-val label {
     margin: 5px;
 }
@@ -999,6 +1007,9 @@ p {
     color: #00afea;
 }
 
+#opt {
+    display: none;
+}
 .page_list {
     display: flex;
     justify-content: normal;

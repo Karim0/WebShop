@@ -2,10 +2,12 @@ var temp_price = 0;
 
 function select_char(id, price) {
 
-    $('#chars' + id).css('border-bottom', '1px solid black');
+    // $('#chars' + id).css('border-bottom', '1px solid black');
 
     temp_price = price;
 
+
+    $('#opt').css('display', 'block');
     $('#cost').html(temp_price);
     $('#pricebox').html(temp_price);
     $('#countAmount').val(1);
