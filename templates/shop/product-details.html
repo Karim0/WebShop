@@ -31,7 +31,7 @@
                         {% csrf_token %}
                             <h2 class="prod-name">{{ product.name }}</h2>
                             <ul class="filters mt-5">
-                                {% for pr in prodch %}
+                                {% for pr in product.productchar_set.all %}
                                     <li class="text-center m-0 mb-3">
                                         <div class="filter">
                                             <label id="chars{{ pr.id }}" for="prodch{{ pr.id }}"

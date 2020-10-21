@@ -197,9 +197,9 @@ def product_subcat_page(request, pk):
 
 
 def filter_prod(cat_id, prop):
-    session_key = request.session.session_key
-    if not session_key:
-        request.session.cycle_key()
+    # session_key = request.session.session_key
+    # if not session_key:
+    #     request.session.cycle_key()
 
     prods = ProductChar.objects.filter(prod__subcategory__category_id=cat_id)
 

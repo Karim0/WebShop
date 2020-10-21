@@ -146,8 +146,8 @@
                                                 </div>
                                                 <div class="prod-wrap">
                                                     <div class="img-box">
-                                                        <img class="w-100" src="{% static 'Shop/img/product.jpg' %}"
-                                                             alt="{{ ph.alt }}">
+                                                        <img class="w-100" src="{{ pr.productphoto_set.all.0.img.url }}"
+                                                             alt="{{ pr.productphoto_set.all.0.alt }}">
                                                     </div>
                                                     <div class="content-box">
                                                         <h3>{{ pr.name }}</h3>
