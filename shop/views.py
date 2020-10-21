@@ -82,6 +82,9 @@ def about_page(request):
 
 
 def product_detail_page(request, pk):
+    session_key = request.session.session_key
+    if not session_key:
+        request.session.cycle_key()
     product = Product.objects.get(id=pk)
     page = request.GET.get('page', 1)
 
@@ -106,6 +109,12 @@ def product_page(request, pk):
     session_key = request.session.session_key
     if not session_key:
         request.session.cycle_key()
+
+    try:
+        cart = Cart.objects.get(session_key=session_key)
+    except Cart.DoesNotExist:
+        cart = Cart(session_key=session_key)
+        cart.save()
 
     search = request.GET.get('search', None)
     order = request.GET.get('order', 'По рейтингу')
@@ -146,6 +155,8 @@ def product_page(request, pk):
         products = products.annotate(price=Min('productchar__price')).order_by('-price')
 
     page = request.GET.get('page', 1)
+
+
     content = {
         'pagename': 'Продукт',
         'type': 'sub-head',
@@ -226,7 +237,6 @@ def delete_item(request):
             "props": props,
             "alt": img.alt,
             "id": i.id,
-            "totals": totals,
             "amount": i.amount
         })
 
