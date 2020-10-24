@@ -3,11 +3,13 @@
 {% load temp_filter %}
 {% block content %}
 
-    <div class="cart-banner">
-        <img src="{% static 'Shop/img/cart-banner.jpg' %}" alt="" class="page-banner">
+    <div class="sub-banner">
+        <img src="{{ product.subcategory.category.banner.url }}" alt="" class="page-banner">
         <div class="page-info">
             <h1>{{ product.name }}</h1>
-            <p><a class="blue" href="{% url 'shop:index' %}">Категория</a> / <span>Детали товара</span></p>
+            <p>
+                <a href="{% url 'shop:product' pk=product.subcategory.category.id %}">{{ product.subcategory.category.name }}</a>
+                / <span>Детали товара</span></p>
         </div>
     </div>
 
@@ -48,33 +50,33 @@
                                     </li>
                                 {% endfor %}
                             </ul>
-                        <div id="opt" class="m-0 p-0">
-                            <div class="counter-box">
-                                <div class="">
-                                    <a onclick="modify('minus')"
-                                       class="minus decrease"><i class="fas fa-minus"></i>
-                                    </a>
-                                    <input class="quantity" min="0" name="amount" value="0"
-                                           type="number" id="countAmount" onchange="modify('change')">
-                                    <a onclick="modify('plus')"
-                                       class="plus increase"><i class="fas fa-plus"></i>
-                                    </a>
+                            <div id="opt" class="m-0 p-0">
+                                <div class="counter-box">
+                                    <div class="">
+                                        <a onclick="modify('minus')"
+                                           class="minus decrease"><i class="fas fa-minus"></i>
+                                        </a>
+                                        <input class="quantity" min="0" name="amount" value="0"
+                                               type="number" id="countAmount" onchange="modify('change')">
+                                        <a onclick="modify('plus')"
+                                           class="plus increase"><i class="fas fa-plus"></i>
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <div class="price-box">
+                                    <h3 class="title-price">ИТОГ</h3>
+                                    <p><span id="pricebox" style="font-size: 2em"> 0 </span> (<span id="cost">0</span>тг
+                                        X
+                                        <span
+                                                id="amountbox">0</span>шт)</p>
+                                </div>
+                                <div class="section">
+                                    <button class="btn btn-success" type="submit">
+                                        Добавить в корзину
+                                    </button>
                                 </div>
                             </div>
-
-                            <div class="price-box">
-                                <h3 class="title-price">ИТОГ</h3>
-                                <p><span id="pricebox" style="font-size: 2em"> 0 </span> (<span id="cost">0</span>тг X
-                                    <span
-                                            id="amountbox">0</span>шт)</p>
-                            </div>
-
-                            <div class="section">
-                                <button class="btn btn-success" type="submit">
-                                    Добавить в корзину
-                                </button>
-                            </div>
-                        </div>
                         </form>
                     </div>
 
@@ -173,10 +175,10 @@
                                                 <div class="row p-0 m-0">
                                                     <div class="form-group p-0 col-lg-6">
                                                         <input class="w-100" type="text" name="user_name" id=""
-                                                               placeholder="Ваше ФИО">
+                                                               placeholder="Ваше ФИО" required>
 
                                                         <input class="w-100" type="text" name="phone_number" id=""
-                                                               placeholder="Ваш номер телефона">
+                                                               placeholder="Ваш номер телефона" required>
                                                     </div>
                                                     <div class="col-lg-6 d-flex align-items-center">
                                                         <div class="rating d-flex justify-content-center flex-row-reverse">
@@ -193,7 +195,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <textarea placeholder="Ваш коментарий" name="text"></textarea>
+                                                <textarea placeholder="Ваш коментарий" name="text" required></textarea>
 
                                                 <button> Оставить коментарий</button>
                                             </form>

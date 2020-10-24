@@ -44,3 +44,13 @@ admin.site.register(Subcategory)
 admin.site.register(ProductComment)
 admin.site.register(Calling)
 admin.site.register(Question)
+admin.site.register(Order)
+admin.site.register(OrderPosition)
+admin.site.register(Cart)
+admin.site.register(CartProduct)
+admin.site.register(Tag)
+admin.site.register(Article)
+admin.site.register(AboutItem)
+
+
+

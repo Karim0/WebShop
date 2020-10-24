@@ -1,22 +1,44 @@
 {% extends 'Shop/base.html' %}
 {% load static %}
-{#{% load filters %}#}
 {% block content %}
 
-    <div class="cart-banner">
-        <img src="{% static 'Shop/img/about-banner.jpg' %}" alt="" class="page-banner">
-        <div class="page-info">
-            <h1>О компании</h1>
-{#            <p><a href="">Главная</a> / <a href="">О компании</a></p>#}
+    <div class="sub-banner">
+        <div style="background-image: url('{% static 'Shop/img/back.jpg' %}')" class="page-info">
         </div>
     </div>
 
     <main class="about-main">
         <section class="">
             <div class="container">
-                <div class="row">
-
+                <div class="row mt-5">
+                    <h1 style="margin: 0 auto; font-weight: 500; font-size: 3em">О магазине</h1>
                 </div>
+
+                {% for i in items %}
+
+                    {{ i|safe }}
+
+                {% endfor %}
+
+                {% if articles.count > 0 %}
+                    <div class="row mt-5">
+                        <h2 style="margin: 0 auto; font-weight: 500; font-size: 3em"> Новости и акции </h2>
+                    </div>
+
+                    {% for a in articles %}
+                        <div id="news{{ a.id }}"
+                             class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative mt-5">
+                            <div class="col-lg-4 col-md-4 col-12">
+                                <img src="{{ a.img.url }}" alt="" class="img-fluid">
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-12 p-4 d-flex flex-column position-static">
+                                <h3 class="mb-0">{{ a.title }}</h3>
+                                <div class="mb-1 text-muted">{{ a.pub_date }}</div>
+                                <p class="card-text mb-auto" style="word-break: break-all">{{ a.text }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
             </div>
         </section>
     </main>

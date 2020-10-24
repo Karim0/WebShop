@@ -23,10 +23,19 @@ class Calling(models.Model):
         return f'{self.full_name} {self.phone}'
 
 
+class Tag(models.Model):
+    name = models.CharField(max_length=255)
+    desc = models.TextField()
+
+    def __str__(self):
+        return f'{self.name}, {self.desc}'
+
+
 class Category(models.Model):
     name = models.CharField(max_length=255)
     desc = models.TextField()
     banner = models.ImageField(upload_to='banners')
+    banner_alt = models.CharField(max_length=255, default="фото")
 
     def __str__(self):
         return f'{self.name}, {self.desc}'
@@ -50,6 +59,7 @@ class Property(models.Model):
 class Product(models.Model):
     name = models.CharField(max_length=255)
     subcategory = models.ForeignKey(Subcategory, on_delete=models.CASCADE)
+    tag = models.ForeignKey(Tag, on_delete=models.DO_NOTHING, null=True)
     desc = models.TextField()
     desc_short = models.CharField(max_length=255)
 
@@ -121,88 +131,86 @@ class CartProduct(models.Model):
         verbose_name_plural = "Товары в корзине"
 
     def __str__(self):
-        return f"Название товара: {self.product.product.name}  --  " \
-               f"Размер: {self.product.size}  --  Цвет: {self.product.color}"
+        return f"Название товара: {self.product.product.name}"
 
 
-# class Article(models.Model):
-#     title = models.CharField(max_length=200, help_text="(максимальное число символов: 200)",
-#                              verbose_name="Название статьи ")
-#
-#     short_desc = models.CharField(max_length=250, help_text="(максимальное число символов: 250)",
-#                                   verbose_name="Краткое описание", default="")
-#
-#     text = models.TextField(help_text="(максимальное число символов: неограниченно)",
-#                             verbose_name="Контент статьи ")
-#
-#     img = models.ImageField(upload_to='media/photos', default='static/Shop/images/default.png', blank=True,
-#                             help_text="(желательно 250Х250px)",
-#                             verbose_name="Загрузка картинки")
-#     pub_date = models.DateTimeField(verbose_name="Дата публикации", default=timezone.now())
-#
-#     def image_tag(self):
-#         return mark_safe(f'<img src="{self.img.url}" width="200" height="200" />')
-#
-#     def __str__(self):
-#         return f"{self.title}"
-#
-#     class Meta:
-#         verbose_name = "Статья"
-#         verbose_name_plural = "Статьи"
+class Article(models.Model):
+    title = models.CharField(max_length=200, help_text="(максимальное число символов: 200)",
+                             verbose_name="Название статьи ")
+
+    text = models.TextField(help_text="(максимальное число символов: неограниченно)",
+                            verbose_name="Контент статьи ")
+
+    img = models.ImageField(upload_to='media/photos', default='static/Shop/images/default.png', blank=True,
+                            help_text="(желательно 250Х250px)",
+                            verbose_name="Загрузка картинки")
+    pub_date = models.DateTimeField(verbose_name="Дата", auto_now_add=True, blank=True)
+
+    def __str__(self):
+        return f"{self.title}"
+
+    class Meta:
+        verbose_name = "Статья"
+        verbose_name_plural = "Статьи"
 
 
-# class SiteProfile(models.Model):
-#     page_name = models.CharField(max_length=50, help_text="(максимальное число символов: 50)",
-#                                  verbose_name="Название страницы ")
-#     page_icon = models.ImageField(upload_to='media/photos', default='static/Shop/images/default.png',
-#                                   help_text="(видна в закладках)",
-#                                   verbose_name="Иконка страницы ")
-#
-#     main_logo = models.ImageField(upload_to='media/photos', default='static/Shop/images/default.png',
-#                                   help_text="(виден на главном меню)",
-#                                   verbose_name="Логотип страницы ")
-#
-#     home_slider_video = models.FileField(upload_to='media/videos', default='static/Shop/videos/home_slider_video.mp4',
-#                                          help_text="(желателено соотношение 8:6)",
-#                                          verbose_name="Видео на главной странице ")
-#
-#     phone_number = models.CharField(max_length=20, blank=True,
-#                                     help_text="(максимальное число символов: 20)",
-#                                     verbose_name="Телефон в контактах ")
-#     instagram = models.CharField(max_length=50, blank=True,
-#                                  help_text="(максимальное число символов: 50)",
-#                                  verbose_name="Ссылка на Instagramm ")
-#     whatsup = models.CharField(max_length=50, blank=True,
-#                                help_text="(максимальное число символов: 50)",
-#                                verbose_name="Ссылка на Whats'Up ")
-#     telegram = models.CharField(max_length=50, blank=True,
-#                                 help_text="(максимальное число символов: 50)",
-#                                 verbose_name="Ссылка на Telegram ")
-#     email = models.CharField(max_length=50, blank=True,
-#                              help_text="(максимальное число символов: 50)",
-#                              verbose_name="Email адресс ")
-#     address = models.CharField(max_length=50, blank=True,
-#                                help_text="(максимальное число символов: 50)",
-#                                verbose_name="Адресс самовывоза ")
-#
-#     def __str__(self):
-#         return f"{self.page_name}"
-#
-#     def page_image(self):
-#         return mark_safe(f'<img src="{self.page_icon.url}" width="200" height="200" />')
-#
-#     def page_logo(self):
-#         return mark_safe(f'<img src="{self.main_logo.url}" width="200" height="200" />')
-#
-#     class Meta:
-#         verbose_name = "Профиль сайта"
-#         verbose_name_plural = "Профили сайта"
+class SiteProfile(models.Model):
+    page_name = models.CharField(max_length=50, help_text="(максимальное число символов: 50)",
+                                 verbose_name="Название страницы ")
+    page_icon = models.ImageField(upload_to='media/photos', default='static/Shop/images/default.png',
+                                  help_text="(видна в закладках)",
+                                  verbose_name="Иконка страницы ")
+
+    main_logo = models.ImageField(upload_to='media/photos', default='static/Shop/images/default.png',
+                                  help_text="(виден на главном меню)",
+                                  verbose_name="Логотип страницы ")
+
+    home_slider_video = models.FileField(upload_to='media/videos', default='static/Shop/videos/home_slider_video.mp4',
+                                         help_text="(желателено соотношение 8:6)",
+                                         verbose_name="Видео на главной странице ")
+
+    phone_number = models.CharField(max_length=20, blank=True,
+                                    help_text="(максимальное число символов: 20)",
+                                    verbose_name="Телефон в контактах ")
+    instagram = models.CharField(max_length=50, blank=True,
+                                 help_text="(максимальное число символов: 50)",
+                                 verbose_name="Ссылка на Instagramm ")
+    whatsup = models.CharField(max_length=50, blank=True,
+                               help_text="(максимальное число символов: 50)",
+                               verbose_name="Ссылка на Whats'Up ")
+    telegram = models.CharField(max_length=50, blank=True,
+                                help_text="(максимальное число символов: 50)",
+                                verbose_name="Ссылка на Telegram ")
+    email = models.CharField(max_length=50, blank=True,
+                             help_text="(максимальное число символов: 50)",
+                             verbose_name="Email адресс ")
+    address = models.CharField(max_length=50, blank=True,
+                               help_text="(максимальное число символов: 50)",
+                               verbose_name="Адресс самовывоза ")
+
+    paylogin = models.CharField(max_length=50, blank=True,
+                               help_text="(максимальное число символов: 50)",
+                               verbose_name="Платежный логин")
+
+    paypassword = models.CharField(max_length=50, blank=True,
+                                help_text="(максимальное число символов: 50)",
+                                verbose_name="Платежный пароль")
+
+    def __str__(self):
+        return f"{self.page_name}"
+
+    class Meta:
+        verbose_name = "Профиль сайта"
+        verbose_name_plural = "Профили сайта"
 
 
 class Order(models.Model):
-    name = models.CharField(max_length=100, verbose_name="Имя клиента")
-    address = models.CharField(max_length=100, verbose_name="Адресс клиента")
-    phone = models.CharField(max_length=100, verbose_name="Телефон клиента")
+    name = models.CharField(max_length=100, default="Не указан", verbose_name="Имя клиента")
+    address = models.CharField(max_length=100, default="Не указан", verbose_name="Адресс клиента")
+    email = models.CharField(max_length=100, default="Не указан", verbose_name="Почта")
+    phone = models.CharField(max_length=100, default="Не указан", verbose_name="Телефон клиента")
+    del_type = models.CharField(max_length=10, default="Не указан", verbose_name="Доставка")
+    pay_type = models.CharField(max_length=10, default="Не указан", verbose_name="Оплата")
     total_sum = models.IntegerField(default=0, verbose_name="Общая сумма заказа")
     pub_date = models.DateTimeField(verbose_name="Дата заказа", auto_now_add=True, blank=True)
 
@@ -219,3 +227,25 @@ class Order(models.Model):
     class Meta:
         verbose_name = "Заказ"
         verbose_name_plural = "Заказы"
+
+
+class OrderPosition(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    product = models.ForeignKey(ProductChar, on_delete=models.DO_NOTHING, blank=True, null=True, default=None)
+    amount = models.IntegerField(default=1, verbose_name="Заказано")
+
+    def __str__(self):
+        return f"{self.product.prod.name}"
+
+
+class AboutItem(models.Model):
+    text = models.TextField(help_text="(максимальное число символов: неограниченно)",
+                            verbose_name="Контент статьи ")
+
+    img = models.ImageField(upload_to='media/photos', default='static/Shop/images/default.png', blank=True,
+                            help_text="(желательно 250Х250px)",
+                            verbose_name="Загрузка картинки")
+
+    def __str__(self):
+        return f"Item"
+

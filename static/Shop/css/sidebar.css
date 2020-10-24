@@ -4,17 +4,17 @@
 
 #sidebar {
     display: block;
-    padding: 50px 20px;
+    padding: 40px 20px;
     position: absolute;
-    right: 0px;
+    right: 0;
     top: 0;
     width: 100%;
-    min-height: 100vh;
     background: white;
     color: #fff;
     transition: all 0.6s cubic-bezier(0.945, 0.020, 0.270, 0.665);
     transform-origin: bottom right;
     overflow-y: scroll;
+    box-shadow: 0 2px 5px -3px #969696;
 }
 
 #sidebar.active {
@@ -29,10 +29,6 @@
     background: #6d7fcc;
 }
 
-
-#sidebar ul.components {
-    padding: 20px 0;
-}
 
 #sidebar ul p {
     color: #fff;

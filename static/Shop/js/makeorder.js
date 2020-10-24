@@ -395,8 +395,29 @@ function selfSel() {
     $('#delType').html('самовывоз');
 
     $('#optionalFields').css('display', 'none');
+    $('#address').removeAttr('required');
 }
 
 function paySel(type) {
     $('#paymentType').html(type);
 }
+
+
+$(`#make_order`).on('submit', function (e) {
+    if (parseInt($('#cartSize').html()) === 0){
+        e.preventDefault();
+        var note = new jBox('Notice', {
+                content: "Ваша корзина пуста",
+                color: 'red',
+                delayClose: 2000,
+                position: {
+                    x: 'left',
+                    y: 'top'
+                }
+            });
+            note.open();
+            note.close();
+    }
+});
+
+

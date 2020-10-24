@@ -1,13 +1,10 @@
-from django.db.models import Count, Q
-from django.contrib import messages
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.shortcuts import render, get_object_or_404, redirect, reverse
-from django.views.generic import View, ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.shortcuts import render, redirect
 from django.db.models import Max, Min, Avg
 from django.contrib.postgres.search import SearchVector, SearchRank, SearchQuery
-from django.http import response, JsonResponse
+from django.http import JsonResponse
 import json
 from django.core.paginator import Paginator
+import requests as RQ
 
 from .models import *
 
@@ -29,8 +26,8 @@ def home_page(request):
         'prod_recom': Product.objects.annotate(prodreate=Avg('productcomment__rate')).order_by('-prodreate'),
         'questions': Question.objects.all(),
         'cartSize': len(cart.cartproduct_set.all()),
-        'cart': cart
-
+        'cart': cart,
+        'articles': Article.objects.all()
     }
     return render(request, 'shop/index.html', content)
 
@@ -56,7 +53,10 @@ def cart_page(request):
         'categs': Category.objects.all(),
         'items': cart.cartproduct_set.all().order_by('pk'),
         'cartSize': len(cart.cartproduct_set.all()),
-        'tot': totals
+        'tot': totals,
+        'type': 'sub-head',
+        'articles': Article.objects.all()
+
     }
     return render(request, 'shop/card-page.html', content)
 
@@ -72,11 +72,39 @@ def about_page(request):
         cart = Cart(session_key=session_key)
         cart.save()
 
+    items = []
+
+    c = 0
+    for i in AboutItem.objects.all():
+        if c % 2 == 0:
+            items.append(f'<div class="row mt-5"> \
+                                <div class="col-lg-6 col-md-6"> \
+                                    <img src="{i.img.url}" alt="" class="img-fluid">\
+                                </div>\
+                                <div class="col-lg-6 col-md-6">\
+                                    <p>{i.text}</p>\
+                                </div>\
+                            </div>')
+        else:
+            items.append(f'<div class="row d-flex flex-wrap-reverse mt-5">\
+                                <div class="col-lg-6 col-md-6">\
+                                    <p>{i.text}</p>\
+                                </div>\
+                                <div class="col-lg-6 col-md-6">\
+                                    <img src="{i.img.url}" alt="" class="img-fluid">\
+                                </div>\
+                            </div>')
+
+        c += 1
+
     content = {
         'pagename': 'О компании',
         'categs': Category.objects.all(),
         'cartSize': len(cart.cartproduct_set.all()),
-        'type': 'sub-head'
+        'type': 'sub-head',
+        'articles': Article.objects.all(),
+        'items': items,
+
     }
     return render(request, 'shop/about.html', content)
 
@@ -100,7 +128,10 @@ def product_detail_page(request, pk):
         'type': 'sub-head',
         'cartSize': len(cart.cartproduct_set.all()),
         'product': product,
+        'prodch': product.productchar_set.all(),
         'comment': Paginator(product.productcomment_set.all(), 5).get_page(page),
+        'articles': Article.objects.all()
+
     }
     return render(request, 'shop/product-details.html', content)
 
@@ -116,6 +147,7 @@ def product_page(request, pk):
         cart = Cart(session_key=session_key)
         cart.save()
 
+    category = Category.objects.get(pk=pk)
     search = request.GET.get('search', None)
     order = request.GET.get('order', 'По рейтингу')
     subcategory = Subcategory.objects.filter(category_id=pk)
@@ -156,7 +188,6 @@ def product_page(request, pk):
 
     page = request.GET.get('page', 1)
 
-
     content = {
         'pagename': 'Продукт',
         'type': 'sub-head',
@@ -167,11 +198,13 @@ def product_page(request, pk):
         'max_price': max_min_min['price__max'],
         'min_price': max_min_min['price__min'],
         'cartSize': len(cart.cartproduct_set.all()),
-
+        'category': category,
         'max_price_curr': max_price,
         'min_price_curr': min_price,
         'search': search,
-        'cur_subcat': subcat
+        'cur_subcat': subcat,
+        'articles': Article.objects.all()
+
     }
     return render(request, 'shop/shop.html', content)
 
@@ -284,19 +317,72 @@ def changeAmount(request):
 
 
 def make_order(request):
-    session_key = request.session.session_key
-    if not session_key:
-        request.session.cycle_key()
+    cart = Cart.objects.get(session_key=request.session.session_key)
 
-    try:
-        cart = Cart.objects.get(session_key=session_key)
-    except Cart.DoesNotExist:
-        cart = Cart(session_key=session_key)
-        cart.save()
+    order = Order(name=request.POST.get('full_name', 'unknown'),
+                  phone=request.POST.get('phone', 'unknown'),
+                  email=request.POST.get('email', 'unknown'),
+                  address=f"{request.POST.get('city', 'unknown')}, {request.POST.get('address', 'unknown')}",
+                  del_type=request.POST.get('delivery', 'unknown'),
+                  pay_type=request.POST.get('payment', 'unknown'),
+                  total_sum=0)
+    order.save()
+    tot_sum = 0
+    for i in cart.cartproduct_set.all():
+        tot_sum += i.product.price * i.amount
+        i.product.sold += 1
+        i.product.save()
 
-    if request.method == 'POST':
-        print(request.POST.get('full_name'))
+        position = OrderPosition(order=order,
+                                 product=i.product,
+                                 amount=i.amount)
+        position.save()
 
+    order.total_sum = tot_sum
+    order.save()
+    cart.delete()
+
+    if order.pay_type == 'картой':
+        login = "test_merch"
+        password = "A12345678a"
+
+        auth_data = {'login': login,
+                     'password': password}
+
+        auth_url = "https://api.yii2-stage.test.wooppay.com/v1/auth"
+
+        auth_data = RQ.request("POST", auth_url, data=auth_data).json()
+
+        order_url = "https://api.yii2-stage.test.wooppay.com/v1/invoice/create"
+
+        order_data = {
+            "reference_id": 72234 * order.id,
+            "amount": tot_sum,
+            "service_name": "test_merch_invoice",
+            "merchant_name": 384310,
+            "option": 0,
+            "card_forbidden": 0,
+            "requestUrl": "http://213.211.91.155:8000/shop/product/order_confirmation?order_id=" + str(order.id)
+        }
+
+        headers = {
+            'Authorization': auth_data['token'].replace('jwt ', 'Bearer ')
+        }
+
+        response = RQ.request("POST", order_url, headers=headers, data=order_data).json()
+
+        return redirect(response['operation_url'])
+
+    return redirect('shop:index')
+
+
+def confirmation(request):
+    print('successful')
+    order = Order.objects.get(request.GET['order_id'])
+    order.checked = "оплачен"
+    order.save()
+
+    return redirect('shop:index')
 
 
 def add_comment(request):
@@ -306,6 +392,16 @@ def add_comment(request):
     comment.rate = int(request.POST.get('rating', 0))
     comment.text = request.POST.get('text')
     comment.pub_date = datetime.datetime.now()
-    comment.user_name = request.POST.get('user_name')
+    comment.phone_number = request.POST.get('phone_number', 0)
+    comment.user_name = 'sdsd'
     comment.save()
     return redirect('shop:product_detail', pk=pk)
+
+
+def callback(request):
+
+    print(request.GET['name'])
+    call = Calling(full_name=request.GET['name'],
+                   phone=request.GET['phone'])
+    call.save()
+    return JsonResponse(json.dumps({}), safe=False)

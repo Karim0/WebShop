@@ -16,4 +16,7 @@ urlpatterns = [
     path('shop/product/modify', views.changeAmount, name='modify'),
     path('shop/product/add_comment', views.add_comment, name='add_comment'),
     path('shop/product/make_order', views.make_order, name='make_order'),
+    path('shop/product/order_confirmation', views.confirmation, name='confirmation'),
+    path('shop/callback', views.callback, name='callback'),
+
 ]

@@ -29,6 +29,7 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
+    'requests',
     'nested_admin',
     'admin_tools',
     'admin_tools.theming',
