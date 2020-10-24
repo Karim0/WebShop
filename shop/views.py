@@ -235,7 +235,7 @@ def addCart(request):
         cartElement = CartProduct(cart=cart, product=prod, amount=amount)
         cartElement.save()
 
-    return redirect('shop:cart')
+    return redirect('shop:product', pk=prod.prod.subcategory.category.id)
 
 
 def delete_item(request):

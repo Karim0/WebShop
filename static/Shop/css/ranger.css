@@ -55,6 +55,7 @@
     /*border-radius: 5px;*/
     pointer-events: none;
     -webkit-appearance: none;
+    z-index: 1;
 }
 
 .wrapper-price .price-field input[type=range]::-webkit-slider-thumb {
