@@ -392,8 +392,8 @@ def add_comment(request):
     comment.rate = int(request.POST.get('rating', 0))
     comment.text = request.POST.get('text')
     comment.pub_date = datetime.datetime.now()
-    comment.phone_number = request.POST.get('phone_number', 0)
-    comment.user_name = 'sdsd'
+    comment.phone_number = request.POST.get('phone_number')
+    comment.user_name = request.POST.get('user_name')
     comment.save()
     return redirect('shop:product_detail', pk=pk)
 
