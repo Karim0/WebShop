@@ -594,10 +594,6 @@ p {
     width: 100%;
 }
 
-.main-footer .questions-box a {
-    font-weight: lighter;
-}
-
 .main-footer .questions-box a:hover {
     color: #ec293c;
 }

@@ -7,6 +7,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ pagename }}</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="keywords" content="">
+    <meta name="description" content="{{ site.description }}">
+    <meta name="author" content="">
+
+    <link rel="shortcut icon" href="{{ site.page_icon.url }}" type="image/x-icon">
+    <link rel="apple-touch-icon" href="{% static '/Shop/images/apple-touch-icon.png' %}">
+
+
     <link rel="stylesheet" href="{% static 'Shop/bootstrap-4.5.2-dist/css/bootstrap.css' %}">
     <link rel="stylesheet" href="{% static 'Shop/fontawesome-free-5.15.1-web/css/all.css' %}">
     <link rel="stylesheet" href="{% static 'Shop/simple-text-rotator-master/simpletextrotator.css' %}">
@@ -27,14 +36,10 @@
 <header id="main_header" class="main-header {{ type }}">
     <nav class="navbar navbar-expand-lg main-navigation">
         <div class="navbar-brand brand-box">
-            <a href="{% url 'shop:index' %}"><img src="{% static 'Shop/img/logo.png' %}" alt="" class="img-fluid"></a>
+            <a href="{% url 'shop:index' %}"><img src="{{ site.main_logo.url }}" alt="Логотип магазина" class="img-fluid"></a>
         </div>
         <div class="nav-box">
             <ul class="navbar-nav ml-auto">
-                <!-- <li class="nav-item mr-auto callback-box">
-                    <a class="whatsapp-ref"><i class="fab fa-whatsapp"></i> +1-888 705 770</a>
-                    <a class="callback-btn" href="#footer"> Обратная связь</a>
-                </li>	 -->
                 <li class="nav-item active ml-auto">
                     <a class="nav-link" href="{% url 'shop:index' %}">Главная</a>
                 </li>
@@ -131,19 +136,19 @@
             <div class="col-lg-4 col-md-10 col-sm-10 ml-auto mr-auto" id="contacts">
                 <h3 class="mt-5">Контакты</h3>
                 <p>
-                    Телефон: <br><span class="phone"> 332-3223-2332 </span>
+                    Телефон: <br><span class="phone"> {{ site.phone_number }} </span>
                     <br>
                     <br>
-                    Адрес: <br><span class="address">Lorem ipsum dolor sit amet.</span>
+                    Адрес: <br><span class="address">{{ site.address }}</span>
                     <br>
                     <br>
                     Социальные сети:
 
                 </p>
                 <ul class="socials">
-                    <li><a href="#"> <img src="{% static 'Shop/img/instagram.png' %}" alt=""></a></li>
-                    <li><a href="#"> <img src="{% static 'Shop/img/whatsapp.png' %}" alt=""></a></li>
-                    <li><a href="#"> <img src="{% static 'Shop/img/facebook.png' %}" alt=""></a></li>
+                    <li><a href="{{ site.instagram }}"> <img src="{% static 'Shop/img/instagram.png' %}" alt="инстаграм"></a></li>
+                    <li><a href="{{ site.whatsup }}"> <img src="{% static 'Shop/img/whatsapp.png' %}" alt="ватсап"></a></li>
+                    <li><a href="{{ site.email }}"> <img src="{% static 'Shop/img/gmail.png' %}" alt="почта"></a></li>
                 </ul>
             </div>
             <div class="col-lg-4 col-md-10 col-sm-10 ml-auto mr-auto">

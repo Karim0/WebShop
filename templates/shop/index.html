@@ -1,16 +1,15 @@
 {% extends 'Shop/base.html' %}
 {% load static %}
-{#{% load filters %}#}
 {% block content %}
 
     <div class="banner-wrapper">
         <div class="main-banner">
-            <img src="{% static 'Shop/img/main-banner.png' %}" alt="">
+            <img src="{{ site.home_banner }}" alt="{{ site.home_banner_alt }}">
         </div>
 
         <div class="slogan">
-            <h1> Наш магазин</h1>
-            <p><span class="rotate">КАЧЕСТВО, ДОСТУПНОСТЬ, УНИКАЛЬНОСТЬ, УСПЕХ</span></p>
+            <h1> Наш магазин </h1>
+            <p><span class="rotate">{{ site.slogan }}</span></p>
         </div>
     </div>
 
@@ -60,10 +59,9 @@
                     </div>
                 </div>
                 <div class="main-banner">
-                    <img src="{% static 'Shop/img/recomend-banner.png' %}" alt="">
+                    <img src="{% static 'Shop/img/recomend-banner.png' %}" alt="Фон рекомендаций">
                 </div>
             </div>
-
         </section>
     </main>
 

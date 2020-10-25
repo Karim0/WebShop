@@ -17,7 +17,6 @@ class ValCharAdmin(NestedTabularInline):
 
 class ProdCharAdmin(NestedTabularInline):
     class Media:
-        # js = ('js/admin/my_own_admin.js',)
         css = {
             'all': ('css/admin_panel.css',)
         }
@@ -33,8 +32,21 @@ class ProductAdmin(NestedModelAdmin):
     model = Product
     inlines = [ProdCharAdmin, ProductPhotoAdmin]
 
+class ElementInline(admin.TabularInline):
+    model = OrderPosition
+    extra = 0
+    fields = ['product', 'amount']
 
-# Register your models here.
+class OrderAdmin(admin.ModelAdmin):
+    class Meta:
+        model = Order
+        fields = '__all__'
+
+    list_display = ('name', 'address', 'email', 'phone', 'del_type', 'pay_type', 'total_sum', 'pub_date', 'checked')
+    list_filter = ('checked', 'del_type', 'pay_type')
+    inlines = (ElementInline,)
+
+
 admin.site.register(Product, ProductAdmin)
 admin.site.register(ProductChar)
 admin.site.register(ProdVal)
@@ -44,13 +56,12 @@ admin.site.register(Subcategory)
 admin.site.register(ProductComment)
 admin.site.register(Calling)
 admin.site.register(Question)
-admin.site.register(Order)
-admin.site.register(OrderPosition)
-admin.site.register(Cart)
-admin.site.register(CartProduct)
+admin.site.register(Order, OrderAdmin)
 admin.site.register(Tag)
 admin.site.register(Article)
 admin.site.register(AboutItem)
+admin.site.register(SiteProfile)
+
 
 
 

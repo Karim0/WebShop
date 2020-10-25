@@ -21,13 +21,14 @@ def home_page(request):
         cart.save()
 
     content = {
-        'pagename': 'Главная страница',
+        'pagename': f'{SiteProfile.objects.first().page_name} | Главная страница',
         'categs': Category.objects.all(),
         'prod_recom': Product.objects.annotate(prodreate=Avg('productcomment__rate')).order_by('-prodreate'),
         'questions': Question.objects.all(),
         'cartSize': len(cart.cartproduct_set.all()),
         'cart': cart,
-        'articles': Article.objects.all()
+        'articles': Article.objects.all(),
+        'site': SiteProfile.objects.first()
     }
     return render(request, 'shop/index.html', content)
 
@@ -55,7 +56,9 @@ def cart_page(request):
         'cartSize': len(cart.cartproduct_set.all()),
         'tot': totals,
         'type': 'sub-head',
-        'articles': Article.objects.all()
+        'articles': Article.objects.all(),
+        'questions': Question.objects.all(),
+        'site': SiteProfile.objects.first()
 
     }
     return render(request, 'shop/card-page.html', content)
@@ -98,12 +101,14 @@ def about_page(request):
         c += 1
 
     content = {
-        'pagename': 'О компании',
+        'pagename': 'О магазине',
         'categs': Category.objects.all(),
         'cartSize': len(cart.cartproduct_set.all()),
         'type': 'sub-head',
         'articles': Article.objects.all(),
         'items': items,
+        'questions': Question.objects.all(),
+        'site': SiteProfile.objects.first()
 
     }
     return render(request, 'shop/about.html', content)
@@ -124,13 +129,16 @@ def product_detail_page(request, pk):
 
     content = {
         'categs': Category.objects.all(),
-        'pagename': 'О товаре',
+        'pagename': f'О товаре | {product.name}',
         'type': 'sub-head',
         'cartSize': len(cart.cartproduct_set.all()),
         'product': product,
         'prodch': product.productchar_set.all(),
         'comment': Paginator(product.productcomment_set.all(), 5).get_page(page),
-        'articles': Article.objects.all()
+        'articles': Article.objects.all(),
+        'questions': Question.objects.all(),
+
+        'site': SiteProfile.objects.first()
 
     }
     return render(request, 'shop/product-details.html', content)
@@ -189,7 +197,7 @@ def product_page(request, pk):
     page = request.GET.get('page', 1)
 
     content = {
-        'pagename': 'Продукт',
+        'pagename': category.name,
         'type': 'sub-head',
         'categs': Category.objects.all(),
         'subcategory': subcategory,
@@ -203,7 +211,10 @@ def product_page(request, pk):
         'min_price_curr': min_price,
         'search': search,
         'cur_subcat': subcat,
-        'articles': Article.objects.all()
+        'articles': Article.objects.all(),
+        'questions': Question.objects.all(),
+
+        'site': SiteProfile.objects.first()
 
     }
     return render(request, 'shop/shop.html', content)
@@ -333,8 +344,10 @@ def make_order(request):
         i.product.sold += 1
         i.product.save()
 
+
+
         position = OrderPosition(order=order,
-                                 product=i.product,
+                                 product=i.product.__str__(),
                                  amount=i.amount)
         position.save()
 
@@ -343,8 +356,8 @@ def make_order(request):
     cart.delete()
 
     if order.pay_type == 'картой':
-        login = "test_merch"
-        password = "A12345678a"
+        login = SiteProfile.objects.first().paylogin
+        password = SiteProfile.objects.first().paypassword
 
         auth_data = {'login': login,
                      'password': password}
@@ -356,7 +369,7 @@ def make_order(request):
         order_url = "https://api.yii2-stage.test.wooppay.com/v1/invoice/create"
 
         order_data = {
-            "reference_id": 72234 * order.id,
+            "reference_id": 32400*order.id,
             "amount": tot_sum,
             "service_name": "test_merch_invoice",
             "merchant_name": 384310,
