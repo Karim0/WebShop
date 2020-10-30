@@ -61,7 +61,3 @@ admin.site.register(Tag)
 admin.site.register(Article)
 admin.site.register(AboutItem)
 admin.site.register(SiteProfile)
-
-
-
-
