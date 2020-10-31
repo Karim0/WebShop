@@ -14,7 +14,6 @@ function addAmount(id) {
     data.amount = parseInt($(`#item${id}Amount`).val());
     const url = $(`#modifyItem${id}`).attr('action');
 
-    console.log($(`#modifyItem${id}`));
 
     $.ajax({
         url: url,

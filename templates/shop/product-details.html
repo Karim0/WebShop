@@ -66,7 +66,7 @@
 
                                 <div class="price-box">
                                     <h3 class="title-price">ИТОГ</h3>
-                                    <p><span id="pricebox" style="font-size: 2em"> 0 </span> (<span id="cost">0</span>тг
+                                    <p><span id="pricebox" style="font-size: 2em"> 0 </span> ₸ (<span id="cost">0</span> ₸
                                         X
                                         <span
                                                 id="amountbox">0</span>шт)</p>
@@ -95,53 +95,11 @@
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                                 <p style="padding:15px;">
-                                    <small>
-                                        Stay connected either on the phone or the Web with the Galaxy S4 I337 from
-                                        Samsung.
-                                        With 16 GB of memory and a 4G connection, this phone stores precious photos and
-                                        video and lets you upload them to a cloud or social network at blinding-fast
-                                        speed.
-                                        With a 17-hour operating life from one charge, this phone allows you keep in
-                                        touch
-                                        even on the go.
-
-                                        With its built-in photo editor, the Galaxy S4 allows you to edit photos with the
-                                        touch of a finger, eliminating extraneous background items. Usable with most
-                                        carriers, this smartphone is the perfect companion for work or entertainment.
-                                    </small>
+                                    {{ product.desc }}
                                 </p>
-                                <small>
-                                    <ul>
-                                        <li>Super AMOLED capacitive touchscreen display with 16M colors</li>
-                                        <li>Available on GSM, AT T, T-Mobile and other carriers</li>
-                                        <li>Compatible with GSM 850 / 900 / 1800; HSDPA 850 / 1900 / 2100 LTE; 700 MHz
-                                            Class
-                                            17 / 1700 / 2100 networks
-                                        </li>
-                                        <li>MicroUSB and USB connectivity</li>
-                                        <li>Interfaces with Wi-Fi 802.11 a/b/g/n/ac, dual band and Bluetooth</li>
-                                        <li>Wi-Fi hotspot to keep other devices online when a connection is not
-                                            available
-                                        </li>
-                                        <li>SMS, MMS, email, Push Mail, IM and RSS messaging</li>
-                                        <li>Front-facing camera features autofocus, an LED flash, dual video call
-                                            capability
-                                            and a sharp 4128 x 3096 pixel picture
-                                        </li>
-                                        <li>Features 16 GB memory and 2 GB RAM</li>
-                                        <li>Upgradeable Jelly Bean v4.2.2 to Jelly Bean v4.3 Android OS</li>
-                                        <li>17 hours of talk time, 350 hours standby time on one charge</li>
-                                        <li>Available in white or black</li>
-                                        <li>Model I337</li>
-                                        <li>Package includes phone, charger, battery and user manual</li>
-                                        <li>Phone is 5.38 inches high x 2.75 inches wide x 0.13 inches deep and weighs a
-                                            mere 4.59 oz
-                                        </li>
-                                    </ul>
-                                </small>
                             </div>
                             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                <ul class="product_comments w-100">
+                                <ul class="product_comments w-100" id="comments_view">
                                     {% for com in comment %}
                                         <li>
                                             <div class="comment-box">
@@ -152,56 +110,61 @@
                                                 {% endfor %}
 
                                                 <p>{{ com.text }}</p>
-                                                <span class="date">{{ com.pub_date }}</span>
+                                                <span class="date">{{ com.pub_date.isoformat }}</span>
                                             </div>
                                         </li>
                                     {% endfor %}
 
-                                    {% if comment.paginator.num_pages > 1 %}
-                                        <li class="d-flex justify-content-center">
-                                            <ul class="page_list">
-                                                {% for p in  comment.paginator.page_range %}
-                                                    <li><a href="?page={{ p }}">{{ p }}</a></li>
-                                                {% endfor %}
-                                            </ul>
-                                        </li>
-                                    {% endif %}
+                                    {#                                    {% if comment.paginator.num_pages > 1 %}#}
+                                    {#                                        <li class="d-flex justify-content-center">#}
+                                    {#                                            <ul class="page_list">#}
+                                    {#                                                {% for p in  comment.paginator.page_range %}#}
+                                    {#                                                    <li><a href="?page={{ p }}">{{ p }}</a></li>#}
+                                    {#                                                {% endfor %}#}
+                                    {#                                            </ul>#}
+                                    {#                                        </li>#}
+                                    {#                                    {% endif %}#}
+                                </ul>
+                                <li class="leave-comment">
+                                    <div>
+                                        <form action="{% url 'shop:add_comment' %}" method="post" id="send_comment">
+                                            {% csrf_token %}
+                                            <input type="number" id="prod_id" name="prod_id" value="{{ product.id }}"
+                                                   hidden>
+                                            <div class="row p-0 m-0">
+                                                <div class="form-group p-0 col-lg-6">
+                                                    <input class="w-100" type="text" name="user_name" id="user_name"
+                                                           placeholder="Ваше ФИО" required>
 
-                                    <li class="leave-comment">
-                                        <div>
-                                            <form action="{% url 'shop:add_comment' %}" method="post">
-                                                {% csrf_token %}
-                                                <input type="number" name="prod_id" value="{{ product.id }}" hidden>
-                                                <div class="row p-0 m-0">
-                                                    <div class="form-group p-0 col-lg-6">
-                                                        <input class="w-100" type="text" name="user_name" id=""
-                                                               placeholder="Ваше ФИО" required>
-
-                                                        <input class="w-100" type="text" name="phone_number" id=""
-                                                               placeholder="Ваш номер телефона" required>
-                                                    </div>
-                                                    <div class="col-lg-6 d-flex align-items-center">
-                                                        <div class="rating d-flex justify-content-center flex-row-reverse">
+                                                    <input class="w-100" type="text" name="phone_number"
+                                                           id="phone_number"
+                                                           placeholder="Ваш номер телефона" required>
+                                                </div>
+                                                <div class="col-lg-6 d-flex align-items-center">
+                                                    <div class="rating d-flex justify-content-center flex-row-reverse">
                                                             <span><input type="radio" name="rating" id="str5" value="5"><label
                                                                     for="str5" class="fas fa-star"></label></span>
-                                                            <span><input type="radio" name="rating" id="str4" value="4"><label
-                                                                    for="str4" class="fas fa-star"></label></span>
-                                                            <span><input type="radio" name="rating" id="str3" value="3"><label
-                                                                    for="str3" class="fas fa-star"></label></span>
-                                                            <span><input type="radio" name="rating" id="str2" value="2"><label
-                                                                    for="str2" class="fas fa-star"></label></span>
-                                                            <span><input type="radio" name="rating" id="str1" value="1"><label
-                                                                    for="str1" class="fas fa-star"></label></span>
-                                                        </div>
+                                                        <span><input type="radio" name="rating" id="str4"
+                                                                     value="4"><label
+                                                                for="str4" class="fas fa-star"></label></span>
+                                                        <span><input type="radio" name="rating" id="str3"
+                                                                     value="3"><label
+                                                                for="str3" class="fas fa-star"></label></span>
+                                                        <span><input type="radio" name="rating" id="str2"
+                                                                     value="2"><label
+                                                                for="str2" class="fas fa-star"></label></span>
+                                                        <span><input type="radio" name="rating" id="str1"
+                                                                     value="1"><label
+                                                                for="str1" class="fas fa-star"></label></span>
                                                     </div>
                                                 </div>
-                                                <textarea placeholder="Ваш коментарий" name="text" required></textarea>
-
-                                                <button> Оставить коментарий</button>
-                                            </form>
-                                        </div>
-                                    </li>
-                                </ul>
+                                            </div>
+                                            <textarea placeholder="Ваш коментарий" id="comment_text" name="text"
+                                                      required></textarea>
+                                            <button type="submit"> Оставить коментарий</button>
+                                        </form>
+                                    </div>
+                                </li>
                             </div>
                         </div>
                     </div>

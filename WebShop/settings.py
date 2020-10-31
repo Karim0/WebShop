@@ -30,6 +30,7 @@ ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = [
     'requests',
+    'mathfilters',
     'nested_admin',
     'admin_tools',
     'admin_tools.theming',

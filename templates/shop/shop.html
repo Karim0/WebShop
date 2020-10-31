@@ -5,17 +5,19 @@
 
 
     <div class="shop-banner">
-        {#        <img src="{{ category.banner.url }}" alt="{{ category.banner_alt }}" class="page-banner">#}
         <div class="page-info" style="background-image: url('{{ category.banner.url }}')">
-            <h1>{{ category.name }}</h1>
-            <form class="d-flex justify-content-center align-content-center mt-lg-5 mt-3 w-75" action="">
-                {% if search %}
-                    <input type="text" class="search-bar" placeholder="Поиск" name="search" value="{{ search }}">
-                {% else %}
-                    <input type="text" class="search-bar" placeholder="Поиск" name="search" value="">
-                {% endif %}
-                <button type="submit" class="search-btn">ИСКАТЬ</button>
-            </form>
+            <div class="w-100 d-flex align-items-center flex-column p-5">
+                <h1 class="w-100 text-center">{{ category.name }}</h1>
+                <form class="d-flex justify-content-center align-content-center mt-lg-5 mt-3 w-75" action="">
+                    {% if search %}
+                        <input type="text" class="search-bar" placeholder="Поиск" name="search" value="{{ search }}">
+                    {% else %}
+                        <input type="text" class="search-bar" placeholder="Поиск" name="search" value="">
+                    {% endif %}
+                    <button type="submit" class="search-btn">ИСКАТЬ</button>
+                    <button type="submit" class="search-icon"><i class="fas fa-search"></i></button>
+                </form>
+            </div>
         </div>
     </div>
 
@@ -30,37 +32,32 @@
                             {% endif %}
                             <div class="filter-sidebar">
                                 {% if subcategory %}
-                                     <h2>Подкатегории</h2>
-                                        {% for sub in subcategory %}
-                                            <a href="?subcat={{ sub.id }}">{{ sub.name }}</a>
-                                        {% endfor %}
+                                    <h2>Подкатегории</h2>
+                                    {% for sub in subcategory %}
+                                        <a class="d-block" href="?subcat={{ sub.id }}">{{ sub.name }}</a>
+                                    {% endfor %}
                                 {% endif %}
                                 <div class="filters-box">
                                     <h2>Фильтры</h2>
                                     <ul>
                                         {% for prop in props %}
                                             <li>
-                                                <label for="inputState">{{ prop.name }}</label>
-                                                <select id="inputState" class="form-control" name="{{ prop.name }}">
-                                                    <option value="-1">Не выбрано</option>
-                                                    {% for val in prop.prodval_set.all|unique %}
-                                                        {% if request.GET|is_contains:val %}
-                                                            <option value="{{ val }}"
-                                                                    selected>{{ val }}</option>
-                                                        {% else %}
-                                                            <option value="{{ val }}">{{ val }}</option>
-                                                        {% endif %}
-
-                                                    {% endfor %}
-
-                                                </select>
+                                                <label>{{ prop.name }}</label>
+                                                <div class="custom_selector">
+                                                    <div class="select">
+                                                        <span>Не выбрано</span>
+                                                        <i class="fa fa-chevron-left"></i>
+                                                    </div>
+                                                    <input type="hidden" name="{{ prop.name }}">
+                                                    <ul class="custom_selector-menu">
+                                                        {% for val in prop.prodval_set.all|unique %}
+                                                            <li id="{{ prop.id }}_{{ val.id }}">{{ val.value }}</li>
+                                                        {% endfor %}
+                                                    </ul>
+                                                </div>
                                             </li>
                                         {% endfor %}
-
                                     </ul>
-                                </div>
-                                <div class="rating-box">
-
                                 </div>
                                 <div class="select-price-box">
                                     <h2>Ценовой промежуток</h2>
@@ -106,7 +103,7 @@
                                     </div>
                                 </div>
                                 <button class="f-btn filter-btn" type="submit"> Фильтровать</button>
-                                <a class="f-btn reset-btn" href="#"> Сбросить </a>
+                                <a class="f-btn reset-btn" href="{% url 'shop:product' category.id %}"> Сбросить </a>
                             </div>
                         </form>
                     </div>
@@ -115,25 +112,27 @@
                         <div class="container">
                             <div class="row">
                                 <div class="sorting-box">
-                                    <form class="sorting" action="">
-                                        <label for="inputState">Сортировать по: </label>
-                                        <select id="inputState" class="form-control" form="#filter_form" name="order">
-                                            <option {% if order == 'По рейтингу' %}selected{% endif %}>По рейтингу
-                                            </option>
-                                            <option {% if order == 'Цена по возрастанию' %}selected{% endif %}>Цена по
-                                                возрастанию
-                                            </option>
-                                            <option {% if order == 'Цена по убыванию' %}selected{% endif %}>Цена по
-                                                убыванию
-                                            </option>
-                                        </select>
+                                    <form id="sortingby" class="sorting" action="{% url 'shop:sortby' %}">
+                                        <label for="inputState">Сортировать по:</label>
+                                        <div id="inputState" class="custom_selector">
+                                            <div class="select">
+                                                <span>Популярности</span>
+                                                <i class="fa fa-chevron-left"></i>
+                                            </div>
+                                            <input id="sortby_val" type="hidden" name="sortby" on>
+                                            <ul class="custom_selector-menu">
+                                                <li id="popularity" onclick="sortby('1')">Популярности</li>
+                                                <li id="price_asc" onclick="sortby('2')">Цена по возрастанию</li>
+                                                <li id="price_desc" onclick="sortby('3')">Цена по убыванию</li>
+                                            </ul>
+                                        </div>
                                     </form>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="all-products-box d-flex justify-content-between w-100 p-0 mt-4 flex-wrap">
+                                <div id="product_view" class="all-products-box d-flex w-100 p-0 mt-4 flex-wrap">
                                     {% for pr in product %}
-                                        <div class="product-box">
+                                        <div class="product-box col-lg-4 col-md-4 col-sm-6 col-12">
                                             <div class="card">
                                                 <div class="tag-box">
                                                     <span>{{ pr.tag.name }}</span>
@@ -152,7 +151,6 @@
                                             </div>
                                         </div>
                                     {% endfor %}
-
                                 </div>
                             </div>
                             {% if product.paginator.num_pages > 1 %}

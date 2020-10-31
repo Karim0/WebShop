@@ -209,7 +209,7 @@
     }
 
     .shopping-screen .card {
-        height: 150%;
+        height: 250px;
     }
 
     .shopping-screen .card > .prod-wrap {
@@ -225,7 +225,9 @@
     }
 
     .shopping-screen .card > .prod-wrap > .content-box {
-        display: block;
+        padding-top: 15px;
+        display: flex;
+        flex-direction: column;
         position: relative;
         height: 100%;
         align-items: center;

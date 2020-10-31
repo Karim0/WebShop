@@ -8,6 +8,8 @@ import requests as RQ
 
 from .models import *
 
+products = ...
+
 
 def home_page(request):
     session_key = request.session.session_key
@@ -119,7 +121,6 @@ def product_detail_page(request, pk):
     if not session_key:
         request.session.cycle_key()
     product = Product.objects.get(id=pk)
-    page = request.GET.get('page', 1)
 
     try:
         cart = Cart.objects.get(session_key=session_key)
@@ -134,7 +135,7 @@ def product_detail_page(request, pk):
         'cartSize': len(cart.cartproduct_set.all()),
         'product': product,
         'prodch': product.productchar_set.all(),
-        'comment': Paginator(product.productcomment_set.all(), 5).get_page(page),
+        'comment': product.productcomment_set.all(),
         'articles': Article.objects.all(),
         'questions': Question.objects.all(),
 
@@ -157,8 +158,10 @@ def product_page(request, pk):
 
     category = Category.objects.get(pk=pk)
     search = request.GET.get('search', None)
-    order = request.GET.get('order', 'По рейтингу')
+    order = request.GET.get('sortby', 'По рейтингу')
+    print(request.GET.get('sortby'))
     subcategory = Subcategory.objects.filter(category_id=pk)
+    global products
     if search:
         products = Product.objects.annotate(
             rank=SearchRank(SearchVector('name', 'desc_short', 'desc'), SearchQuery(search))).filter(
@@ -179,7 +182,9 @@ def product_page(request, pk):
 
     for i in request.GET.keys():
         if request.GET[i] != '-1' and i not in ['max_price', 'min_price', 'search', 'order', 'subcat', 'page']:
-            products = products.filter(productchar__prodval__value=request.GET[i]).distinct()
+            if request.GET[i]:
+                val = request.GET[i].split('_')[1]
+                products = products.filter(productchar__prodval__id=val).distinct()
 
     if min_price != -1 and max_price != -1:
         products = products.filter(productchar__price__gte=min_price).filter(
@@ -197,7 +202,6 @@ def product_page(request, pk):
     page = request.GET.get('page', 1)
 
     content = {
-        'pagename': category.name,
         'type': 'sub-head',
         'categs': Category.objects.all(),
         'subcategory': subcategory,
@@ -344,8 +348,6 @@ def make_order(request):
         i.product.sold += 1
         i.product.save()
 
-
-
         position = OrderPosition(order=order,
                                  product=i.product.__str__(),
                                  amount=i.amount)
@@ -369,7 +371,7 @@ def make_order(request):
         order_url = "https://api.yii2-stage.test.wooppay.com/v1/invoice/create"
 
         order_data = {
-            "reference_id": 32400*order.id,
+            "reference_id": 32400 * order.id,
             "amount": tot_sum,
             "service_name": "test_merch_invoice",
             "merchant_name": 384310,
@@ -408,13 +410,48 @@ def add_comment(request):
     comment.phone_number = request.POST.get('phone_number')
     comment.user_name = request.POST.get('user_name')
     comment.save()
-    return redirect('shop:product_detail', pk=pk)
+
+    data = []
+    for c in Product.objects.get(pk=pk).productcomment_set.all():
+        data.append({
+            'name': c.user_name,
+            'text': c.text,
+            'date': str(c.pub_date),
+            'rate': c.rate
+        })
+
+    return JsonResponse(json.dumps(data), safe=False)
 
 
 def callback(request):
-
     print(request.GET['name'])
     call = Calling(full_name=request.GET['name'],
                    phone=request.GET['phone'])
     call.save()
     return JsonResponse(json.dumps({}), safe=False)
+
+
+def sortby(request):
+    global products
+
+    print(len(products))
+
+    if request.GET['by'] == 'popularity':
+        products = products.annotate(rate=Avg('productcomment__rate')).order_by('-rate')
+    elif request.GET['by'] == 'price_asc':
+        products = products.annotate(price=Min('productchar__price')).order_by('price')
+    else:
+        products = products.annotate(price=Min('productchar__price')).order_by('-price')
+
+    data = []
+    for pr in products:
+        data.append({
+            'tag': pr.tag.name,
+            'photo': pr.productphoto_set.all()[0].img.url,
+            'photo_alt': pr.productphoto_set.all()[0].alt,
+            'name': pr.name,
+            'desc': pr.desc_short,
+            'id': pr.id
+        })
+
+    return JsonResponse(json.dumps(data), safe=False)

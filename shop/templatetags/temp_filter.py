@@ -19,10 +19,10 @@ def get_val_map(value, key):
 def unique(value):
     output = set()
     for x in value:
-        output.add(x.value)
+        output.add(x)
     return output
 
-# @register.filter()
-# def totPrice(id):
-#     cp = CartProduct.objects.get(pk=id)
-#     return cp.amount*cp.product.price
+
+@register.filter()
+def multiplication(value):
+    return value * 10

@@ -167,6 +167,7 @@ p {
 }
 
 .main-header {
+    margin-top: 1.5em;
     position: absolute;
     top: 0;
     left: 0;
@@ -176,10 +177,10 @@ p {
 }
 
 .sub-head {
+    margin-top: 0;
     position: relative;
     box-shadow: 0 3px 10px 1px #fff9e5;
 }
-
 
 .header-menu {
     right: 0 !important;
@@ -456,6 +457,7 @@ p {
     padding: 0;
     margin: 0;
     text-align: center;
+    border-bottom: 1px solid #ec293c;
 }
 
 .product-box > .card > .prod-wrap {
@@ -628,12 +630,15 @@ p {
     color: #383636;
 }
 
+.page-info div {
+    background: #00000060;
+}
+
 .sub-banner .page-info h1 {
     display: block;
-
     font-size: 2.5em;
     font-weight: 500;
-    color: #ec293c;
+    color: white;
 }
 
 .sub-banner .page-info p a {
@@ -680,7 +685,7 @@ p {
 
     font-size: 2.5em;
     font-weight: 500;
-    color: #ec293c;
+    color: white;
 }
 
 .shop-banner .page-info p a {
@@ -822,17 +827,17 @@ p {
     margin: 15px auto;
 }
 
-.product-screen .product_comments li.leave-comment {
+.product-screen .leave-comment {
     border-top: 1px solid #ec293c;
     padding: 10px;
 }
 
 
-.product-screen .product_comments li.leave-comment div {
+.product-screen .leave-comment div {
     width: 100%;
 }
 
-.product-screen .product_comments li.leave-comment input {
+.product-screen .leave-comment input {
     border: 1px solid lightgrey;
     margin-top: 15px;
     padding: 5px 10px;
@@ -840,7 +845,7 @@ p {
 
 }
 
-.product-screen .product_comments li.leave-comment textarea {
+.product-screen .leave-comment textarea {
     width: 100%;
     height: 80px;
     resize: none;
@@ -851,7 +856,7 @@ p {
 
 }
 
-.product-screen .product_comments li.leave-comment button {
+.product-screen .leave-comment button {
     color: white;
     background: dodgerblue;
     padding: 5px 10px;
@@ -860,7 +865,7 @@ p {
     border-radius: 2px;
 }
 
-.product-screen .product_comments li.leave-comment button:hover {
+.product-screen .leave-comment button:hover {
 
     background: #383636;
 }
@@ -974,7 +979,7 @@ p {
     font-size: 1.1em;
     border: none;
     color: white;
-    background: #4e4eff;
+    background: #ec293c;
 }
 
 .search-icon {
@@ -984,7 +989,15 @@ p {
     font-size: 1.1em;
     border: none;
     color: white;
-    background: #4e4eff;
+    background: #ec293c;
+}
+
+.search-btn:hover {
+    background: #383636;
+}
+
+.search-icon:hover {
+    background: #383636;
 }
 
 .shopping-screen .sorting-box {
@@ -1006,16 +1019,15 @@ p {
     padding: 5px;
     align-items: center;
     justify-content: space-between;
-    /*width: 30%;*/
+    width: 300px;
 
 }
 
 .shopping-screen .sorting-box .sorting label {
 
     box-sizing: border-box;
-    width: max-content;
+    width: 100%;
     margin: 0;
-    margin-right: 10px;
 
 }
 
@@ -1040,6 +1052,7 @@ p {
 }
 
 .sticky {
+    margin-top: 0;
     position: fixed;
     background: white;
     box-shadow: 0 2px 5px -3px #969696;
@@ -1062,29 +1075,35 @@ p {
     background-color: #cccccc;
 }
 
-.news_line {
-    height: 100px;
+
+.scroll-left {
+    height: 1.5em;
     overflow: hidden;
     position: relative;
     background: #383636;
 }
 
-.news_line li  {
+.scroll-left p {
     position: absolute;
-    width: 100%;
+    width: max-content;
     height: 100%;
-    margin: 0;
-    line-height: 100px;
-    font-size: 2em;
+    /*margin-right: -100%;*/
+    line-height: 1.5em;
     text-align: center;
-    -moz-transform: translateX(100%);
-    -webkit-transform: translateX(100%);
-    transform: translateX(100%);
-    -moz-animation: scroll-left 2s linear infinite;
-    -webkit-animation: scroll-left 2s linear infinite;
-    animation: scroll-left 20s linear infinite;
+    -moz-transform: translateX(0%);
+    -webkit-transform: translateX(0%);
+    transform: translateX(0%);
 }
 
+.scroll-left p a {
+    font-size: 1em;
+    color: white;
+    display: inline-block;
+    padding: 0 300px;
+    width: max-content;
+}
+
+/* Move it (define the animation) */
 @-moz-keyframes scroll-left {
     0% {
         -moz-transform: translateX(100%);
@@ -1105,18 +1124,13 @@ p {
 
 @keyframes scroll-left {
     0% {
-        -moz-transform: translateX(100%);
-        -webkit-transform: translateX(100%);
+        -moz-transform: translateX(100%); /* Browser bug fix */
+        -webkit-transform: translateX(100%); /* Browser bug fix */
         transform: translateX(100%);
     }
     100% {
-        -moz-transform: translateX(-100%);
-        -webkit-transform: translateX(-100%);
+        -moz-transform: translateX(-100%); /* Browser bug fix */
+        -webkit-transform: translateX(-100%); /* Browser bug fix */
         transform: translateX(-100%);
     }
-}
-
-
-.news_line li a{
-    color: white;
 }
