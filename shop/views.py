@@ -443,8 +443,10 @@ def sortby(request):
         products = products.annotate(price=Min('productchar__price')).order_by('-price')
 
     data = []
+
     for pr in products:
-        print(pr.name)
+        print(pr.productcomment_set.all().annotate(Avg('rate')))
+
         data.append({
             'tag': pr.tag.name,
             'photo': pr.productphoto_set.all()[0].img.url,

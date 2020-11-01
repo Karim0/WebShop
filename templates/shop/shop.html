@@ -113,19 +113,11 @@
                             <div class="row">
                                 <div class="sorting-box">
                                     <form id="sortingby" class="sorting" action="{% url 'shop:sortby' %}">
-                                        <label for="inputState">Сортировать по:</label>
-                                        <div id="inputState" class="custom_selector">
-                                            <div class="select">
-                                                <span>Популярности</span>
-                                                <i class="fa fa-chevron-left"></i>
-                                            </div>
-                                            <input id="sortby_val" type="hidden" name="sortby" on>
-                                            <ul class="custom_selector-menu">
-                                                <li id="popularity" onclick="sortby('1')">Популярности</li>
-                                                <li id="price_asc" onclick="sortby('2')">Цена по возрастанию</li>
-                                                <li id="price_desc" onclick="sortby('3')">Цена по убыванию</li>
-                                            </ul>
-                                        </div>
+                                        <select name="sortby" id="sortby" onchange="sort_by()">
+                                            <option value="popularity">Популярное</option>
+                                            <option value="price_desc">Цена по убыванию</option>
+                                            <option value="price_asc">Цена по возростанию</option>
+                                        </select>
                                     </form>
                                 </div>
                             </div>
