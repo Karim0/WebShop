@@ -434,8 +434,7 @@ def callback(request):
 def sortby(request):
     global products
 
-    print(len(products))
-
+    print(request.GET)
     if request.GET['by'] == 'popularity':
         products = products.annotate(rate=Avg('productcomment__rate')).order_by('-rate')
     elif request.GET['by'] == 'price_asc':
@@ -445,6 +444,7 @@ def sortby(request):
 
     data = []
     for pr in products:
+        print(pr.name)
         data.append({
             'tag': pr.tag.name,
             'photo': pr.productphoto_set.all()[0].img.url,
