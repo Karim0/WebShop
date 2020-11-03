@@ -1,0 +1,39 @@
+Index: shop/models.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>from django.db import models\r\n\r\n\r\n# Create your models here.\r\n\r\nclass Category(models.Model):\r\n    name = models.CharField(max_length=255)\r\n    desc = models.TextField()\r\n    banner = models.ImageField(upload_to='banners/')\r\n\r\n    def __str__(self):\r\n        return f'{self.name}, {self.desc}'\r\n\r\n\r\nclass Subcategory(models.Model):\r\n    category = models.ForeignKey(Category, on_delete=models.CASCADE)\r\n    name = models.CharField(max_length=255)\r\n\r\n    def __str__(self):\r\n        return f'{self.name}: {self.category.name}'\r\n\r\n\r\nclass Product(models.Model):\r\n    name = models.CharField(max_length=255)\r\n    subcategory = models.ForeignKey(Subcategory, on_delete=models.CASCADE)\r\n    desc = models.TextField()\r\n    desc_short = models.CharField(max_length=255)\r\n\r\n    def __str__(self):\r\n        return f'{self.name}: subcategory - {self.subcategory.name}'\r\n\r\n\r\nclass ProductPhoto(models.Model):\r\n    prod = models.ForeignKey(Product, on_delete=models.CASCADE)\r\n    img = models.ImageField(upload_to='video')\r\n    alt = models.CharField(max_length=255)\r\n\r\n    def __str__(self):\r\n        return f'{self.prod.name}: alt: {self.alt}, video url - {self.img.url}'\r\n\r\n\r\nclass ProductVideo(models.Model):\r\n    prod = models.ForeignKey(Product, on_delete=models.CASCADE)\r\n    video = models.FileField(upload_to='video')\r\n    alt = models.CharField(max_length=255)\r\n\r\n    def __str__(self):\r\n        return f'{self.prod.name}: alt: {self.alt}, video url - {self.video.url}'\r\n\r\n\r\nclass ProductChar(models.Model):\r\n    prod = models.ForeignKey(Product, on_delete=models.CASCADE)\r\n    price = models.IntegerField()\r\n    sold = models.IntegerField()\r\n    amount = models.IntegerField()\r\n\r\n    def __str__(self):\r\n        return f'prod - {self.prod.name}, price - {self.price}, sold - {self.sold}, amount - {self.amount}'\r\n\r\n\r\nclass Property(models.Model):\r\n    name = models.CharField(max_length=255)\r\n\r\n    def __str__(self):\r\n        return self.name\r\n\r\n\r\nclass ProdVal(models.Model):\r\n    value = models.CharField(max_length=255)\r\n    prop = models.ForeignKey(Property, on_delete=models.CASCADE)\r\n    prod_char = models.ForeignKey(ProductChar, on_delete=models.CASCADE)\r\n\r\n    def __str__(self):\r\n        return f'{self.prod_char.prod.name}: {self.prop.name} - {self.value}'\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- shop/models.py	(revision 5e7e56047019502d3f6af6d2bccc56be321c3f9f)
++++ shop/models.py	(date 1602921712751)
+@@ -30,6 +30,15 @@
+         return f'{self.name}: subcategory - {self.subcategory.name}'
+ 
+ 
++class ProductComment(models.Model):
++    prod = models.ForeignKey(Product, on_delete=models.CASCADE)
++    text = models.TextField()
++    rate = models.IntegerField()
++
++    def __str__(self):
++        return f'{self.name}: subcategory - {self.subcategory.name}'
++
++
+ class ProductPhoto(models.Model):
+     prod = models.ForeignKey(Product, on_delete=models.CASCADE)
+     img = models.ImageField(upload_to='video')
+@@ -72,3 +81,13 @@
+ 
+     def __str__(self):
+         return f'{self.prod_char.prod.name}: {self.prop.name} - {self.value}'
++
++
++
++class SiteProfile(models.Model):
++    logo = models.ImageField()
++    phone = models.CharField(max_length=255)
++    address = models.CharField(max_length=255)
++    wwp = models.CharField(max_length=255)
++    ins = models.CharField(max_length=255)
++    email = models.CharField(max_length=255)
