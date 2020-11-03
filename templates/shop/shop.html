@@ -59,6 +59,19 @@
                                         {% endfor %}
                                     </ul>
                                 </div>
+                                <h2>Сортировать по</h2>
+                                <div class="custom_selector">
+                                    <div class="select">
+                                        <span>{{ cur_sort }}</span>
+                                        <i class="fa fa-chevron-left"></i>
+                                    </div>
+                                    <input type="hidden" name="sortby">
+                                    <ul class="custom_selector-menu">
+                                        <li id="popularity">Популярности</li>
+                                        <li id="price_asc">Цена по возрастанию</li>
+                                        <li id="price_desc">Цена по убыванию</li>
+                                    </ul>
+                                </div>
                                 <div class="select-price-box">
                                     <h2>Ценовой промежуток</h2>
                                     <div class="wrapper-price">
@@ -73,8 +86,6 @@
                                                            value="{{ min_price }}"
                                                            id="lower">
                                                 {% endif %}
-
-
                                                 {% if max_price_curr != -1 %}
                                                     <input type="range" min="{{ min_price }}" max="{{ max_price }}"
                                                            value="{{ max_price_curr }}"
@@ -84,7 +95,6 @@
                                                            value="{{ max_price }}"
                                                            id="upper">
                                                 {% endif %}
-
                                             </div>
                                             <div class="price-wrap">
                                                 <div class="price-container">
@@ -110,17 +120,6 @@
 
                     <div class="col-lg-9 col-12">
                         <div class="container">
-                            <div class="row">
-                                <div class="sorting-box">
-                                    <form id="sortingby" class="sorting" action="{% url 'shop:sortby' %}">
-                                        <select name="sortby" id="sortby" onchange="sort_by()">
-                                            <option value="popularity">Популярное</option>
-                                            <option value="price_desc">Цена по убыванию</option>
-                                            <option value="price_asc">Цена по возростанию</option>
-                                        </select>
-                                    </form>
-                                </div>
-                            </div>
                             <div class="row">
                                 <div id="product_view" class="all-products-box d-flex w-100 p-0 mt-4 flex-wrap">
                                     {% for pr in product %}

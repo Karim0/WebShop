@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.db.models import Max, Min, Avg
+from django.db.models import Max, Min, Avg, Sum
 from django.contrib.postgres.search import SearchVector, SearchRank, SearchQuery
 from django.http import JsonResponse
 import json
@@ -7,8 +7,6 @@ from django.core.paginator import Paginator
 import requests as RQ
 
 from .models import *
-
-products = ...
 
 
 def home_page(request):
@@ -158,10 +156,10 @@ def product_page(request, pk):
 
     category = Category.objects.get(pk=pk)
     search = request.GET.get('search', None)
-    order = request.GET.get('sortby', 'По рейтингу')
-    print(request.GET.get('sortby'))
+    order = request.GET.get('sortby', 'popularity')
+
     subcategory = Subcategory.objects.filter(category_id=pk)
-    global products
+
     if search:
         products = Product.objects.annotate(
             rank=SearchRank(SearchVector('name', 'desc_short', 'desc'), SearchQuery(search))).filter(
@@ -170,6 +168,7 @@ def product_page(request, pk):
         products = Product.objects.filter(subcategory__in=subcategory)
 
     max_min_min = ProductChar.objects.filter(prod__in=products).aggregate(Max('price'), Min('price'))
+
     props = Property.objects.filter(prodval__prod_char__prod__in=products).distinct()
 
     max_price = int(request.GET.get('max_price', -1))
@@ -181,7 +180,9 @@ def product_page(request, pk):
         products = Product.objects.filter(subcategory_id=subcat)
 
     for i in request.GET.keys():
-        if request.GET[i] != '-1' and i not in ['max_price', 'min_price', 'search', 'order', 'subcat', 'page']:
+
+        if request.GET[i] != '-1' and i not in ['max_price', 'min_price', 'search', 'order', 'subcat', 'page',
+                                                'sortby']:
             if request.GET[i]:
                 val = request.GET[i].split('_')[1]
                 products = products.filter(productchar__prodval__id=val).distinct()
@@ -190,13 +191,14 @@ def product_page(request, pk):
         products = products.filter(productchar__price__gte=min_price).filter(
             productchar__price__lte=max_price).distinct()
 
-    if order == 'По рейтингу' and search:
-        products = products.order_by('-rank')
-    elif order == 'По рейтингу':
-        products = products.annotate(rate=Avg('productcomment__rate')).order_by('-rate')
-    elif order == 'Цена по возрастанию':
+    if order == 'popularity':
+        order = 'Популярности'
+        products = products.annotate(rate=Sum('productcomment__rate')).order_by('-rate')
+    elif order == 'price_asc':
+        order = 'Цена по возрастанию'
         products = products.annotate(price=Min('productchar__price')).order_by('price')
-    elif order == 'Цена по убыванию':
+    elif order == 'price_desc':
+        order = 'Цена по убыванию'
         products = products.annotate(price=Min('productchar__price')).order_by('-price')
 
     page = request.GET.get('page', 1)
@@ -217,9 +219,8 @@ def product_page(request, pk):
         'cur_subcat': subcat,
         'articles': Article.objects.all(),
         'questions': Question.objects.all(),
-
-        'site': SiteProfile.objects.first()
-
+        'site': SiteProfile.objects.first(),
+        'cur_sort': order
     }
     return render(request, 'shop/shop.html', content)
 
@@ -429,31 +430,3 @@ def callback(request):
                    phone=request.GET['phone'])
     call.save()
     return JsonResponse(json.dumps({}), safe=False)
-
-
-def sortby(request):
-    global products
-
-    print(request.GET)
-    if request.GET['by'] == 'popularity':
-        products = products.annotate(rate=Avg('productcomment__rate')).order_by('-rate')
-    elif request.GET['by'] == 'price_asc':
-        products = products.annotate(price=Min('productchar__price')).order_by('price')
-    else:
-        products = products.annotate(price=Min('productchar__price')).order_by('-price')
-
-    data = []
-
-    for pr in products:
-        print(pr.productcomment_set.all().annotate(Avg('rate')))
-
-        data.append({
-            'tag': pr.tag.name,
-            'photo': pr.productphoto_set.all()[0].img.url,
-            'photo_alt': pr.productphoto_set.all()[0].alt,
-            'name': pr.name,
-            'desc': pr.desc_short,
-            'id': pr.id
-        })
-
-    return JsonResponse(json.dumps(data), safe=False)
