@@ -88,10 +88,10 @@ WSGI_APPLICATION = 'WebShop.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'shop',
-        'USER': 'shop',
-        'PASSWORD': 'shop',
-        'HOST': '127.0.0.1',
+        'NAME': 'hanokmar_shop',
+        'USER': 'hanokmar_admin',
+        'PASSWORD': 'hanokmarket2020@',
+        'HOST': 'srv-db-pgsql01.ps.kz',
         'PORT': '5432',
     }
 
