@@ -33,7 +33,7 @@ import django
 from django.core.handlers.wsgi import WSGIHandler
 
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "eisentask.settings.production")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "WebShop.settings.WebShop")
 django.setup(set_prefix=False)
 
 application = WSGIHandler()
