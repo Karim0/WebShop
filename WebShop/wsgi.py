@@ -7,33 +7,10 @@ For more information on this file, see
 https://docs.djangoproject.com/en/3.0/howto/deployment/wsgi/
 """
 
-# import os, sys
-#
-# # add the hellodjango project path into the sys.path
-# sys.path.append('<PATH_TO_MY_DJANGO_PROJECT>/WebShop')
-#
-# # add the virtualenv site-packages path to the sys.path
-# sys.path.append('<PATH_TO_VIRTUALENV>/Lib/site-packages')
-#
-# # poiting to the project settings
-# os.environ.setdefault("DJANGO_SETTINGS_MODULE", "WebShop.settings")
-#
-#
-# from django.core.wsgi import get_wsgi_application
-#
-#
-#
-# os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'WebShop.settings')
-#
-# application = get_wsgi_application()
-
 import os
-import django
 
-from django.core.handlers.wsgi import WSGIHandler
+from django.core.wsgi import get_wsgi_application
 
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'WebShop.settings')
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "WebShop.settings.WebShop")
-django.setup(set_prefix=False)
-
-application = WSGIHandler()
+application = get_wsgi_application()
