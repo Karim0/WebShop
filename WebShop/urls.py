@@ -33,16 +33,11 @@ urlpatterns = [
 
 urlpatterns += staticfiles_urlpatterns()
 
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# urlpatterns += static(settings.STATIC_URL, document_root=settings.)
 
-
+# urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 #
-# urlpatterns = [
-#     path('grappelli/', include('grappelli.urls')),
-#     path('admin/', admin.site.urls),
-#     path('admin_tools/', include('admin_tools.urls')),
-#     path('shop/', include('Shop.urls')),
-#     # path(r'^myadmin/', include(admin_site.urls)),
-# ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
 

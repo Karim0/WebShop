@@ -99,14 +99,14 @@ class Product(models.Model):
     subcategory = models.ForeignKey(Subcategory, on_delete=models.CASCADE,
                                     verbose_name="Выбор подкатегории ")
     tag = models.ForeignKey(Tag, on_delete=models.DO_NOTHING, null=True,
-                            verbose_name="Выбор тэга ")
+                            verbose_name="Выбор тэга ", blank=True)
     desc = models.TextField(verbose_name="Полное описание товара ")
 
     desc_short = models.CharField(max_length=255, help_text="(максимальное число символов: 255)",
                                   verbose_name="Короткое описание товара ")
 
     def __str__(self):
-        return f'Название: {self.name} Подкатегория: {self.subcategory.name} Тэг: {self.tag.name}'
+        return f'Название: {self.name} Подкатегория: {self.subcategory.name}'
 
     class Meta:
         verbose_name = "Товар"
@@ -170,7 +170,7 @@ class ProductChar(models.Model):
     prod = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name="Выбор товара ")
     price = models.IntegerField(verbose_name="Цена товара",
                                 default=10000)
-    sold = models.IntegerField(default=10000, editable=False)
+    sold = models.IntegerField(default=0, editable=False)
     amount = models.IntegerField(default=0, help_text="(необязательно, только для вас)",
                                  verbose_name="Количество товара")
     props = models.ManyToManyField(Property, through='ProdVal',

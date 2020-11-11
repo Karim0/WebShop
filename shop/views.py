@@ -156,16 +156,13 @@ def product_page(request, pk):
 
     category = Category.objects.get(pk=pk)
     search = request.GET.get('search', None)
-    order = request.GET.get('sortby', 'popularity')
+    order = request.GET.get('sortby')
+    if order != 'popularity' or order != 'price_asc' or order != 'price_desc' or order is None:
+        order = 'popularity'
 
     subcategory = Subcategory.objects.filter(category_id=pk)
 
-    if search:
-        products = Product.objects.annotate(
-            rank=SearchRank(SearchVector('name', 'desc_short', 'desc'), SearchQuery(search))).filter(
-            rank__gte=0.05).order_by('-rank')
-    else:
-        products = Product.objects.filter(subcategory__in=subcategory)
+    products = Product.objects.filter(subcategory__in=subcategory)
 
     max_min_min = ProductChar.objects.filter(prod__in=products).aggregate(Max('price'), Min('price'))
 
@@ -178,11 +175,16 @@ def product_page(request, pk):
 
     if subcat != -1:
         products = Product.objects.filter(subcategory_id=subcat)
+    else:
+        subcat = int(request.GET.get('cur_subcat', -1))
+        if subcat != -1:
+            products = Product.objects.filter(subcategory_id=subcat)
+            print(products)
 
     for i in request.GET.keys():
 
         if request.GET[i] != '-1' and i not in ['max_price', 'min_price', 'search', 'order', 'subcat', 'page',
-                                                'sortby']:
+                                                'sortby', 'cur_subcat']:
             if request.GET[i]:
                 val = request.GET[i].split('_')[1]
                 products = products.filter(productchar__prodval__id=val).distinct()
@@ -203,6 +205,9 @@ def product_page(request, pk):
 
     page = request.GET.get('page', 1)
 
+    if search:
+        products = Product.objects.filter(name__contains=search[1:].strip().lower())
+
     content = {
         'type': 'sub-head',
         'categs': Category.objects.all(),
@@ -220,7 +225,7 @@ def product_page(request, pk):
         'articles': Article.objects.all(),
         'questions': Question.objects.all(),
         'site': SiteProfile.objects.first(),
-        'cur_sort': order
+        'cur_sort': order,
     }
     return render(request, 'shop/shop.html', content)
 
