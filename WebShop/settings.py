@@ -91,6 +91,7 @@ WSGI_APPLICATION = 'WebShop.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
+client_encoding = 'LATIN1'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -99,10 +100,6 @@ DATABASES = {
         'PASSWORD': 'shop',
         'HOST': '127.0.0.1',
         'PORT': '5432',
-        'OPTIONS': {
-            'client_encoding': 'LATIN1',
-            'use_unicode': True,
-        },
     }
 
     # 'default': {
