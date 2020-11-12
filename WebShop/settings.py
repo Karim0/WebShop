@@ -100,6 +100,9 @@ DATABASES = {
         'PASSWORD': 'shop',
         'HOST': '127.0.0.1',
         'PORT': '5432',
+        'OPTIONS': {
+            'ENCODING': 'LATIN1',
+        },
     }
 
     # 'default': {
