@@ -100,7 +100,7 @@ DATABASES = {
         'HOST': '127.0.0.1',
         'PORT': '5432',
         'OPTIONS': {
-            'default-character-set': 'LATIN1',
+            'client_encoding': 'LATIN1',
             'use_unicode': True,
         },
     }
