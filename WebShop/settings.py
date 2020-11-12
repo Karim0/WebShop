@@ -99,14 +99,7 @@ DATABASES = {
         'PASSWORD': 'shop',
         'HOST': '127.0.0.1',
         'PORT': '5432',
-        'OPTIONS': {
-            'charset': 'LATIN1',
-            'use_unicode': True,
-            'init_command': 'SET '
-                            'storage_engine=INNODB,'
-                            'character_set_connection=LATIN1,'
-                            'collation_connection=utf8_bin'
-        },
+
     }
 
     # 'default': {
