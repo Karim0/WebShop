@@ -31,8 +31,6 @@ ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
-DEFAULT_CHARACTER_SET = 'LATIN1'
-
 INSTALLED_APPS = [
     'requests',
     'nested_admin',
@@ -59,6 +57,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware'
 ]
+
+
 
 TEMPLATES = [
     {
@@ -91,25 +91,24 @@ WSGI_APPLICATION = 'WebShop.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-client_encoding = 'LATIN1'
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'shop',
-        'USER': 'shop',
-        'PASSWORD': 'shop',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
-        'OPTIONS': {
-            'ENCODING': 'LATIN1',
-        },
-    }
-
     # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #     'NAME': 'shop',
+    #     'USER': 'shop',
+    #     'PASSWORD': 'shop',
+    #     'HOST': '127.0.0.1',
+    #     'PORT': '5432',
     # }
+
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
 }
+
+
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -156,9 +155,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 
+
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR,
-                           "static")  # Изначально пустой каталог, куда Django соберёт всё при выполнении manage.py collectstatic
+STATIC_ROOT = os.path.join(BASE_DIR, "static") # Изначально пустой каталог, куда Django соберёт всё при выполнении manage.py collectstatic
 # STATICFILES_DIRS = [
 #     os.path.join(BASE_DIR, "static_dev"), # Каталог, куда вам нужно складывать статику проекта, не относящуюся к конкретному приложению
 # ]
