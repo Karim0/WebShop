@@ -30,7 +30,7 @@ DEBUG = True
 ALLOWED_HOSTS = ["*"]
 
 # Application definition
-
+ROOT_URLCONF = 'WebShop.urls'
 INSTALLED_APPS = [
     'requests',
     'nested_admin',
@@ -57,8 +57,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware'
 ]
-
-
 
 TEMPLATES = [
     {
@@ -107,9 +105,6 @@ DATABASES = {
     }
 }
 
-
-
-
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
@@ -155,9 +150,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 
-
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, "static") # Изначально пустой каталог, куда Django соберёт всё при выполнении manage.py collectstatic
+STATIC_ROOT = os.path.join(BASE_DIR,
+                           "static")  # Изначально пустой каталог, куда Django соберёт всё при выполнении manage.py collectstatic
 # STATICFILES_DIRS = [
 #     os.path.join(BASE_DIR, "static_dev"), # Каталог, куда вам нужно складывать статику проекта, не относящуюся к конкретному приложению
 # ]
