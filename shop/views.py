@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect
 from django.db.models import Max, Min, Avg, Sum
-from django.contrib.postgres.search import SearchVector, SearchRank, SearchQuery
 from django.http import JsonResponse
 import json
 from django.core.paginator import Paginator
