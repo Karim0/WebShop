@@ -59,6 +59,13 @@
         width: 20%;
     }
 
+    .scroll-left {
+        display: none!important;
+    }
+    .main-header{
+        margin-top: 0;
+    }
+
 }
 
 @media (min-width: 490px) and (max-width: 767px) {
@@ -130,6 +137,12 @@
 
     .brand-box {
         width: 30%;
+    }
+    .scroll-left {
+        display: none!important;
+    }
+    .main-header{
+        margin-top: 0;
     }
 
 }
@@ -265,5 +278,12 @@
 
     .search-icon {
         display: block;
+    }
+
+    .scroll-left {
+        display: none!important;
+    }
+    .main-header{
+        margin-top: 0;
     }
 }
