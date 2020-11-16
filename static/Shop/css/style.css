@@ -605,6 +605,7 @@ p {
     height: 50vh;
     overflow: hidden;
     z-index: 1;
+    box-shadow: 0 9px 7px 0 #e6e6e6;
 }
 
 .sub-banner .page-banner {
