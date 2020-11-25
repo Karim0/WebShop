@@ -31,34 +31,31 @@
                     <div class="col-lg-6 filters-box" style="border:0px solid gray">
                         <form action="{% url 'shop:add_cart' %}" method="post">
                             {% csrf_token %}
+                            <input type="text" name="fast" value="full" hidden>
                             <h2 class="prod-name">{{ product.name }}</h2>
                             <ul class="filters mt-5">
-                                {% for pr in product.productchar_set.all %}
                                     <li class="text-center m-0 mb-3">
                                         <div class="filter">
                                             <input type="radio" name="prodchars" id="prodch{{ pr.id }}"
-                                                   value="{{ pr.id }}" hidden>
-                                            <label id="chars{{ pr.id }}" for="prodch{{ pr.id }}"
-                                                   onclick="select_char({{ pr.id }}, {{ pr.price }})">
+                                                   value="{{ pr.id }}" hidden checked>
+                                            <label id="chars{{ pr.id }}" for="prodch{{ pr.id }}">
                                                 {% for v in pr.prodval_set.all %}
                                                     {{ v.prop.name }}:
                                                     <b style="color: black; margin-right: 5px">{{ v.value }}</b>
                                                 {% endfor %}
                                             </label>
-
                                         </div>
                                     </li>
-                                {% endfor %}
                             </ul>
                             <div id="opt" class="m-0 p-0">
                                 <div class="counter-box">
                                     <div class="">
-                                        <a onclick="modify('minus')"
+                                        <a onclick="modify('minus', {{ pr.price }})"
                                            class="minus decrease"><i class="fas fa-minus"></i>
                                         </a>
-                                        <input class="quantity" min="0" name="amount" value="0"
+                                        <input class="quantity" min="0" name="amount" value="1"
                                                type="number" id="countAmount" onchange="modify('change')">
-                                        <a onclick="modify('plus')"
+                                        <a onclick="modify('plus', {{ pr.price }})"
                                            class="plus increase"><i class="fas fa-plus"></i>
                                         </a>
                                     </div>
@@ -66,10 +63,11 @@
 
                                 <div class="price-box">
                                     <h3 class="title-price">ИТОГ</h3>
-                                    <p><span id="pricebox" style="font-size: 2em"> 0 </span> ₸ (<span id="cost">0</span> ₸
+                                    <p><span id="pricebox" style="font-size: 2em"> {{ pr.price }} </span> ₸ (<span id="cost">{{ pr.price }}</span>
+                                        ₸
                                         X
                                         <span
-                                                id="amountbox">0</span>шт)</p>
+                                                id="amountbox">1</span>шт)</p>
                                 </div>
                                 <div class="section">
                                     <button class="btn btn-success" type="submit">

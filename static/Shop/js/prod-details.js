@@ -1,22 +1,19 @@
-var temp_price = 0;
+// function select_char(id, price) {
+//
+//     // $('#chars' + id).css('border-bottom', '1px solid black');
+//
+//     temp_price = price;
+//
+//
+//     $('#opt').css('display', 'block');
+//     $('#cost').html(temp_price);
+//     $('#pricebox').html(temp_price);
+//     $('#countAmount').val(1);
+//     $('#amountbox').html($('#countAmount').val());
+//
+// }
 
-function select_char(id, price) {
-
-    // $('#chars' + id).css('border-bottom', '1px solid black');
-
-    temp_price = price;
-
-
-    $('#opt').css('display', 'block');
-    $('#cost').html(temp_price);
-    $('#pricebox').html(temp_price);
-    $('#countAmount').val(1);
-    $('#amountbox').html($('#countAmount').val());
-
-}
-
-function modify(op) {
-    console.log(temp_price)
+function modify(op, temp_price) {
 
     if (op === 'plus') {
         $('#countAmount').val(parseInt($('#countAmount').val()) + 1);
@@ -33,3 +30,5 @@ function modify(op) {
     $('#pricebox').html(temp_price * parseInt($('#countAmount').val()));
     $('#amountbox').html($('#countAmount').val());
 }
+
+

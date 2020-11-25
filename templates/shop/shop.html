@@ -124,26 +124,39 @@
                         <div class="container">
                             <div class="row">
                                 <div id="product_view" class="all-products-box d-flex w-100 p-0 mt-4 flex-wrap">
-                                    {% for pr in product %}
-                                        <div class="product-box col-lg-4 col-md-4 col-sm-6 col-12">
-                                            <div class="card">
-                                                <div class="tag-box">
-                                                    <span>{{ pr.tag.name }}</span>
-                                                </div>
-                                                <div class="prod-wrap">
-                                                    <div class="img-box">
-                                                        <img class="w-100" src="{{ pr.productphoto_set.all.0.img.url }}"
-                                                             alt="{{ pr.productphoto_set.all.0.alt }}">
+                                    <form id="fast_add_cart" action="{% url 'shop:add_cart' %}" method="post">
+                                        {% csrf_token %}
+                                        {% for pr in product %}
+                                            <div class="product-box col-lg-4 col-md-6 col-sm-6 col-12">
+                                                <div class="card">
+                                                    <input type="text" id="char_id"
+                                                           value="{{ pr.productchar_set.all.0.id }}" hidden>
+                                                    <input type="text" id="char_amount" value="1" hidden>
+                                                    <input type="text" id="is_fast" value="fast" hidden>
+                                                    <div class="tag-box">
+                                                        <span>{{ pr.tag.name }}</span>
                                                     </div>
-                                                    <div class="content-box">
-                                                        <h3>{{ pr.name }}</h3>
-                                                        <p>{{ pr.desc_short }}</p>
-                                                        <a href="{% url 'shop:product_detail' pr.id %}">Подробнее</a>
+                                                    <div class="prod-wrap">
+                                                        <div class="img-box">
+                                                            <img class="w-100"
+                                                                 src="{{ pr.productphoto_set.all.0.img.url }}"
+                                                                 alt="{{ pr.productphoto_set.all.0.alt }}">
+                                                        </div>
+                                                        <div class="content-box">
+                                                            <h3>{{ pr.name }}</h3>
+                                                            <p>{{ pr.desc_short }}</p>
+                                                            <div class="d-flex align-items-center mb-2 w-75 p-0 justify-content-between">
+                                                                <span>Цена: <b>{{ pr.productchar_set.all.0.price }}</b> ₸</span>
+                                                                <button type="submit" class="btn fast-cart m-0"><i
+                                                                        class="fas fa-cart-plus"></i></button>
+                                                            </div>
+                                                            <a class="w-75" href="{% url 'shop:product_detail' pr.id %}">Подробнее</a>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    {% endfor %}
+                                        {% endfor %}
+                                    </form>
                                 </div>
                             </div>
                             {% if product.paginator.num_pages > 1 %}

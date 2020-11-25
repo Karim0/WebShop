@@ -131,7 +131,7 @@ def product_detail_page(request, pk):
         'type': 'sub-head',
         'cartSize': len(cart.cartproduct_set.all()),
         'product': product,
-        'prodch': product.productchar_set.all(),
+        'pr': product.productchar_set.all()[0],
         'comment': product.productcomment_set.all(),
         'articles': Article.objects.all(),
         'questions': Question.objects.all(),
@@ -240,8 +240,9 @@ def addCart(request):
         cart = Cart(session_key=session_key)
         cart.save()
 
-    id = request.POST['prodchars']
+    id = int(request.POST['prodchars'])
     amount = request.POST['amount']
+    isFast = request.POST['fast']
     prod = ProductChar.objects.get(pk=id)
     pass_bool = True
 
@@ -255,7 +256,11 @@ def addCart(request):
         cartElement = CartProduct(cart=cart, product=prod, amount=amount)
         cartElement.save()
 
-    return redirect('shop:product', pk=prod.prod.subcategory.category.id)
+    if isFast == 'fast':
+        data = {'amount': len(cart.cartproduct_set.all())}
+        return JsonResponse(json.dumps(data), safe=False)
+    else:
+        return redirect('shop:product', pk=prod.prod.subcategory.category.id)
 
 
 def delete_item(request):

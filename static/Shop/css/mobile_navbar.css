@@ -66,6 +66,63 @@
         margin-top: 0;
     }
 
+
+    .shopping-screen .product-box {
+        width: 100%;
+    }
+
+    .brand-box {
+        width: 30%;
+    }
+
+    .shopping-screen .card {
+        height: 250px;
+    }
+
+    .shopping-screen .card > .prod-wrap {
+        display: flex;
+        align-items: center;
+    }
+
+    .shopping-screen .card > .prod-wrap > .img-box {
+        padding: 0;
+        margin: 0 15px;
+        width: 50%;
+        height: fit-content;
+    }
+
+    .shopping-screen .card > .prod-wrap > .content-box {
+        padding-top: 15px;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        height: 100%;
+        align-items: center;
+        background: white;
+        color: black;
+        font-size: .8em;
+        text-align: left;
+    }
+
+    .shopping-screen .card:hover > .prod-wrap > .content-box {
+        display: block;
+    }
+
+    .shopping-screen .card > .prod-wrap > .content-box > a {
+        position: absolute;
+        left: 50%;
+        margin-right: -50%;
+        bottom: 5%;
+        transform: translate(-50%, 0)
+    }
+
+    .shopping-screen .card > .prod-wrap > .content-box > h3 {
+        /*font-size: 1em;*/
+        color: black;
+
+    }
+
+
 }
 
 @media (min-width: 490px) and (max-width: 767px) {

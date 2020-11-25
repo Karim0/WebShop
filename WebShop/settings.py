@@ -153,9 +153,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR,
                            "static")  # Изначально пустой каталог, куда Django соберёт всё при выполнении manage.py collectstatic
-# STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, "static_dev"), # Каталог, куда вам нужно складывать статику проекта, не относящуюся к конкретному приложению
-# ]
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static_dev"), # Каталог, куда вам нужно складывать статику проекта, не относящуюся к конкретному приложению
+]
 
 # STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 

@@ -403,20 +403,65 @@ function paySel(type) {
 
 
 $(`#make_order`).on('submit', function (e) {
-    if (parseInt($('#cartSize').html()) === 0){
+    if (parseInt($('#cartSize').html()) === 0) {
         e.preventDefault();
         var note = new jBox('Notice', {
-                content: "Ваша корзина пуста",
-                color: 'red',
+            content: "Ваша корзина пуста",
+            color: 'red',
+            delayClose: 2000,
+            position: {
+                x: 'left',
+                y: 'top'
+            }
+        });
+        note.open();
+        note.close();
+    }
+});
+
+$(`#fast_add_cart`).on('submit', function (e) {
+    e.preventDefault();
+
+    let data = {};
+
+    data.prodchars = $(`#char_id`).val();
+    data.amount = $(`#char_amount`).val();
+    data.fast = $(`#is_fast`).val();
+
+    const url = $(`#fast_add_cart`).attr('action');
+
+    var csrf_token = $('#fast_add_cart [name="csrfmiddlewaretoken"]').val();
+
+    data["csrfmiddlewaretoken"] = csrf_token;
+
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data: data,
+        caсhe: true,
+        success: function (data) {
+            const amount = JSON.parse(data)['amount'];
+            $(`#cartProductAmount`).html(`<sup> ${amount}</sup>`);
+
+            var note = new jBox('Notice', {
+                content: "Добавлен в корзину",
+                color: 'green',
                 delayClose: 2000,
-                position: {
-                    x: 'left',
-                    y: 'top'
-                }
             });
             note.open();
             note.close();
-    }
+        },
+        error: function () {
+            var note = new jBox('Notice', {
+                content: "Что то пошло не так, попробуйте позже`",
+                color: 'red',
+                delayClose: 2000,
+            });
+            note.open();
+            note.close();
+        }
+    });
+
 });
 
 
