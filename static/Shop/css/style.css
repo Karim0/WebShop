@@ -816,7 +816,6 @@ p {
     width: 100%;
 }
 
-
 .product-screen .filter .filter-val label {
     margin: 5px;
 }
@@ -936,7 +935,7 @@ p {
 }
 
 .shopping-screen .filters-box li {
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
 .shopping-screen .f-btn {
