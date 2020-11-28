@@ -52,7 +52,7 @@
                                                     <input type="hidden" name="{{ prop.0.name }}">
                                                     <ul class="custom_selector-menu">
                                                         {% for val in prop.0.prodval_set.all|unique %}
-                                                            <li id="{{ prop_id}}_{{ val.id }}">{{ val.value }}</li>
+                                                            <li id="{{ prop_id}}_{{ val.id }}_{{ val.value }}">{{ val.value }}</li>
                                                         {% endfor %}
                                                     </ul>
                                                 </div>

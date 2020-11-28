@@ -184,12 +184,11 @@ def product_page(request, pk):
             products = Product.objects.filter(subcategory_id=subcat)
 
     for i in request.GET.keys():
-
         if request.GET[i] != '-1' and i not in ['max_price', 'min_price', 'search', 'order', 'subcat', 'page',
                                                 'sortby', 'cur_subcat']:
             if request.GET[i]:
                 val = request.GET[i].split('_')[1]
-                products = products.filter(productchar__prodval__id=val).distinct()
+                products = products.filter(productchar__prodval__value=request.GET[i].split('_')[2]).distinct()
                 p_id = ProdVal.objects.get(id=val).prop.id
                 p_val = ProdVal.objects.get(id=val).value
                 props[p_id][1] = p_val
