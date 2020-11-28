@@ -1,3 +1,4 @@
+
 function addAmount(id) {
     $(`#item${id}Amount`).val(parseInt($(`#item${id}Amount`).val()) + 1);
 

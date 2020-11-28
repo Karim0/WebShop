@@ -27,7 +27,6 @@
                 <div class="row m-0">
                     <div class="col-lg-3 col-md-10 col-sm-10 mr-auto ml-auto">
                         <form action="" method="get" id="filter_form">
-
                             <input type="text" value="{{ cur_subcat }}" name="cur_subcat" hidden>
                             {% if search %}
                                 <input type="text" value="{{ search }}" name="search" hidden>
@@ -47,13 +46,13 @@
                                                 <label>{{ prop.0.name }}</label>
                                                 <div class="custom_selector">
                                                     <div class="select">
-                                                        <span>Не выбрано</span>
+                                                        <span>{{ prop.1 }}</span>
                                                         <i class="fa fa-chevron-left"></i>
                                                     </div>
                                                     <input type="hidden" name="{{ prop.0.name }}">
                                                     <ul class="custom_selector-menu">
                                                         {% for val in prop.0.prodval_set.all|unique %}
-                                                            <li id="{{ prop_id }}_{{ val.id }}">{{ val.value }}</li>
+                                                            <li id="{{ prop_id}}_{{ val.id }}">{{ val.value }}</li>
                                                         {% endfor %}
                                                     </ul>
                                                 </div>
@@ -150,7 +149,8 @@
                                                                 <button type="submit" class="btn fast-cart m-0"><i
                                                                         class="fas fa-cart-plus"></i></button>
                                                             </div>
-                                                            <a class="w-75" href="{% url 'shop:product_detail' pr.id %}">Подробнее</a>
+                                                            <a class="w-75"
+                                                               href="{% url 'shop:product_detail' pr.id %}">Подробнее</a>
                                                         </div>
                                                     </div>
                                                 </div>

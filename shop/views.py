@@ -169,7 +169,7 @@ def product_page(request, pk):
     props = {}
 
     for p in Property.objects.filter(prodval__prod_char__prod__in=products).distinct():
-        props[p.id] = [p, '?? ???????',]
+        props[p.id] = [p, 'Не выбрано', ]
 
     max_price = int(request.GET.get('max_price', -1))
     min_price = int(request.GET.get('min_price', -1))
@@ -199,13 +199,13 @@ def product_page(request, pk):
             productchar__price__lte=max_price).distinct()
 
     if order == 'popularity':
-        order = '????????????'
+        order = 'Популярности'
         products = products.annotate(rate=Sum('productcomment__rate')).order_by('-rate')
     elif order == 'price_asc':
-        order = '???? ?? ???????????'
+        order = 'Цена по возрастанию'
         products = products.annotate(price=Min('productchar__price')).order_by('price')
     elif order == 'price_desc':
-        order = '???? ?? ????????'
+        order = 'Цена по убыванию'
         products = products.annotate(price=Min('productchar__price')).order_by('-price')
 
     page = request.GET.get('page', 1)
@@ -386,7 +386,7 @@ def make_order(request):
         order_url = "https://api.yii2-stage.test.wooppay.com/v1/invoice/create"
 
         order_data = {
-            "reference_id": 3093*order.id,
+            "reference_id":  9383 * order.id,
             "amount": tot_sum,
             "service_name": "test_merch_invoice",
             "merchant_name": 384310,
