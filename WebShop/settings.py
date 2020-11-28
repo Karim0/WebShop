@@ -14,20 +14,22 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = '$-@t)g2x7*(s)%_3pz+zc1l_qnzblvqdc%5ucrp#l!u+1+=j0#'
 
-with open('/etc/secret_key.txt') as f:
+with open('etc/secret_key.txt', 'r') as f:
     SECRET_KEY = f.read().strip()
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-# DEBUG = bool(os.environ.get('DJANGO_DEBUG', True))
+DEBUG = False
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = [
+    '.hanok-market.kz'
+]
 
 # Application definition
 ROOT_URLCONF = 'WebShop.urls'
@@ -58,10 +60,13 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware'
 ]
 
+# TEMPLATE_DIRS = (os.path.join(BASE_DIR, 'templates'),)
+
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [os.path.join(PROJECT_DIR, 'templates')],
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -82,7 +87,10 @@ TEMPLATES = [
     },
 ]
 
-TEMPLATE_DIRS = (os.path.join(BASE_DIR, 'templates'),)
+ADMINS = (('Webmaster','hanok-master@hanok-market.kz.com'),('Administrator','hanok-admin@hanok-market.kz'))
+
+MANAGERS = ADMINS
+
 
 WSGI_APPLICATION = 'WebShop.wsgi.application'
 
@@ -90,15 +98,6 @@ WSGI_APPLICATION = 'WebShop.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    #     'NAME': 'shop',
-    #     'USER': 'shop',
-    #     'PASSWORD': 'shop',
-    #     'HOST': '127.0.0.1',
-    #     'PORT': '5432',
-    # }
-
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
@@ -122,6 +121,12 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+SECURE_SSL_REDIRECT = True
+
+SESSION_COOKIE_SECURE = True
+
+CSRF_COOKIE_SECURE = True
 
 CACHES = {
     'default': {
@@ -157,6 +162,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static_dev"), # Каталог, куда вам нужно складывать статику проекта, не относящуюся к конкретному приложению
 ]
 
+
 # STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 ADMIN_TOOLS_INDEX_DASHBOARD = 'shop.dashboard.CustomIndexDashboard'
@@ -167,3 +173,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 CART_SESSION_ID = 'shop'
+
