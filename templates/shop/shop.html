@@ -42,18 +42,18 @@
                                 <div class="filters-box">
                                     <h2>Фильтры</h2>
                                     <ul>
-                                        {% for prop in props %}
+                                        {% for prop_id, prop in props.items %}
                                             <li>
-                                                <label>{{ prop.name }}</label>
+                                                <label>{{ prop.0.name }}</label>
                                                 <div class="custom_selector">
                                                     <div class="select">
                                                         <span>Не выбрано</span>
                                                         <i class="fa fa-chevron-left"></i>
                                                     </div>
-                                                    <input type="hidden" name="{{ prop.name }}">
+                                                    <input type="hidden" name="{{ prop.0.name }}">
                                                     <ul class="custom_selector-menu">
-                                                        {% for val in prop.prodval_set.all|unique %}
-                                                            <li id="{{ prop.id }}_{{ val.id }}">{{ val.value }}</li>
+                                                        {% for val in prop.0.prodval_set.all|unique %}
+                                                            <li id="{{ prop_id }}_{{ val.id }}">{{ val.value }}</li>
                                                         {% endfor %}
                                                     </ul>
                                                 </div>
@@ -124,7 +124,7 @@
                         <div class="container">
                             <div class="row">
                                 <div id="product_view" class="all-products-box d-flex w-100 p-0 mt-4 flex-wrap">
-                                    <form id="fast_add_cart" action="{% url 'shop:add_cart' %}" method="post">
+                                    <form id="fast_add_cart" class="row w-100" action="{% url 'shop:add_cart' %}" method="post">
                                         {% csrf_token %}
                                         {% for pr in product %}
                                             <div class="product-box col-lg-4 col-md-6 col-sm-6 col-12">

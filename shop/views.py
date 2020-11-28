@@ -156,7 +156,8 @@ def product_page(request, pk):
     category = Category.objects.get(pk=pk)
     search = request.GET.get('search', None)
     order = request.GET.get('sortby')
-    if order != 'popularity' or order != 'price_asc' or order != 'price_desc' or order is None:
+
+    if (order != 'popularity') and (order != 'price_asc') and (order != 'price_desc'):
         order = 'popularity'
 
     subcategory = Subcategory.objects.filter(category_id=pk)
@@ -165,7 +166,10 @@ def product_page(request, pk):
 
     max_min_min = ProductChar.objects.filter(prod__in=products).aggregate(Max('price'), Min('price'))
 
-    props = Property.objects.filter(prodval__prod_char__prod__in=products).distinct()
+    props = {}
+
+    for p in Property.objects.filter(prodval__prod_char__prod__in=products).distinct():
+        props[p.id] = [p, '?? ???????',]
 
     max_price = int(request.GET.get('max_price', -1))
     min_price = int(request.GET.get('min_price', -1))
@@ -178,7 +182,6 @@ def product_page(request, pk):
         subcat = int(request.GET.get('cur_subcat', -1))
         if subcat != -1:
             products = Product.objects.filter(subcategory_id=subcat)
-            print(products)
 
     for i in request.GET.keys():
 
@@ -187,19 +190,22 @@ def product_page(request, pk):
             if request.GET[i]:
                 val = request.GET[i].split('_')[1]
                 products = products.filter(productchar__prodval__id=val).distinct()
+                p_id = ProdVal.objects.get(id=val).prop.id
+                p_val = ProdVal.objects.get(id=val).value
+                props[p_id][1] = p_val
 
     if min_price != -1 and max_price != -1:
         products = products.filter(productchar__price__gte=min_price).filter(
             productchar__price__lte=max_price).distinct()
 
     if order == 'popularity':
-        order = 'Популярности'
+        order = '????????????'
         products = products.annotate(rate=Sum('productcomment__rate')).order_by('-rate')
     elif order == 'price_asc':
-        order = 'Цена по возрастанию'
+        order = '???? ?? ???????????'
         products = products.annotate(price=Min('productchar__price')).order_by('price')
     elif order == 'price_desc':
-        order = 'Цена по убыванию'
+        order = '???? ?? ????????'
         products = products.annotate(price=Min('productchar__price')).order_by('-price')
 
     page = request.GET.get('page', 1)
@@ -227,7 +233,6 @@ def product_page(request, pk):
         'cur_sort': order,
     }
     return render(request, 'shop/shop.html', content)
-
 
 def addCart(request):
     session_key = request.session.session_key
@@ -381,7 +386,7 @@ def make_order(request):
         order_url = "https://api.yii2-stage.test.wooppay.com/v1/invoice/create"
 
         order_data = {
-            "reference_id": 32400 * order.id,
+            "reference_id": 3093*order.id,
             "amount": tot_sum,
             "service_name": "test_merch_invoice",
             "merchant_name": 384310,

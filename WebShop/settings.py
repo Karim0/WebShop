@@ -14,21 +14,20 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
-with open('etc/secret_key.txt', 'r') as f:
+with open('/etc/secret_key.txt', 'r') as f:
     SECRET_KEY = f.read().strip()
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
-    '.hanok-market.kz'
+    'hanok-market.kz'
 ]
 
 # Application definition
@@ -66,7 +65,7 @@ MIDDLEWARE = [
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(PROJECT_DIR, 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -87,7 +86,7 @@ TEMPLATES = [
     },
 ]
 
-ADMINS = (('Webmaster','hanok-master@hanok-market.kz.com'),('Administrator','hanok-admin@hanok-market.kz'))
+ADMINS = (('Webmaster','hanok-master@hanok-market.kz'),('Administrator','hanok-admin@hanok-market.kz'))
 
 MANAGERS = ADMINS
 
@@ -121,12 +120,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
-SECURE_SSL_REDIRECT = True
-
-SESSION_COOKIE_SECURE = True
-
-CSRF_COOKIE_SECURE = True
 
 CACHES = {
     'default': {
