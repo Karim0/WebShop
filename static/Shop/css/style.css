@@ -816,17 +816,6 @@ p {
     width: 100%;
 }
 
-.product-screen .filter label:hover {
-    border-bottom: 1px solid #383636;
-}
-
-.product-screen .filter label:focus {
-    border-bottom: 1px solid #383636;
-}
-
-.product-screen .filter label:active {
-    border-bottom: 1px solid #383636;
-}
 
 .product-screen .filter .filter-val label {
     margin: 5px;
