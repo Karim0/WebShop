@@ -47,3 +47,17 @@ def pagi_cut(value, p):
             return f'{pattern[0]}?{pattern[1]}&page={p}'
     else:
         return f'{value}?page={p}'
+
+
+@register.filter()
+def cur_ranger(range, value):
+    if value.find('page=') != -1:
+        cp = int(value[value.find('page=')+5:])
+        if cp > max(range)-2:
+            return [1, '...', max(range)-2, max(range)-1, max(range)]
+        elif cp > 2:
+            return [1, '...', cp-1, cp, cp+1, '...', max(range)]
+        else:
+            return [1, 2, 3, '...', max(range)]
+    else:
+        return [1, 2, 3, '...', max(range)]
