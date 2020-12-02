@@ -76,7 +76,7 @@
     }
 
     .shopping-screen .card {
-        height: 250px;
+        padding: 0 15px;
     }
 
     .shopping-screen .card > .prod-wrap {
@@ -87,12 +87,10 @@
     .shopping-screen .card > .prod-wrap > .img-box {
         padding: 0;
         margin: 0 15px;
-        width: 50%;
         height: fit-content;
     }
 
     .shopping-screen .card > .prod-wrap > .content-box {
-        padding-top: 15px;
         display: flex;
         flex-direction: column;
         position: relative;
@@ -102,18 +100,14 @@
         color: black;
         font-size: .8em;
         text-align: left;
+        padding: 0 10px;
     }
 
     .shopping-screen .card:hover > .prod-wrap > .content-box {
-        display: block;
     }
 
     .shopping-screen .card > .prod-wrap > .content-box > a {
-        position: absolute;
-        left: 50%;
-        margin-right: -50%;
-        bottom: 5%;
-        transform: translate(-50%, 0)
+        margin-bottom: 25px
     }
 
     .shopping-screen .card > .prod-wrap > .content-box > h3 {
@@ -278,10 +272,6 @@
         width: 30%;
     }
 
-    .shopping-screen .card {
-        height: 250px;
-    }
-
     .shopping-screen .card > .prod-wrap {
         display: flex;
         align-items: center;
@@ -290,12 +280,10 @@
     .shopping-screen .card > .prod-wrap > .img-box {
         padding: 0;
         margin: 0 15px;
-        width: 50%;
         height: fit-content;
     }
 
     .shopping-screen .card > .prod-wrap > .content-box {
-        padding-top: 15px;
         display: flex;
         flex-direction: column;
         position: relative;
@@ -305,6 +293,7 @@
         color: black;
         font-size: .8em;
         text-align: left;
+        padding: 0 10px;
     }
 
     .shopping-screen .card:hover > .prod-wrap > .content-box {
@@ -312,11 +301,7 @@
     }
 
     .shopping-screen .card > .prod-wrap > .content-box > a {
-        position: absolute;
-        left: 50%;
-        margin-right: -50%;
-        bottom: 5%;
-        transform: translate(-50%, 0)
+        margin-bottom: 25px;
     }
 
     .shopping-screen .card > .prod-wrap > .content-box > h3 {

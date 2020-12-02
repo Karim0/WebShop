@@ -123,7 +123,7 @@
                         <div class="container">
                             <div class="row">
                                 <div id="product_view" class="all-products-box d-flex w-100 p-0 mt-4 flex-wrap">
-                                    <form id="fast_add_cart" class="row w-100" action="{% url 'shop:add_cart' %}" method="post">
+                                    <form id="fast_add_cart" class="row w-100 m-auto" action="{% url 'shop:add_cart' %}" method="post">
                                         {% csrf_token %}
                                         {% for pr in product %}
                                             <div class="product-box col-lg-4 col-md-6 col-sm-6 col-12">
@@ -135,7 +135,7 @@
                                                     <div class="tag-box">
                                                         <span>{{ pr.tag.name }}</span>
                                                     </div>
-                                                    <div class="prod-wrap">
+                                                    <div class="prod-wrap row">
                                                         <div class="img-box">
                                                             <img class="w-100"
                                                                  src="{{ pr.productphoto_set.all.0.img.url }}"
