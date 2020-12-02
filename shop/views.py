@@ -22,7 +22,7 @@ def home_page(request):
     content = {
         'pagename': f'{SiteProfile.objects.first().page_name} | Главная страница',
         'categs': Category.objects.all(),
-        'prod_recom': Product.objects.annotate(prodreate=Avg('productcomment__rate')).order_by('-prodreate'),
+        'prod_recom': Product.objects.annotate(prodreate=Avg('productcomment__rate')).order_by('-prodreate')[:10],
         'questions': Question.objects.all(),
         'cartSize': len(cart.cartproduct_set.all()),
         'cart': cart,
