@@ -167,6 +167,13 @@
                     <input type="text" name="callphone" id="callphone" placeholder="Ваш номер телефона" required>
                     <button type="submit" class="callback-btn"> Отправить</button>
                 </form>
+
+                <div class="d-flex flex-column text-center w-100 mt-5">
+
+                    <a href="{% url 'shop:oferta' %}" class="d-block"> Публичная оферта </a>
+                    <a href="{% url 'shop:privacy' %}" class="d-block"> Политика конфиденциальности </a>
+
+                </div>
             </div>
             <div class="col-lg-4 col-md-10 col-sm-10 ml-auto mr-auto">
                 <h3 class="mt-5">Часто задаваемые вопросы</h3>

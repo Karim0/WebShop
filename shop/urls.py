@@ -18,4 +18,7 @@ urlpatterns = [
     path('shop/product/make_order', views.make_order, name='make_order'),
     path('shop/product/order_confirmation', views.confirmation, name='confirmation'),
     path('shop/callback', views.callback, name='callback'),
+    path('privacy/', views.privacy, name='privacy'),
+    path('oferta/', views.oferta, name='oferta'),
+
 ]

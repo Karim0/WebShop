@@ -443,3 +443,52 @@ def callback(request):
                    phone=request.GET['phone'])
     call.save()
     return JsonResponse(json.dumps({}), safe=False)
+
+
+
+def privacy(request):
+    session_key = request.session.session_key
+    if not session_key:
+        request.session.cycle_key()
+
+    try:
+        cart = Cart.objects.get(session_key=session_key)
+    except Cart.DoesNotExist:
+        cart = Cart(session_key=session_key)
+        cart.save()
+
+    content = {
+        'pagename': f'{SiteProfile.objects.first().page_name} | ПОЛИТИКА КОНФИДЕНЦИАЛЬНОСТИ',
+        'categs': Category.objects.all(),
+        'questions': Question.objects.all(),
+        'cartSize': len(cart.cartproduct_set.all()),
+        'cart': cart,
+        'articles': Article.objects.all(),
+        'site': SiteProfile.objects.first()
+    }
+    return render(request, 'shop/privacy.html', content)
+
+
+def oferta(request):
+    session_key = request.session.session_key
+    if not session_key:
+        request.session.cycle_key()
+
+    try:
+        cart = Cart.objects.get(session_key=session_key)
+    except Cart.DoesNotExist:
+        cart = Cart(session_key=session_key)
+        cart.save()
+
+    content = {
+        'pagename': f'{SiteProfile.objects.first().page_name} | ПУБЛИЧНАЯ ОФЕРТА',
+        'categs': Category.objects.all(),
+        'questions': Question.objects.all(),
+        'cartSize': len(cart.cartproduct_set.all()),
+        'cart': cart,
+        'articles': Article.objects.all(),
+        'site': SiteProfile.objects.first()
+    }
+    return render(request, 'shop/oferta.html', content)
+
+

@@ -28,7 +28,7 @@ with open('/etc/secret_key.txt', 'r') as f:
 DEBUG = False
 
 ALLOWED_HOSTS = [
-    'hanok-market.kz'
+    'hanok-market.kz'z
 ]
 
 # Application definition

@@ -507,7 +507,6 @@ p {
 }
 
 
-
 .product-box > .card > .prod-wrap > .content-box button {
     color: white;
     background: #4e4eff;
@@ -517,7 +516,6 @@ p {
     font-weight: lighter;
     text-align: center;
 }
-
 
 
 .product-box > .card > .prod-wrap > .content-box > a:hover {
@@ -1139,4 +1137,44 @@ p {
         -webkit-transform: translateX(-100%); /* Browser bug fix */
         transform: translateX(-100%);
     }
+}
+
+.oferta-page h1 {
+    margin: 30px auto;
+    text-align: center;
+    font-weight: bold;
+    display: block;
+    box-sizing: border-box;
+}
+
+.oferta-page p {
+    width: 100%;
+}
+
+.oferta-page h2 {
+    margin: 30px  auto;
+    text-align: center;
+    font-weight: bold;
+    display: block;
+    box-sizing: border-box;
+}
+
+.privacy-page h1 {
+    margin: 30px auto;
+    text-align: center;
+    font-weight: bold;
+    display: block;
+    box-sizing: border-box;
+}
+
+.privacy-page p {
+    width: 100%;
+}
+
+.privacy-page h2 {
+    margin: 30px auto;
+    text-align: center;
+    font-weight: bold;
+    display: block;
+    box-sizing: border-box;
 }
