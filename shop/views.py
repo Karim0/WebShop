@@ -368,8 +368,6 @@ def make_order(request):
         position.save()
 
     order.total_sum = tot_sum
-    order.save()
-    cart.delete()
 
     if order.pay_type == 'картой':
         login = SiteProfile.objects.first().paylogin
@@ -381,6 +379,9 @@ def make_order(request):
         auth_url = "https://api.yii2-stage.test.wooppay.com/v1/auth"
 
         auth_data = RQ.request("POST", auth_url, data=auth_data).json()
+
+        print(login, password)
+        print(auth_data)
 
         order_url = "https://api.yii2-stage.test.wooppay.com/v1/invoice/create"
 
@@ -399,6 +400,9 @@ def make_order(request):
         response = RQ.request("POST", order_url, headers=headers, data=order_data).json()
 
         print(response)
+
+        order.save()
+        cart.delete()
 
         return redirect(response['operation_url'])
 
