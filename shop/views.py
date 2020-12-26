@@ -385,10 +385,8 @@ def make_order(request):
         order_url = "https://api.yii2-stage.test.wooppay.com/v1/invoice/create"
 
         order_data = {
-            "reference_id": order.id,
+            "reference_id": 'hanok-market-payment' + str(order.id),
             "amount": tot_sum,
-            "service_name": "hanok_payment",
-            "merchant_name": "victor_3d",
             "option": 0,
             "card_forbidden": 0,
             "requestUrl": "http://hanok-market.kz/shop/product/order_confirmation?order_id=" + str(order.id)
@@ -399,6 +397,8 @@ def make_order(request):
         }
 
         response = RQ.request("POST", order_url, headers=headers, data=order_data).json()
+
+        print(response)
 
         return redirect(response['operation_url'])
 
