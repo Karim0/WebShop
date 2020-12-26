@@ -385,13 +385,13 @@ def make_order(request):
         order_url = "https://api.yii2-stage.test.wooppay.com/v1/invoice/create"
 
         order_data = {
-            "reference_id":  9383 * order.id,
+            "reference_id": order.id,
             "amount": tot_sum,
-            "service_name": "test_merch_invoice",
-            "merchant_name": 384310,
+            "service_name": "hanok_payment",
+            "merchant_name": "victor_3d",
             "option": 0,
             "card_forbidden": 0,
-            "requestUrl": "http://213.211.91.155:8000/shop/product/order_confirmation?order_id=" + str(order.id)
+            "requestUrl": "http://hanok-market.kz/shop/product/order_confirmation?order_id=" + str(order.id)
         }
 
         headers = {

@@ -195,8 +195,8 @@ p {
 
 .header-menu > .head-menu-wrap > .cat-row {
     display: flex;
-    flex-wrap: nowrap;
-    width: 100%;
+    flex-wrap: wrap;
+    width: 60vw;
     align-items: flex-start;
 }
 
