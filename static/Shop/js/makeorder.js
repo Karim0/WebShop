@@ -1,4 +1,3 @@
-
 function addAmount(id) {
     $(`#item${id}Amount`).val(parseInt($(`#item${id}Amount`).val()) + 1);
 
@@ -248,6 +247,7 @@ function minusAmount(id) {
                 $(`#totalCheck`).html(totals);
             }
             $('#cartSize').html(cartAmount);
+            $(`#cartProductAmount`).html(`<sup> ${cartAmount}</sup>`);
         },
         error: function () {
             var note = new jBox('Notice', {
@@ -370,6 +370,8 @@ function delItem(id) {
                 console.log(totals);
             }
             $('#cartSize').html(cartAmount);
+            $(`#cartProductAmount`).html(`<sup> ${cartAmount}</sup>`);
+
         },
         error: function () {
             var note = new jBox('Notice', {
@@ -420,49 +422,56 @@ $(`#make_order`).on('submit', function (e) {
     }
 });
 
-$(`#fast_add_cart`).on('submit', function (e) {
-    e.preventDefault();
+function add_cart_fast(char_id) {
 
-    let data = {};
+    $(`#fast_add_cart_${char_id}`).on('submit', function (e) {
+        e.preventDefault();
+        let data = {};
 
-    data.prodchars = $(`#char_id`).val();
-    data.amount = $(`#char_amount`).val();
-    data.fast = $(`#is_fast`).val();
+        data.prodchars = $(`#fast_add_cart_${char_id} [name="char_id"]`).val();
+        data.amount = $(`#fast_add_cart_${char_id} [name="char_amount"]`).val();
+        data.fast = $(`#fast_add_cart_${char_id} [name="is_fast"]`).val();
 
-    const url = $(`#fast_add_cart`).attr('action');
 
-    var csrf_token = $('#fast_add_cart [name="csrfmiddlewaretoken"]').val();
+        const url = $(`#fast_add_cart_${char_id}`).attr('action');
 
-    data["csrfmiddlewaretoken"] = csrf_token;
+        var csrf_token = $(`#fast_add_cart_${char_id} [name="csrfmiddlewaretoken"]`).val();
 
-    $.ajax({
-        url: url,
-        type: 'POST',
-        data: data,
-        caсhe: true,
-        success: function (data) {
-            const amount = JSON.parse(data)['amount'];
-            $(`#cartProductAmount`).html(`<sup> ${amount}</sup>`);
+        data["csrfmiddlewaretoken"] = csrf_token;
 
-            var note = new jBox('Notice', {
-                content: "Добавлен в корзину",
-                color: 'green',
-                delayClose: 2000,
-            });
-            note.open();
-            note.close();
-        },
-        error: function () {
-            var note = new jBox('Notice', {
-                content: "Что то пошло не так, попробуйте позже`",
-                color: 'red',
-                delayClose: 2000,
-            });
-            note.open();
-            note.close();
-        }
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: data,
+            caсhe: true,
+            success: function (data) {
+                const amount = JSON.parse(data)['amount'];
+                $(`#cartProductAmount`).html(`<sup> ${amount}</sup>`);
+
+                var note = new jBox('Notice', {
+                    content: "Добавлен в корзину",
+                    color: 'green',
+                    delayClose: 2000,
+                });
+                note.open();
+                note.close();
+            },
+            error: function () {
+                var note = new jBox('Notice', {
+                    content: "Что то пошло не так, попробуйте позже`",
+                    color: 'red',
+                    delayClose: 2000,
+                });
+                note.open();
+                note.close();
+            }
+        });
     });
 
-});
+    $(`#fast_add_cart_${char_id}`).submit();
+
+}
+
+
 
 

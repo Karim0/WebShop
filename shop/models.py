@@ -315,7 +315,7 @@ class Order(models.Model):
     )
 
     def __str__(self):
-        return f"ФИО: {self.name} Сумма: {self.total_sum} Статус: {self.checked} Дата: {self.pub_date}"
+        return f"ФИО: {self.id} {self.name} Сумма: {self.total_sum} Статус: {self.checked} Дата: {self.pub_date}"
 
     class Meta:
         verbose_name = "Заказ"

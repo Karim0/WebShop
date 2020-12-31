@@ -405,9 +405,8 @@ def make_order(request):
 
 
 def confirmation(request):
-    print('successful')
-    order = Order.objects.get(request.GET['order_id'])
-    order.checked = "оплачен"
+    order = Order.objects.get(pk=request.GET['order_id'])
+    order.checked = "Оплачен"
     order.save()
 
     return redirect('shop:index')
@@ -437,16 +436,16 @@ def add_comment(request):
 
 
 def callback(request):
-    print(request.GET['name'])
     call = Calling(full_name=request.GET['name'],
                    phone=request.GET['phone'])
     call.save()
     return JsonResponse(json.dumps({}), safe=False)
 
 
-
 def privacy(request):
+
     session_key = request.session.session_key
+
     if not session_key:
         request.session.cycle_key()
 
