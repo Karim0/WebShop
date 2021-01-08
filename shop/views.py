@@ -376,11 +376,11 @@ def make_order(request):
         auth_data = {'login': login,
                      'password': password}
 
-        auth_url = "https://api.yii2-stage.test.wooppay.com/v1/auth"
+        auth_url = "https://api-core.wooppay.com/v1/auth"
 
         auth_data = RQ.request("POST", auth_url, data=auth_data).json()
 
-        order_url = "https://api.yii2-stage.test.wooppay.com/v1/invoice/create"
+        order_url = "https://api-core.wooppay.com/v1/invoice/create"
 
         order_data = {
             "reference_id": 'hanok-market-payment' + str(order.id),
