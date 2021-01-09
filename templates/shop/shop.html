@@ -151,9 +151,9 @@
                                                         <p>{{ pr.desc_short }}</p>
                                                         <div class="d-flex align-items-center mb-2 w-75 p-0 justify-content-between">
                                                             <span>Цена: <b>{{ pr.productchar_set.all.0.price }}</b> ₸</span>
-                                                            <button class="btn fast-cart m-0"><i
-                                                                    class="fas fa-cart-plus"
-                                                                    onclick="add_cart_fast({{ pr.productchar_set.all.0.id }})"></i>
+                                                            <button class="btn fast-cart m-0"
+                                                                    onclick="add_cart_fast({{ pr.productchar_set.all.0.id }})">
+                                                                <i class="fas fa-cart-plus"></i>
                                                             </button>
                                                         </div>
                                                         <a class="w-75"
