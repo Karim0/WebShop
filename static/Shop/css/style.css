@@ -204,7 +204,7 @@ p {
 .header-menu > .head-menu-wrap > .cat-row > .menu-cat {
     display: flex;
     flex-direction: column;
-    /* width: 3%; */
+    width: 27%;
     text-align: center;
     justify-content: center;
     margin: 0 20px;
