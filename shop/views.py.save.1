@@ -368,6 +368,8 @@ def make_order(request):
         position.save()
 
     order.total_sum = tot_sum
+    order.save()
+    cart.delete()
 
     if order.pay_type == 'картой':
         login = SiteProfile.objects.first().paylogin
@@ -383,11 +385,13 @@ def make_order(request):
         order_url = "https://api-core.wooppay.com/v1/invoice/create"
 
         order_data = {
-            "reference_id": 'hanok-market-payment' + str(order.id),
+            "reference_id": order.id,
             "amount": tot_sum,
+            ,
+            "merchant_name": 384310,
             "option": 0,
             "card_forbidden": 0,
-            "requestUrl": "http://hanok-market.kz/shop/product/order_confirmation?order_id=" + str(order.id)
+            "requestUrl": "http://213.211.91.155:8000/shop/product/order_confirmation?order_id=" + str(order.id)
         }
 
         headers = {
@@ -396,17 +400,15 @@ def make_order(request):
 
         response = RQ.request("POST", order_url, headers=headers, data=order_data).json()
 
-        order.save()
-        cart.delete()
-
         return redirect(response['operation_url'])
 
     return redirect('shop:index')
 
 
 def confirmation(request):
-    order = Order.objects.get(pk=request.GET['order_id'])
-    order.checked = "Оплачен"
+    print('successful')
+    order = Order.objects.get(request.GET['order_id'])
+    order.checked = "оплачен"
     order.save()
 
     return redirect('shop:index')
@@ -436,16 +438,16 @@ def add_comment(request):
 
 
 def callback(request):
+    print(request.GET['name'])
     call = Calling(full_name=request.GET['name'],
                    phone=request.GET['phone'])
     call.save()
     return JsonResponse(json.dumps({}), safe=False)
 
 
+
 def privacy(request):
-
     session_key = request.session.session_key
-
     if not session_key:
         request.session.cycle_key()
 
