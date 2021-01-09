@@ -16,6 +16,7 @@ class ValCharAdmin(NestedTabularInline):
 
 
 class ProdCharAdmin(NestedTabularInline):
+
     class Media:
         css = {
             'all': ('css/admin_panel.css',)
@@ -31,6 +32,8 @@ class ProdCharAdmin(NestedTabularInline):
 class ProductAdmin(NestedModelAdmin):
     model = Product
     inlines = [ProdCharAdmin, ProductPhotoAdmin]
+    list_filter = ('subcategory', 'tag')
+
 
 class ElementInline(admin.TabularInline):
     model = OrderPosition
@@ -42,7 +45,7 @@ class OrderAdmin(admin.ModelAdmin):
         model = Order
         fields = '__all__'
 
-    list_display = ('name', 'address', 'email', 'phone', 'del_type', 'pay_type', 'total_sum', 'pub_date', 'checked')
+    list_display = ('id', 'name', 'address', 'email', 'phone', 'del_type', 'pay_type', 'total_sum', 'pub_date', 'checked')
     list_filter = ('checked', 'del_type', 'pay_type')
     inlines = (ElementInline,)
 

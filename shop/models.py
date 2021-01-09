@@ -299,8 +299,8 @@ class SiteProfile(models.Model):
 
 class Order(models.Model):
     name = models.CharField(max_length=100, default="Не указан", verbose_name="Имя клиента")
-    address = models.CharField(max_length=100, default="Не указан", verbose_name="Адресс клиента")
-    email = models.CharField(max_length=100, default="Не указан", verbose_name="Почта")
+    address = models.CharField(max_length=100, default="Не указан", verbose_name="Адресс клиента", blank=True)
+    email = models.CharField(max_length=100, default="Не указан", verbose_name="Почта", blank=True)
     phone = models.CharField(max_length=100, default="Не указан", verbose_name="Телефон клиента")
     del_type = models.CharField(max_length=10, default="Не указан", verbose_name="Доставка")
     pay_type = models.CharField(max_length=10, default="Не указан", verbose_name="Оплата")
@@ -315,7 +315,7 @@ class Order(models.Model):
     )
 
     def __str__(self):
-        return f"ФИО: {self.id} {self.name} Сумма: {self.total_sum} Статус: {self.checked} Дата: {self.pub_date}"
+        return f"ID заказа: {self.id} ФИО: {self.id} {self.name} Сумма: {self.total_sum} Статус: {self.checked} Дата: {self.pub_date}"
 
     class Meta:
         verbose_name = "Заказ"
