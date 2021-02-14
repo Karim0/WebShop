@@ -4,14 +4,28 @@ from django.http import JsonResponse
 import json
 from django.core.paginator import Paginator
 import requests as RQ
-
+import logging
+from datetime import datetime as dt
 from .models import *
+from string import ascii_letters, digits, whitespace
+
+
+def strip(text):
+    allowed_chars = ascii_letters + digits + whitespace + "()_-+=[]{}\'\""
+    return "".join([c for c in text if c in allowed_chars])
+
+
+logging.basicConfig(filename='example.log', encoding='utf-8', level=logging.INFO)
 
 
 def home_page(request):
+
+    nTime = dt.now()
     session_key = request.session.session_key
     if not session_key:
         request.session.cycle_key()
+
+    logging.info(f'{nTime} | {session_key} | ENTER HOME PAGE')
 
     try:
         cart = Cart.objects.get(session_key=session_key)
@@ -33,9 +47,13 @@ def home_page(request):
 
 
 def cart_page(request):
+    nTime = dt.now()
     session_key = request.session.session_key
     if not session_key:
         request.session.cycle_key()
+
+    logging.info(f'{nTime} | {session_key} | ENTER CART PAGE')
+
 
     try:
         cart = Cart.objects.get(session_key=session_key)
@@ -64,9 +82,12 @@ def cart_page(request):
 
 
 def about_page(request):
+    nTime = dt.now()
     session_key = request.session.session_key
     if not session_key:
         request.session.cycle_key()
+
+    logging.info(f'{nTime} | {session_key} | ENTER ABOUT PAGE')
 
     try:
         cart = Cart.objects.get(session_key=session_key)
@@ -114,9 +135,13 @@ def about_page(request):
 
 
 def product_detail_page(request, pk):
+    nTime = dt.now()
     session_key = request.session.session_key
     if not session_key:
         request.session.cycle_key()
+
+    logging.info(f'{nTime} | {session_key} | ENTER PRODUCT DETAIL PAGE | {pk}')
+
     product = Product.objects.get(id=pk)
 
     try:
@@ -143,9 +168,14 @@ def product_detail_page(request, pk):
 
 
 def product_page(request, pk):
+    nTime = dt.now()
     session_key = request.session.session_key
     if not session_key:
         request.session.cycle_key()
+
+    get_mes = strip(str(request.GET))
+
+    logging.info(f'{nTime} | {session_key} | ENTER ALL PRODUCTS PAGE | {get_mes}')
 
     try:
         cart = Cart.objects.get(session_key=session_key)
@@ -233,10 +263,16 @@ def product_page(request, pk):
     }
     return render(request, 'shop/shop.html', content)
 
+
 def addCart(request):
+    nTime = dt.now()
     session_key = request.session.session_key
     if not session_key:
         request.session.cycle_key()
+
+    get_mes = strip(str(request.POST))
+
+    logging.info(f'{nTime} | {session_key} | ADD CART | {get_mes}')
 
     try:
         cart = Cart.objects.get(session_key=session_key)
@@ -268,9 +304,15 @@ def addCart(request):
 
 
 def delete_item(request):
+
+    nTime = dt.now()
     session_key = request.session.session_key
     if not session_key:
         request.session.cycle_key()
+
+    get_mes = strip(str(request.GET))
+
+    logging.info(f'{nTime} | {session_key} | DELETE CART | {get_mes}')
 
     try:
         cart = Cart.objects.get(session_key=session_key)
@@ -306,9 +348,15 @@ def delete_item(request):
 
 
 def changeAmount(request):
+    nTime = dt.now()
     session_key = request.session.session_key
     if not session_key:
         request.session.cycle_key()
+
+    get_mes = strip(str(request.GET))
+
+    logging.info(f'{nTime} | {session_key} | CHANGE AMOUNT | {get_mes}')
+
 
     try:
         cart = Cart.objects.get(session_key=session_key)
@@ -346,6 +394,13 @@ def changeAmount(request):
 
 
 def make_order(request):
+    nTime = dt.now()
+
+    get_mes = strip(str(request.POST))
+
+    logging.info(f'{nTime} | {str(request.session.session_key)} | MAKE ORDER | {get_mes}')
+
+
     cart = Cart.objects.get(session_key=request.session.session_key)
 
     order = Order(name=request.POST.get('full_name', 'unknown'),
@@ -405,6 +460,11 @@ def make_order(request):
 
 
 def confirmation(request):
+    nTime = dt.now()
+    get_mes = strip(str(request.GET))
+
+    logging.info(f'{nTime}  | CONFIRMATION ORDER | {get_mes}')
+
     order = Order.objects.get(pk=request.GET['order_id'])
     order.checked = "Оплачен"
     order.save()
@@ -413,6 +473,12 @@ def confirmation(request):
 
 
 def add_comment(request):
+    nTime = dt.now()
+
+    get_mes = strip(str(request.POST))
+
+    logging.info(f'{nTime} | MAKE COMMENT | {get_mes}')
+
     pk = int(request.POST.get('prod_id'))
     comment = ProductComment()
     comment.prod_id = pk
@@ -436,6 +502,12 @@ def add_comment(request):
 
 
 def callback(request):
+    nTime = dt.now()
+
+    get_mes = strip(str(request.GET))
+
+    logging.info(f'{nTime} | MAKE CALLBACK | {get_mes}')
+
     call = Calling(full_name=request.GET['name'],
                    phone=request.GET['phone'])
     call.save()
@@ -443,11 +515,12 @@ def callback(request):
 
 
 def privacy(request):
-
+    nTime = dt.now()
     session_key = request.session.session_key
-
     if not session_key:
         request.session.cycle_key()
+
+    logging.info(f'{nTime} | {session_key} | ENTER PRIVACY PAGE')
 
     try:
         cart = Cart.objects.get(session_key=session_key)
@@ -468,9 +541,12 @@ def privacy(request):
 
 
 def oferta(request):
+    nTime = dt.now()
     session_key = request.session.session_key
     if not session_key:
         request.session.cycle_key()
+
+    logging.info(f'{nTime} | {session_key} | ENTER OFERTA PAGE')
 
     try:
         cart = Cart.objects.get(session_key=session_key)
