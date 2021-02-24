@@ -15,7 +15,7 @@ def strip(text):
     return "".join([c for c in text if c in allowed_chars])
 
 
-logging.basicConfig(filename='example.log', encoding='utf-8', level=logging.INFO)
+logging.basicConfig(filename='example.log', level=logging.INFO)
 
 
 def home_page(request):
